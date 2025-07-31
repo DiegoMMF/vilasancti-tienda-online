@@ -8,7 +8,7 @@ export function WelcomeToast() {
     // ignore if screen height is too small
     if (window.innerHeight < 650) return;
     if (!document.cookie.includes('welcome-toast=2')) {
-      toast('🛍️ Welcome to Next.js Commerce!', {
+      toast('🛍️ Welcome to Vilasancti Tienda!', {
         id: 'welcome-toast',
         duration: Infinity,
         onDismiss: () => {
@@ -16,9 +16,9 @@ export function WelcomeToast() {
         },
         description: (
           <>
-            This is a high-performance, SSR storefront powered by Shopify, Next.js, and Vercel.{' '}
-            <a
-              href="https://vercel.com/templates/next.js/nextjs-commerce"
+                    This is a high-performance, custom ecommerce storefront implemented by Diego Maldini Freyre.{' '}
+        <a
+          href="https://github.com/diegomaldini"
               className="text-blue-600 hover:underline"
               target="_blank"
             >

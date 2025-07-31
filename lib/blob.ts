@@ -1,4 +1,4 @@
-import { put, del, list } from '@vercel/blob';
+import { del, list, put } from '@vercel/blob';
 import { z } from 'zod';
 
 const uploadSchema = z.object({
@@ -21,7 +21,7 @@ export async function uploadImage(file: File, folder: string = 'products') {
     const extension = file.name.split('.').pop();
     const filename = `${folder}/${timestamp}-${Math.random().toString(36).substring(2)}.${extension}`;
 
-    // Upload to Vercel Blob
+    // Upload to Blob Storage
     const { url } = await put(filename, file, {
       access: 'public',
       addRandomSuffix: false,
