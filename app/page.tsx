@@ -4,7 +4,7 @@ import Footer from 'components/layout/footer';
 
 export const metadata = {
   description:
-    'High-performance custom ecommerce store implemented by Diego Maldini Freyre.',
+    'High-performance custom ecommerce store implemented by Diego M. Maldini Freyre.',
   openGraph: {
     type: 'website'
   }
