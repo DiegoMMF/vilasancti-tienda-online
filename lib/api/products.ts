@@ -117,16 +117,53 @@ export async function getProducts({
   query,
   reverse,
   sortKey,
+  colors,
+  sizes,
 }: {
   query?: string;
   reverse?: boolean;
   sortKey?: string;
+  colors?: string[];
+  sizes?: string[];
 }): Promise<Product[]> {
-  const where = query
+  const baseWhere: any = query
     ? {
         OR: [{ title: { contains: query } }, { description: { contains: query } }],
       }
     : {};
+
+  // Filtros por variantes basados en JSON string en selectedOptions
+  const variantFilters: any[] = [];
+  if (colors && colors.length > 0) {
+    variantFilters.push({
+      OR: colors.map((c) => ({
+        selectedOptions: { contains: `\"name\":\"Color\",\"value\":\"${c}\"` },
+      })),
+    });
+  }
+  if (sizes && sizes.length > 0) {
+    variantFilters.push({
+      OR: sizes.map((s) => ({
+        selectedOptions: { contains: `\"name\":\"Talla\",\"value\":\"${s}\"` },
+      })),
+    });
+  }
+
+  const where =
+    variantFilters.length > 0
+      ? {
+          AND: [
+            baseWhere,
+            {
+              variants: {
+                some: {
+                  AND: variantFilters,
+                },
+              },
+            },
+          ],
+        }
+      : baseWhere;
 
   const orderBy: Prisma.ProductOrderByWithRelationInput =
     sortKey === "CREATED_AT"
@@ -187,13 +224,33 @@ export async function getCollectionProducts({
   collection,
   reverse,
   sortKey,
+  colors,
+  sizes,
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: string;
+  colors?: string[];
+  sizes?: string[];
 }): Promise<Product[]> {
   if (!collection) {
-    return getProducts({ reverse, sortKey });
+    return getProducts({ reverse, sortKey, colors, sizes });
+  }
+
+  const variantFilters: any[] = [];
+  if (colors && colors.length > 0) {
+    variantFilters.push({
+      OR: colors.map((c) => ({
+        selectedOptions: { contains: `\"name\":\"Color\",\"value\":\"${c}\"` },
+      })),
+    });
+  }
+  if (sizes && sizes.length > 0) {
+    variantFilters.push({
+      OR: sizes.map((s) => ({
+        selectedOptions: { contains: `\"name\":\"Talla\",\"value\":\"${s}\"` },
+      })),
+    });
   }
 
   const dbProducts = await prisma.product.findMany({
@@ -205,6 +262,9 @@ export async function getCollectionProducts({
           },
         },
       },
+      ...(variantFilters.length > 0 && {
+        variants: { some: { AND: variantFilters } },
+      }),
     },
     include: {
       variants: true,

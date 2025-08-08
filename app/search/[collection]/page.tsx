@@ -27,9 +27,11 @@ export default async function CategoryPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
-  const { sort } = searchParams as { [key: string]: string };
+  const { sort, color, size } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
+  const colors = color ? color.split(',').filter(Boolean) : undefined;
+  const sizes = size ? size.split(',').filter(Boolean) : undefined;
+  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse, colors, sizes });
 
   return (
     <section>

@@ -107,6 +107,9 @@ async function main() {
     },
   ];
 
+  const colors = ["Azul", "Rosa", "Blanco", "Negro"];
+  const sizes = ["XS", "S", "M", "L", "XL"];
+
   await Promise.all(
     productPayloads.map((p) =>
       prisma.product.create({
@@ -120,15 +123,18 @@ async function main() {
           seoTitle: p.title,
           seoDescription: p.description,
           variants: {
-            create: [
-              {
-                title: "Default",
+            create: colors.flatMap((color) =>
+              sizes.map((size) => ({
+                title: `${color} ${size}`,
                 price: p.price,
                 currencyCode: "USD",
                 availableForSale: true,
-                selectedOptions: JSON.stringify([{ name: "Talla", value: "M" }]),
-              },
-            ],
+                selectedOptions: JSON.stringify([
+                  { name: "Color", value: color },
+                  { name: "Talla", value: size },
+                ]),
+              }))
+            ),
           },
           images: {
             create: [
