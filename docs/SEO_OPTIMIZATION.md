@@ -16,9 +16,9 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 - [x] JSON-LD Organization en `app/layout.tsx`
 - [x] JSON-LD Product enriquecido (brand) en `product/[handle]`
 - [x] JSON-LD BreadcrumbList en `product/[handle]`
-- [ ] JSON-LD ItemList en listados
-- [ ] Sitemaps segmentados (productos/colecciones)
-- [ ] Reglas de robots.txt validadas
+- [x] JSON-LD ItemList en listados
+- [x] Sitemaps segmentados (productos/colecciones)
+- [x] Reglas de robots.txt validadas
 - **Canonicals**:
   - En `app/search/[collection]/page.tsx` y `app/search/page.tsx`: cuando existan parámetros de facetas (`color`, `size`) o `q` (búsqueda), usar `rel=canonical` hacia la URL base (sin parámetros).
 - **Meta robots**:
@@ -131,9 +131,9 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 - **JSON-LD**:
   - `product/[handle]/page.tsx`: añadir BreadcrumbList y `brand`/`sku`.
   - `app/layout.tsx`: Organization/Website.
-  - `search/[collection]`: ItemList con productos listados.
+  - `search/[collection]` y `category/[handle]`: ItemList con productos listados.
 - **Sitemaps**:
-  - `app/sitemap.ts`: exportar nodos hacia sitemaps específicos de productos y colecciones (o rutas dedicadas).
+  - Rutas dedicadas: `app/sitemap-products/route.ts` y `app/sitemap-collections/route.ts`; `robots.ts` referencia ambos.
 - **Open Graph/Twitter**:
   - Asegurar `og:image` derivado del `featuredImage`, `twitter:card` summary_large_image.
 - **404/410**:
