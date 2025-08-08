@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Product {
@@ -34,7 +35,7 @@ model Product {
 model ProductVariant {
   id        String   @id @default(cuid())
   title     String
-  price     Float
+  price     Decimal  @db.Decimal(10, 2)
   currencyCode String @default("USD")
   availableForSale Boolean @default(true)
   selectedOptions String // JSON string of selected options
