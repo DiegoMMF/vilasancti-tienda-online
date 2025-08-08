@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers';
-import { prisma } from '../db';
-import type { Cart, CartItem } from '../types';
+import { cookies } from "next/headers";
+import { prisma } from "../db";
+import type { Cart, CartItem } from "../types";
 
-const CART_COOKIE_NAME = 'cartId';
+const CART_COOKIE_NAME = "cartId";
 
 function calculateItemCost(quantity: number, price: string): string {
   return (Number(price) * quantity).toString();
@@ -15,25 +15,27 @@ function reshapeCart(dbCart: any): Cart {
     cost: {
       totalAmount: {
         amount: calculateItemCost(item.quantity, item.variant.price.toString()),
-        currencyCode: item.variant.currencyCode
-      }
+        currencyCode: item.variant.currencyCode,
+      },
     },
     merchandise: {
       id: item.variant.id,
       title: item.variant.title,
-      selectedOptions: JSON.parse(item.variant.selectedOptions || '[]'),
+      selectedOptions: JSON.parse(item.variant.selectedOptions || "[]"),
       product: {
         id: item.variant.product.id,
         handle: item.variant.product.handle,
         title: item.variant.product.title,
         featuredImage: {
-          url: item.variant.product.images.find((img: any) => img.isFeatured)?.url || '',
+          url:
+            item.variant.product.images.find((img: any) => img.isFeatured)?.url ||
+            "",
           altText: item.variant.product.title,
           width: 800,
-          height: 600
-        }
-      }
-    }
+          height: 600,
+        },
+      },
+    },
   }));
 
   const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0);
@@ -41,7 +43,7 @@ function reshapeCart(dbCart: any): Cart {
     (sum, item) => sum + Number(item.cost.totalAmount.amount),
     0
   );
-  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? 'USD';
+  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? "USD";
 
   return {
     id: dbCart.id,
@@ -51,8 +53,8 @@ function reshapeCart(dbCart: any): Cart {
     cost: {
       subtotalAmount: { amount: totalAmount.toString(), currencyCode },
       totalAmount: { amount: totalAmount.toString(), currencyCode },
-      totalTaxAmount: { amount: '0', currencyCode }
-    }
+      totalTaxAmount: { amount: "0", currencyCode },
+    },
   };
 }
 
@@ -64,17 +66,18 @@ async function getOrCreateCart(): Promise<string> {
     const sessionId = Math.random().toString(36).substring(2);
     const cart = await prisma.cart.create({
       data: {
-        sessionId
-      }
+        sessionId,
+      },
     });
-    cartId = cart.id;
-    
+    const newCartId: string = cart.id;
+    cartId = newCartId;
+
     // Set cookie
-    cookieStore.set(CART_COOKIE_NAME, cartId, {
+    cookieStore.set(CART_COOKIE_NAME, newCartId, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 30 // 30 days
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
     });
   }
 
@@ -83,7 +86,7 @@ async function getOrCreateCart(): Promise<string> {
 
 export async function createCart(): Promise<Cart> {
   const cartId = await getOrCreateCart();
-  
+
   const dbCart = await prisma.cart.findUnique({
     where: { id: cartId },
     include: {
@@ -93,27 +96,27 @@ export async function createCart(): Promise<Cart> {
             include: {
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!dbCart) {
     return {
       id: undefined,
-      checkoutUrl: '',
+      checkoutUrl: "",
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: '0', currencyCode: 'USD' },
-        totalAmount: { amount: '0', currencyCode: 'USD' },
-        totalTaxAmount: { amount: '0', currencyCode: 'USD' }
-      }
+        subtotalAmount: { amount: "0", currencyCode: "USD" },
+        totalAmount: { amount: "0", currencyCode: "USD" },
+        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+      },
     };
   }
 
@@ -130,19 +133,19 @@ export async function addToCart(
       where: {
         cartId_variantId: {
           cartId,
-          variantId: line.merchandiseId
-        }
+          variantId: line.merchandiseId,
+        },
       },
       update: {
         quantity: {
-          increment: line.quantity
-        }
+          increment: line.quantity,
+        },
       },
       create: {
         cartId,
         variantId: line.merchandiseId,
-        quantity: line.quantity
-      }
+        quantity: line.quantity,
+      },
     });
   }
 
@@ -155,14 +158,14 @@ export async function addToCart(
             include: {
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   return reshapeCart(dbCart!);
@@ -174,8 +177,8 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
   await prisma.cartItem.deleteMany({
     where: {
       id: { in: lineIds },
-      cartId
-    }
+      cartId,
+    },
   });
 
   const dbCart = await prisma.cart.findUnique({
@@ -187,27 +190,27 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
             include: {
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!dbCart) {
     return {
       id: undefined,
-      checkoutUrl: '',
+      checkoutUrl: "",
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: '0', currencyCode: 'USD' },
-        totalAmount: { amount: '0', currencyCode: 'USD' },
-        totalTaxAmount: { amount: '0', currencyCode: 'USD' }
-      }
+        subtotalAmount: { amount: "0", currencyCode: "USD" },
+        totalAmount: { amount: "0", currencyCode: "USD" },
+        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+      },
     };
   }
 
@@ -223,17 +226,17 @@ export async function updateCart(
     if (line.quantity <= 0) {
       await prisma.cartItem.delete({
         where: {
-          id: line.id
-        }
+          id: line.id,
+        },
       });
     } else {
       await prisma.cartItem.update({
         where: {
-          id: line.id
+          id: line.id,
         },
         data: {
-          quantity: line.quantity
-        }
+          quantity: line.quantity,
+        },
       });
     }
   }
@@ -247,27 +250,27 @@ export async function updateCart(
             include: {
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!dbCart) {
     return {
       id: undefined,
-      checkoutUrl: '',
+      checkoutUrl: "",
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: '0', currencyCode: 'USD' },
-        totalAmount: { amount: '0', currencyCode: 'USD' },
-        totalTaxAmount: { amount: '0', currencyCode: 'USD' }
-      }
+        subtotalAmount: { amount: "0", currencyCode: "USD" },
+        totalAmount: { amount: "0", currencyCode: "USD" },
+        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+      },
     };
   }
 
@@ -291,14 +294,14 @@ export async function getCart(): Promise<Cart | undefined> {
             include: {
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!dbCart) {
@@ -306,4 +309,4 @@ export async function getCart(): Promise<Cart | undefined> {
   }
 
   return reshapeCart(dbCart);
-} 
+}
