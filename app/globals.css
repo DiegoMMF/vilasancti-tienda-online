@@ -30,3 +30,21 @@ input,
 button {
   @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-neutral-600 dark:focus-visible:ring-offset-neutral-900;
 }
+
+/* Carousel animation for the bottom product strip */
+@layer utilities {
+  .animate-carousel {
+    animation: scroll-carousel 40s linear infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes scroll-carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Move by one third of the total width since items are triplicated */
+    transform: translateX(-33.333333%);
+  }
+}
