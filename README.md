@@ -1,75 +1,109 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME)
+# Vilasancti Tienda Online (Next.js Commerce adaptada)
 
-# Next.js Commerce
+Tienda online basada en Next.js App Router, adaptada para usar base de datos local con Prisma + SQLite y almacenamiento de imágenes con Vercel Blob. Mantiene la UI/UX de Next.js Commerce, pero sin dependencias de Shopify en tiempo de ejecución.
 
-A high-performance, server-rendered Next.js App Router ecommerce application.
+## Tecnologías
 
-This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more.
+- Next.js 15 (App Router, RSC, Server Actions, Turbopack)
+- React 19
+- Tailwind CSS 4
+- Prisma 5 + SQLite (desarrollo)
+- Vercel Blob (almacenamiento de imágenes)
 
-<h3 id="v1-note"></h3>
+## Arquitectura de datos
 
-> Note: Looking for Next.js Commerce v1? View the [code](https://github.com/vercel/commerce/tree/v1), [demo](https://commerce-v1.vercel.store), and [release notes](https://github.com/vercel/commerce/releases/tag/v1).
+- Los datos se sirven desde la base de datos local a través de `lib/api`:
+  - `lib/api/products.ts`, `lib/api/cart.ts`, `lib/api/pages.ts`, `lib/api/menu.ts`.
+- Se conservan tipos y utilidades en `lib/shopify` únicamente para compatibilidad de tipos y componentes UI, pero no se realizan llamadas a Shopify.
+- Esquema Prisma en `prisma/schema.prisma`. Por defecto se usa SQLite.
 
-## Providers
+Consulta `MIGRATION.md` para detalles de la migración de Shopify a BD local + Blob.
 
-Vercel will only be actively maintaining a Shopify version [as outlined in our vision and strategy for Next.js Commerce](https://github.com/vercel/commerce/pull/966).
+## Variables de entorno
 
-Vercel is happy to partner and work with any commerce provider to help them get a similar template up and running and listed below. Alternative providers should be able to fork this repository and swap out the `lib/shopify` file with their own implementation while leaving the rest of the template mostly unchanged.
+Crea un archivo `.env` en la raíz tomando como referencia `.env.example`.
 
-- Shopify (this repository)
-- [BigCommerce](https://github.com/bigcommerce/nextjs-commerce) ([Demo](https://next-commerce-v2.vercel.app/))
-- [Ecwid by Lightspeed](https://github.com/Ecwid/ecwid-nextjs-commerce/) ([Demo](https://ecwid-nextjs-commerce.vercel.app/))
-- [Geins](https://github.com/geins-io/vercel-nextjs-commerce) ([Demo](https://geins-nextjs-commerce-starter.vercel.app/))
-- [Medusa](https://github.com/medusajs/vercel-commerce) ([Demo](https://medusa-nextjs-commerce.vercel.app/))
-- [Prodigy Commerce](https://github.com/prodigycommerce/nextjs-commerce) ([Demo](https://prodigy-nextjs-commerce.vercel.app/))
-- [Saleor](https://github.com/saleor/nextjs-commerce) ([Demo](https://saleor-commerce.vercel.app/))
-- [Shopware](https://github.com/shopwareLabs/vercel-commerce) ([Demo](https://shopware-vercel-commerce-react.vercel.app/))
-- [Swell](https://github.com/swellstores/verswell-commerce) ([Demo](https://verswell-commerce.vercel.app/))
-- [Umbraco](https://github.com/umbraco/Umbraco.VercelCommerce.Demo) ([Demo](https://vercel-commerce-demo.umbraco.com/))
-- [Wix](https://github.com/wix/headless-templates/tree/main/nextjs/commerce) ([Demo](https://wix-nextjs-commerce.vercel.app/))
-- [Fourthwall](https://github.com/FourthwallHQ/vercel-commerce) ([Demo](https://vercel-storefront.fourthwall.app/))
+Ejemplo recomendado para desarrollo:
 
-> Note: Providers, if you are looking to use similar products for your demo, you can [download these assets](https://drive.google.com/file/d/1q_bKerjrwZgHwCw0ovfUMW6He9VtepO_/view?usp=sharing).
+```env
+# Database (recomendado apuntar al archivo dentro de prisma/)
+DATABASE_URL="file:./prisma/dev.db"
 
-## Integrations
+# Vercel Blob Storage
+BLOB_READ_WRITE_TOKEN="your_vercel_blob_token_here"
 
-Integrations enable upgraded or additional functionality for Next.js Commerce
+# Configuración de la App
+SITE_NAME="Vilasancti Tienda"
+COMPANY_NAME="Vilasancti"
 
-- [Orama](https://github.com/oramasearch/nextjs-commerce) ([Demo](https://vercel-commerce.oramasearch.com/))
+# Opcional: Analytics
+NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=""
+```
 
-  - Upgrades search to include typeahead with dynamic re-rendering, vector-based similarity search, and JS-based configuration.
-  - Search runs entirely in the browser for smaller catalogs or on a CDN for larger.
+Notas:
+- Si usas exactamente el contenido de `.env.example`, creará la BD en `./dev.db`. Recomendamos `file:./prisma/dev.db` para mantener todo bajo `prisma/`.
+- Para usar Vercel Blob (subida/listado/borrado de imágenes) necesitas el token `BLOB_READ_WRITE_TOKEN` desde el panel de Vercel (Storage → Blob).
 
-- [React Bricks](https://github.com/ReactBricks/nextjs-commerce-rb) ([Demo](https://nextjs-commerce.reactbricks.com/))
-  - Edit pages, product details, and footer content visually using [React Bricks](https://www.reactbricks.com) visual headless CMS.
+## Puesta en marcha local
 
-## Running locally
-
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
-
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control your Shopify store.
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+Requisitos: Node.js 20+, pnpm.
 
 ```bash
 pnpm install
-pnpm dev
+pnpm db:generate   # genera el cliente de Prisma
+pnpm db:push       # aplica el esquema a la BD
+pnpm db:seed       # carga datos de ejemplo (7 productos de pijamas mujer)
+pnpm dev           # http://localhost:3000
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+Scripts disponibles (`package.json`):
 
-<details>
-  <summary>Expand if you work at Vercel and want to run locally and / or contribute</summary>
+- `dev`: inicia el entorno local con Turbopack
+- `build` / `start`: build y arranque en producción
+- `lint`: lint con `next lint`
+- `prettier` / `prettier:check`: formato de código
+- `db:generate`, `db:push`, `db:studio`, `db:seed`
 
-1. Run `vc link`.
-1. Select the `Vercel Solutions` scope.
-1. Connect to the existing `commerce-shopify` project.
-1. Run `vc env pull` to get environment variables.
-1. Run `pnpm dev` to ensure everything is working correctly.
-</details>
+## Datos de ejemplo (seed)
 
-## Vercel, Next.js Commerce, and Shopify Integration Guide
+El script `scripts/seed.js`:
+- Limpia tablas y crea colecciones de sistema: `hidden-homepage-featured-items`, `hidden-homepage-carousel`, `pijamas-mujer`.
+- Inserta 7 productos de pijamas para mujer con variantes de color y talla, e imágenes de Unsplash.
 
-You can use this comprehensive [integration guide](https://vercel.com/docs/integrations/ecommerce/shopify) with step-by-step instructions on how to configure Shopify as a headless CMS using Next.js Commerce as your headless Shopify storefront on Vercel.
+Puedes adaptar precios, imágenes o colecciones editando ese archivo y re‑ejecutando `pnpm db:seed`.
+
+## Rutas principales
+
+- `/` Página principal (grid, carrusel, destacados)
+- `/categoria/[handle]` Listado por colección (por ejemplo, `pijamas-mujer`)
+- `/product/[handle]` Ficha de producto
+- `/search/[collection]?q=` Búsqueda/filtrado
+- `/api/revalidate` Stub (no se usan webhooks de Shopify actualmente)
+
+## Almacenamiento de imágenes (Vercel Blob)
+
+Utilidades en `lib/blob.ts` permiten:
+- `uploadImage(file, folder)`
+- `deleteImage(url)`
+- `listImages(prefix)`
+
+Asegúrate de configurar `BLOB_READ_WRITE_TOKEN` para operaciones de escritura. `next.config.ts` permite cargar imágenes remotas desde Unsplash y Blob público.
+
+## Despliegue
+
+Recomendado: Vercel.
+
+1. Crear proyecto en Vercel y enlazar el repositorio.
+2. Definir variables de entorno (al menos `DATABASE_URL`, `SITE_NAME`, `COMPANY_NAME`; opcional `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID`).
+3. Desplegar. Para bases de datos gestionadas, sustituye `DATABASE_URL` por la conexión correspondiente (por ejemplo, Postgres) y ejecuta migraciones según convenga.
+
+## Notas adicionales
+
+- El sistema de revalidación está desactivado por ahora (`app/api/revalidate/route.ts`).
+- Muchos componentes tipan con `lib/shopify/types` para mantener la compatibilidad de la UI del template original.
+- Consulta `docs/SEO_OPTIMIZATION.md` para recomendaciones SEO.
+
+## Licencia y créditos
+
+- Licencia: ver `license.md`.
+- Basado en la plantilla pública Next.js Commerce de Vercel, adaptada para BD local y Blob. ¡Gracias al equipo de Vercel por el fantástico punto de partida!
