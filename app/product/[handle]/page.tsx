@@ -61,6 +61,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
     name: product.title,
     description: product.description,
     image: product.featuredImage.url,
+    brand: product.seo?.title || 'Marca',
     offers: {
       '@type': 'AggregateOffer',
       availability: product.availableForSale
@@ -72,12 +73,43 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
     }
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: '/'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Pijamas Mujer',
+        item: '/search/pijamas-mujer'
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.title,
+        item: `/product/${product.handle}`
+      }
+    ]
+  };
+
   return (
     <ProductProvider>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(productJsonLd)
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd)
         }}
       />
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">

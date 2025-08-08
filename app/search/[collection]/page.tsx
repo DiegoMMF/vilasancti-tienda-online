@@ -6,18 +6,21 @@ import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
 
-export async function generateMetadata(props: {
-  params: Promise<{ collection: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ collection: string }>; searchParams?: Promise<{ [key: string]: string | string[] | undefined }>; }): Promise<Metadata> {
   const params = await props.params;
+  const searchParams = (await props.searchParams) || {};
   const collection = await getCollection(params.collection);
 
   if (!collection) return notFound();
 
+  const hasFacets = Boolean(searchParams['color'] || searchParams['size'] || searchParams['q']);
+
   return {
     title: collection.seo?.title || collection.title,
     description:
-      collection.seo?.description || collection.description || `${collection.title} products`
+      collection.seo?.description || collection.description || `${collection.title} products`,
+    robots: hasFacets ? { index: false, follow: true } : { index: true, follow: true },
+    alternates: { canonical: `/search/${collection.handle}` }
   };
 }
 
