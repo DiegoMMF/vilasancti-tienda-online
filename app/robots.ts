@@ -7,7 +7,11 @@ export default function robots() {
         userAgent: '*'
       }
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap-products.xml`,
+      `${baseUrl}/sitemap-collections.xml`
+    ],
     host: baseUrl
   };
 }

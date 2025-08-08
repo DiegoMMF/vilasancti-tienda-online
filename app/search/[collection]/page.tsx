@@ -35,9 +35,24 @@ export default async function CategoryPage(props: {
   const colors = color ? color.split(',').filter(Boolean) : undefined;
   const sizes = size ? size.split(',').filter(Boolean) : undefined;
   const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse, colors, sizes });
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map((p, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `/product/${p.handle}`,
+      name: p.title
+    })),
+    numberOfItems: products.length
+  };
 
   return (
     <section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       {products.length === 0 ? (
         <p className="py-3 text-lg">{`No products found in this collection`}</p>
       ) : (

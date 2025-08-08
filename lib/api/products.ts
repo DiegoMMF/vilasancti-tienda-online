@@ -92,7 +92,7 @@ function reshapeCollection(dbCollection: any): Collection | undefined {
       description: dbCollection.seoDescription || dbCollection.description || "",
     },
     updatedAt: dbCollection.updatedAt.toISOString(),
-    path: `/categoria/${dbCollection.handle}`,
+    path: `/category/${dbCollection.handle}`,
   };
 }
 

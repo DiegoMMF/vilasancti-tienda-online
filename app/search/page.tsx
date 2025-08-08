@@ -44,9 +44,24 @@ export default async function SearchPage(props: {
     sizes,
   });
   const resultsText = products.length > 1 ? "results" : "result";
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map((p, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `/product/${p.handle}`,
+      name: p.title
+    })),
+    numberOfItems: products.length
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       {searchValue ? (
         <p className="mb-4">
           {products.length === 0

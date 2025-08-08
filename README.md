@@ -75,7 +75,7 @@ Puedes adaptar precios, imágenes o colecciones editando ese archivo y re‑ejec
 ## Rutas principales
 
 - `/` Página principal (grid, carrusel, destacados)
-- `/categoria/[handle]` Listado por colección (por ejemplo, `pijamas-mujer`)
+- `/category/[handle]` Listado por colección (por ejemplo, `pijamas-mujer`)
 - `/product/[handle]` Ficha de producto
 - `/search/[collection]?q=` Búsqueda/filtrado
 - `/api/revalidate` Stub (no se usan webhooks de Shopify actualmente)

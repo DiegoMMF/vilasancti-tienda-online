@@ -8,7 +8,7 @@ export default {
     return [
       {
         source: '/search/:collection',
-        destination: '/categoria/:collection',
+        destination: '/category/:collection',
         permanent: true
       }
     ];

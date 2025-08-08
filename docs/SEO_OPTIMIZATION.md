@@ -94,11 +94,11 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 - [ ] Plan de redirecciones 301 si cambian rutas/handles
 - **Estructura**:
   - Producto: `/product/[handle]` OK.
-  - Categoría: `/categoria/[handle]` (antes `/search/[collection]`).
+  - Categoría: `/category/[handle]` (antes `/search/[collection]`).
 - **Filtros**:
   - `?color=Azul,Rosa&size=S,M` solo para UX; no index; canonical a base.
 - **Redirecciones**:
-  - [x] 301 de `/search/:collection` a `/categoria/:handle` en `next.config.ts`.
+  - [x] 301 de `/search/:collection` a `/category/:handle` en `next.config.ts`.
 
 ### Fase 6 — Señales externas y confiabilidad
 - [ ] Páginas corporativas (sobre/envíos/devoluciones/contacto)

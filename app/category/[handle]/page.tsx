@@ -18,7 +18,7 @@ export async function generateMetadata(props: {
     title: collection.seo?.title || collection.title,
     description: collection.seo?.description || collection.description || `${collection.title} products`,
     robots: hasFacets ? { index: false, follow: true } : { index: true, follow: true },
-    alternates: { canonical: `/categoria/${collection.handle}` }
+    alternates: { canonical: `/category/${collection.handle}` }
   };
 }
 
@@ -33,6 +33,17 @@ export default async function CategoryPage(props: {
   const colors = color ? color.split(',').filter(Boolean) : undefined;
   const sizes = size ? size.split(',').filter(Boolean) : undefined;
   const products = await getCollectionProducts({ collection: params.handle, sortKey, reverse, colors, sizes });
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map((p, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `/product/${p.handle}`,
+      name: p.title
+    })),
+    numberOfItems: products.length
+  };
 
   if (!products.length) {
     const collection = await getCollection(params.handle);
@@ -41,6 +52,10 @@ export default async function CategoryPage(props: {
 
   return (
     <section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       {products.length === 0 ? (
         <p className="py-3 text-lg">{`No products found in this category`}</p>
       ) : (
