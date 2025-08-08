@@ -10,9 +10,9 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 
 ### Fase 2 — SEO técnico (indexación, canonicals, facetas, datos estructurados)
 - [x] Meta robots dinámico en colecciones con facetas (`noindex,follow`)
-- [ ] Meta robots dinámico en `/search` con facetas (`noindex,follow`)
+- [x] Meta robots dinámico en `/search` con facetas (`noindex,follow`)
 - [x] Canonical en colecciones hacia URL base sin parámetros
-- [ ] Canonical en `/search` hacia URL base sin parámetros
+- [x] Canonical en `/search` hacia URL base sin parámetros
 - [x] JSON-LD Organization en `app/layout.tsx`
 - [x] JSON-LD Product enriquecido (brand) en `product/[handle]`
 - [x] JSON-LD BreadcrumbList en `product/[handle]`
