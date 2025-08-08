@@ -4,10 +4,7 @@ import { getProducts } from "lib/api/products";
 import { defaultSort, sorting } from "lib/constants";
 import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Search",
-  description: "Search for products in the store.",
-};
+// metadata is generated dynamically via generateMetadata
 
 export async function generateMetadata(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
