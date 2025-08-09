@@ -32,9 +32,12 @@ function reshapeProduct(dbProduct: any): Product | undefined {
     altText: image.altText || `${dbProduct.title} - ${image.url.split("/").pop()}`,
     width: image.width,
     height: image.height,
+    // Nota: isFeatured no está en el tipo público Image, pero lo usamos internamente
+    isFeatured: image.isFeatured,
   }));
 
-  const featuredImage = images.find((img: any) => img.isFeatured) ||
+  const featuredImage =
+    images.find((img: any) => img.isFeatured) ||
     images[0] || {
       url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop",
       altText: dbProduct.title,
@@ -42,8 +45,24 @@ function reshapeProduct(dbProduct: any): Product | undefined {
       height: 600,
     };
 
-  // Calculate price range
-  const prices = variants.map((v: any) => parseFloat(v.price.amount));
+  // Opciones derivadas para el selector de variantes
+  const sizeValues = ["XS", "S", "M", "L", "XL"]; // mostrar siempre todos los talles
+  const colorValuesSet = new Set<string>();
+  for (const variant of variants) {
+    for (const opt of variant.selectedOptions) {
+      if (opt.name.toLowerCase() === "color") {
+        colorValuesSet.add(opt.value);
+      }
+    }
+  }
+  const colorValues = Array.from(colorValuesSet);
+  const options = [
+    { id: "color", name: "Color", values: colorValues },
+    { id: "talla", name: "Talla", values: sizeValues },
+  ];
+
+  // Calculate price range (set to a fixed ARS price for all variants)
+  const prices = variants.map((v: any) => 79999);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
@@ -54,15 +73,15 @@ function reshapeProduct(dbProduct: any): Product | undefined {
     title: dbProduct.title,
     description: dbProduct.description,
     descriptionHtml: dbProduct.descriptionHtml,
-    options: [], // TODO: Implement product options
+    options,
     priceRange: {
       maxVariantPrice: {
         amount: maxPrice.toString(),
-        currencyCode: variants[0]?.price.currencyCode || "USD",
+        currencyCode: "ARS",
       },
       minVariantPrice: {
         amount: minPrice.toString(),
-        currencyCode: variants[0]?.price.currencyCode || "USD",
+        currencyCode: "ARS",
       },
     },
     variants,

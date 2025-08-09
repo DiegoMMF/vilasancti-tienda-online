@@ -22,9 +22,9 @@ async function main() {
     data: {
       handle: "hidden-homepage-featured-items",
       title: "Destacados",
-      description: "Pijamas destacados para la portada",
-      seoTitle: "Pijamas Destacados",
-      seoDescription: "Descubre nuestros pijamas destacados para mujer",
+      description: "Piyamas destacados para la portada",
+      seoTitle: "Piyamas Destacados",
+      seoDescription: "Descubre nuestros piyamas destacados para mujer",
     },
   });
 
@@ -32,19 +32,19 @@ async function main() {
     data: {
       handle: "hidden-homepage-carousel",
       title: "Carrusel Portada",
-      description: "Pijamas para el carrusel de portada",
-      seoTitle: "Carrusel de Pijamas",
-      seoDescription: "Explora nuestros pijamas en el carrusel de portada",
+      description: "Piyamas para el carrusel de portada",
+      seoTitle: "Carrusel de Piyamas",
+      seoDescription: "Explora nuestros piyamas en el carrusel de portada",
     },
   });
 
   const womenPajamas = await prisma.collection.create({
     data: {
-      handle: "pijamas-mujer",
-      title: "Pijamas Mujer",
-      description: "Colección de pijamas para mujer",
-      seoTitle: "Pijamas de Mujer",
-      seoDescription: "Pijamas cómodos y elegantes para mujer",
+      handle: "piyamas-mujer",
+      title: "Piyamas Mujer",
+      description: "Colección de piyamas para mujer",
+      seoTitle: "Piyamas de Mujer",
+      seoDescription: "Piyamas cómodos y elegantes para mujer",
     },
   });
 
@@ -153,53 +153,46 @@ async function main() {
 
   const productPayloads = [
     {
-      handle: "pijama-saten-rosa",
-      title: "Pijama de Satén Rosa",
-      description: "Conjunto de satén suave para noches elegantes.",
-      price: 49.99,
+      handle: "piyama-estampado-floresta",
+      title: "Piyama Estampado Floresta",
+      description: "Conjunto de de algodón suave para noches placenteras.",
+      price: 79999,
       folder: "01",
     },
     {
-      handle: "pijama-algodon-azul",
-      title: "Pijama de Algodón Azul",
-      description: "Algodón transpirable para máximo confort.",
-      price: 34.99,
+      handle: "piyama-algodon-rosa-con-borde",
+      title: "Piyama de Algodón Rosa con detalle",
+      description: "Algodón deslizante para máximo confort.",
+      price: 79999,
       folder: "02",
     },
     {
-      handle: "pijama-invierno-gris",
-      title: "Pijama Invierno Gris",
+      handle: "piyama-invierno-negro",
+      title: "Piyama Invierno Negro",
       description: "Tejido cálido ideal para noches frías.",
-      price: 39.99,
+      price: 79999,
       folder: "03",
     },
     {
-      handle: "pijama-seda-champagne",
-      title: "Pijama de Seda Champagne",
+      handle: "piyama-azul-cuadritos",
+      title: "Piyama Azul Cuadritos",
       description: "Acabado lujoso con caída perfecta.",
-      price: 69.99,
+      price: 79999,
       folder: "04",
     },
     {
-      handle: "pijama-saten-negro",
-      title: "Pijama de Satén Negro",
+      handle: "piyama-rosa-con-detalle",
+      title: "Piyama Rosa con detalle",
       description: "Clásico y elegante para un descanso premium.",
-      price: 54.99,
+      price: 79999,
       folder: "05",
     },
     {
-      handle: "pijama-algodon-floral",
-      title: "Pijama de Algodón Floral",
-      description: "Estampado floral y tela ultra suave.",
-      price: 36.99,
+      handle: "piyama-rosa-regalitos",
+      title: "Piyama Rosa Regalitos",
+      description: "Tela suave y elegante para un descanso premium.",
+      price: 79999,
       folder: "06",
-    },
-    {
-      handle: "pijama-rosa-pastel",
-      title: "Pijama Rosa Pastel",
-      description: "Conjunto cómodo para uso diario.",
-      price: 29.99,
-      folder: "07",
     },
   ];
 
@@ -237,7 +230,7 @@ async function main() {
           description: p.description,
           descriptionHtml: `<p>${p.description}</p>`,
           availableForSale: true,
-          tags: JSON.stringify(["pijamas", "mujer", "sleepwear"]),
+          tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
           seoTitle: p.title,
           seoDescription: p.description,
           variants: {
@@ -250,7 +243,7 @@ async function main() {
                 return {
                   title: `${color} ${size}`,
                   price: p.price,
-                  currencyCode: "USD",
+                  currencyCode: "ARS",
                   availableForSale: isAvailable,
                   selectedOptions: JSON.stringify([
                     { name: "Color", value: color },

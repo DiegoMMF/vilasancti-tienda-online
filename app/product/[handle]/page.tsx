@@ -86,8 +86,8 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Pijamas Mujer',
-        item: '/search/pijamas-mujer'
+        name: 'Piyamas Mujer',
+        item: '/search/piyamas-mujer'
       },
       {
         '@type': 'ListItem',
@@ -98,8 +98,15 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
     ]
   };
 
+  // Derivar estado inicial de URL del servidor, para evitar usar useSearchParams en RSC
+  const url = new URL(`https://example.com${''}`); // placeholder base no usada
+  const initialState: Record<string, string> = {};
+  // No tenemos accesso directo a searchParams aquí; el estado se inicia vacío
+  // y se rellena en el cliente via interacciones. Si deseas hidratar desde URL,
+  // podemos usar un wrapper cliente que lea window.location.search.
+
   return (
-    <ProductProvider>
+    <ProductProvider initialState={initialState}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

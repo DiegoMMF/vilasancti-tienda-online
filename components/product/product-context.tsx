@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { createContext, useCallback, useContext, useMemo, useOptimistic } from 'react';
 
 type ProductState = {
@@ -17,16 +17,8 @@ type ProductContextType = {
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
-export function ProductProvider({ children }: { children: React.ReactNode }) {
-  const searchParams = useSearchParams();
-
-  const getInitialState = () => {
-    const params: ProductState = {};
-    for (const [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    return params;
-  };
+export function ProductProvider({ children, initialState }: { children: React.ReactNode; initialState?: Record<string, string> }) {
+  const getInitialState = () => ({ ...(initialState || {}) } as ProductState);
 
   const [state, setOptimisticState] = useOptimistic(
     getInitialState(),
