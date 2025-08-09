@@ -69,7 +69,8 @@ function reshapeProduct(dbProduct: any): Product | undefined {
   return {
     id: dbProduct.id,
     handle: dbProduct.handle,
-    availableForSale: dbProduct.availableForSale,
+    // Disponible si al menos una variante está disponible
+    availableForSale: variants.some((v: any) => v.availableForSale === true),
     title: dbProduct.title,
     description: dbProduct.description,
     descriptionHtml: dbProduct.descriptionHtml,

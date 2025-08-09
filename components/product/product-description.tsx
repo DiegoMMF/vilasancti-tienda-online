@@ -9,11 +9,18 @@ export function ProductDescription({ product }: { product: Product }) {
     <>
       <div className="mb-6 flex flex-col border-b pb-6 dark:border-neutral-700">
         <h1 className="mb-2 text-5xl font-medium">{product.title}</h1>
-        <div className="mr-auto w-auto rounded-full bg-blue-600 p-2 text-sm text-white">
-          <Price
-            amount={product.priceRange.maxVariantPrice.amount}
-            currencyCode={product.priceRange.maxVariantPrice.currencyCode}
-          />
+        <div className="flex items-center gap-3">
+          <div className="mr-auto w-auto rounded-full bg-blue-600 p-2 text-sm text-white">
+            <Price
+              amount={product.priceRange.maxVariantPrice.amount}
+              currencyCode={product.priceRange.maxVariantPrice.currencyCode}
+            />
+          </div>
+          {!product.availableForSale ? (
+            <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
+              AGOTADO
+            </span>
+          ) : null}
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
