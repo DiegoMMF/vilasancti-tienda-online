@@ -1,8 +1,8 @@
 'use client';
 
-import clsx from 'clsx';
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import LoadingDots from 'components/loading-dots';
 import Price from 'components/price';
 import { DEFAULT_OPTION } from 'lib/constants';
@@ -140,7 +140,7 @@ export default function CartModal() {
                                       item.merchandise.product.title
                                     }
                                     src={
-                                      item.merchandise.product.featuredImage.url
+                                      item.merchandise.product.featuredImage.url || '/favicon.ico'
                                     }
                                   />
                                 </div>

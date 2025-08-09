@@ -26,14 +26,17 @@ function reshapeCart(dbCart: any): Cart {
         id: item.variant.product.id,
         handle: item.variant.product.handle,
         title: item.variant.product.title,
-        featuredImage: {
-          url:
-            item.variant.product.images.find((img: any) => img.isFeatured)?.url ||
-            "",
-          altText: item.variant.product.title,
-          width: 800,
-          height: 600,
-        },
+        featuredImage: (() => {
+          const featured =
+            item.variant.product.images.find((img: any) => img.isFeatured) ||
+            item.variant.product.images[0];
+          return {
+            url: featured?.url || "",
+            altText: item.variant.product.title,
+            width: featured?.width || 800,
+            height: featured?.height || 600,
+          };
+        })(),
       },
     },
   }));

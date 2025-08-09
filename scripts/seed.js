@@ -203,19 +203,19 @@ async function main() {
   // Colores en castellano para coincidir con el catálogo: Azul, Rosa, Negro
   const perProductAvailability = [
     // p01 → /articles/01
-    { sizes: ["M"], colors: ["Rosa"] },
+    { sizes: ["M"], colors: ["Rosa"], amount: 1 },
     // p02 → /articles/02
-    { sizes: ["S"], colors: ["Rosa"] },
+    { sizes: ["S"], colors: ["Rosa"], amount: 1 },
     // p03 → /articles/03
-    { sizes: [], colors: ["Negro"] },
+    { sizes: [], colors: ["Negro"], amount: 1 },
     // p04 → /articles/04
-    { sizes: ["M"], colors: ["Azul"] },
+    { sizes: ["M"], colors: ["Azul"], amount: 1 },
     // p05 → /articles/05
-    { sizes: ["S", "M", "L"], colors: ["Rosa"] },
+    { sizes: ["S", "M", "L"], colors: ["Rosa"], amount: 1 },
     // p06 → /articles/06
-    { sizes: ["S", "M", "L"], colors: ["Rosa"] },
+    { sizes: ["S", "M", "L"], colors: ["Rosa"], amount: 1 },
     // p07 (sin carpeta específica) → por defecto solo M Rosa
-    { sizes: ["M"], colors: ["Rosa"] },
+    { sizes: ["M"], colors: ["Rosa"], amount: 1 },
   ];
 
   await Promise.all(
@@ -240,15 +240,17 @@ async function main() {
                 const isColorAllowed = availability.colors.includes(color);
                 const isSizeAllowed = availability.sizes.includes(size);
                 const isAvailable = isColorAllowed && isSizeAllowed;
+                const inventoryQuantity = isAvailable ? (availability.amount ?? 0) : 0;
                 return {
                   title: `${color} ${size}`,
                   price: p.price,
                   currencyCode: "ARS",
-                  availableForSale: isAvailable,
+                  availableForSale: isAvailable && inventoryQuantity > 0,
                   selectedOptions: JSON.stringify([
                     { name: "Color", value: color },
                     { name: "Talla", value: size },
                   ]),
+                  inventoryQuantity,
                 };
               })
             ),
