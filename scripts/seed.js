@@ -109,7 +109,7 @@ async function main() {
 
   async function uploadFolderToBlob(folderIndex) {
     const folder = folderIndex.padStart(2, "0");
-    const absoluteDir = path.join(localArticlesDir, folder);
+    const absoluteDir = path.join(publicArticlesDir, folder);
     if (!fs.existsSync(absoluteDir)) return [];
 
     const files = fs

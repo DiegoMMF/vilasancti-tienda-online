@@ -1,13 +1,13 @@
 'use server';
 
-import { TAGS } from 'lib/constants';
 import {
-  addToCart,
-  createCart,
-  getCart,
-  removeFromCart,
-  updateCart
+    addToCart,
+    createCart,
+    getCart,
+    removeFromCart,
+    updateCart
 } from 'lib/api/cart';
+import { TAGS } from 'lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -96,8 +96,28 @@ export async function updateItemQuantity(
 }
 
 export async function redirectToCheckout() {
-  let cart = await getCart();
-  redirect(cart!.checkoutUrl);
+  const cart = await getCart();
+  const phone = '5493544543637';
+  const lines = cart?.lines ?? [];
+  const first = lines[0];
+  const productTitle = first?.merchandise.product.title || 'piyama';
+  const variantTitle = first?.merchandise.title || '';
+  // Intentar extraer talle y color desde selectedOptions si existen
+  const opts = first?.merchandise.selectedOptions || [];
+  const talla = opts.find((o) => o.name.toLowerCase() === 'talla')?.value || '';
+  const color = opts.find((o) => o.name.toLowerCase() === 'color')?.value || '';
+
+  const messageBase = `Hola, me han redirigido de la web Vilasancti. Quisiera comprar el ${productTitle}`;
+  const messageDetail = [
+    talla && `talle ${talla}`,
+    color && `color ${color}`
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const text = messageDetail ? `${messageBase} ${messageDetail}.` : `${messageBase}.`;
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  redirect(url);
 }
 
 export async function createCartAndSetCookie() {
