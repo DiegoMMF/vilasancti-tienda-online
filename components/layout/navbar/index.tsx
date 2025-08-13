@@ -1,6 +1,6 @@
 import CartModal from 'components/cart/modal';
 import LogoSquare from 'components/logo-square';
-import { getMenu } from 'lib/api/menu';
+import { getMenu } from 'lib/api/menu-drizzle';
 import { Menu } from 'lib/types';
 import Link from 'next/link';
 import { Suspense } from 'react';

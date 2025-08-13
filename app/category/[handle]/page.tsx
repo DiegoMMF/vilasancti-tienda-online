@@ -1,6 +1,6 @@
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
-import { getCollection, getCollectionProducts } from 'lib/api/products';
+import { getCollection, getCollectionProducts } from 'lib/api/products-drizzle';
 import { defaultSort, sorting } from 'lib/constants';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -32,7 +32,7 @@ export default async function CategoryPage(props: {
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const colors = color ? color.split(',').filter(Boolean) : undefined;
   const sizes = size ? size.split(',').filter(Boolean) : undefined;
-  const products = await getCollectionProducts({ collection: params.handle, sortKey, reverse, colors, sizes });
+  const products = await getCollectionProducts(params.handle);
   const itemListJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Suspense } from 'react';
 
-import { getCollections } from 'lib/api/products';
+import { getCollections } from 'lib/api/products-drizzle';
 import FilterList from './filter';
 
 async function CollectionList() {

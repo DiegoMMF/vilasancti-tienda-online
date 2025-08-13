@@ -1,4 +1,4 @@
-import { getCollection, getCollectionProducts } from 'lib/api/products';
+import { getCollection, getCollectionProducts } from 'lib/api/products-drizzle';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -34,7 +34,7 @@ export default async function CategoryPage(props: {
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const colors = color ? color.split(',').filter(Boolean) : undefined;
   const sizes = size ? size.split(',').filter(Boolean) : undefined;
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse, colors, sizes });
+  const products = await getCollectionProducts(params.collection);
   const itemListJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

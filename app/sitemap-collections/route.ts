@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { getCollections } from 'lib/api/products';
+import { getCollections } from 'lib/api/products-drizzle';
 import { baseUrl } from 'lib/utils';
 
 export async function GET(): Promise<Response> {

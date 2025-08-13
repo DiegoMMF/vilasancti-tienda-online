@@ -6,7 +6,7 @@ import {
     getCart,
     removeFromCart,
     updateCart
-} from 'lib/api/cart';
+} from 'lib/api/cart-drizzle';
 import { TAGS } from 'lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';

@@ -1,6 +1,6 @@
 import Grid from "components/grid";
 import ProductGridItems from "components/layout/product-grid-items";
-import { getProducts } from "lib/api/products";
+import { getProducts } from "lib/api/products-drizzle";
 import { defaultSort, sorting } from "lib/constants";
 import type { Metadata } from "next";
 
@@ -36,13 +36,7 @@ export default async function SearchPage(props: {
   const colors = color ? color.split(",").filter(Boolean) : undefined;
   const sizes = size ? size.split(",").filter(Boolean) : undefined;
 
-  const products = await getProducts({
-    sortKey,
-    reverse,
-    query: searchValue,
-    colors,
-    sizes,
-  });
+  const products = await getProducts();
   const resultsText = products.length > 1 ? "results" : "result";
   const itemListJsonLd = {
     '@context': 'https://schema.org',

@@ -1,60 +1,52 @@
 // Cargar variables de entorno desde .env.local
-require('dotenv').config({ path: '.env.local' });
+import { config } from 'dotenv';
+config({ path: '.env.local' });
 
-if (!process.env.DIRECT_URL && process.env.DATABASE_URL) {
-  process.env.DIRECT_URL = process.env.DATABASE_URL;
-}
-const { PrismaClient } = require("@prisma/client");
-const fs = require("fs");
-const path = require("path");
-
-const prisma = new PrismaClient();
+import { db } from '../lib/db/index.js';
+import { collections, productCollections, productImages, products, productVariants } from '../lib/db/schema.js';
+import { getBlobUrlsForFolder } from './generate-blob-urls.js';
 
 async function main() {
-  console.log("🌱 Reseeding database (women pajamas)...");
+  console.log("🌱 Reseeding database con Drizzle (women pajamas)...");
 
   // Wipe existing data (respect FK order)
-  await prisma.productCollection.deleteMany({});
-  await prisma.productImage.deleteMany({});
-  await prisma.productVariant.deleteMany({});
-  await prisma.product.deleteMany({});
-  await prisma.collection.deleteMany({});
+  await db.delete(productCollections);
+  await db.delete(productImages);
+  await db.delete(productVariants);
+  await db.delete(products);
+  await db.delete(collections);
 
   // Create needed collections
-  const featured = await prisma.collection.create({
-    data: {
-      handle: "hidden-homepage-featured-items",
-      title: "Destacados",
-      description: "Piyamas destacados para la portada",
-      seoTitle: "Piyamas Destacados",
-      seoDescription: "Descubre nuestros piyamas destacados para mujer",
-    },
-  });
+  const now = new Date();
+  const [featured] = await db.insert(collections).values({
+    handle: "hidden-homepage-featured-items",
+    title: "Destacados",
+    description: "Piyamas destacados para la portada",
+    seoTitle: "Piyamas Destacados",
+    seoDescription: "Descubre nuestros piyamas destacados para mujer",
+    updatedAt: now,
+  }).returning();
 
-  const carousel = await prisma.collection.create({
-    data: {
-      handle: "hidden-homepage-carousel",
-      title: "Carrusel Portada",
-      description: "Piyamas para el carrusel de portada",
-      seoTitle: "Carrusel de Piyamas",
-      seoDescription: "Explora nuestros piyamas en el carrusel de portada",
-    },
-  });
+  const [carousel] = await db.insert(collections).values({
+    handle: "hidden-homepage-carousel",
+    title: "Carrusel Portada",
+    description: "Piyamas para el carrusel de portada",
+    seoTitle: "Carrusel de Piyamas",
+    seoDescription: "Explora nuestros piyamas en el carrusel de portada",
+    updatedAt: now,
+  }).returning();
 
-  const womenPajamas = await prisma.collection.create({
-    data: {
-      handle: "piyamas-mujer",
-      title: "Piyamas Mujer",
-      description: "Colección de piyamas para mujer",
-      seoTitle: "Piyamas de Mujer",
-      seoDescription: "Piyamas cómodos y elegantes para mujer",
-    },
-  });
+  const [womenPajamas] = await db.insert(collections).values({
+    handle: "piyamas-mujer",
+    title: "Piyamas Mujer",
+    description: "Colección de piyamas para mujer",
+    seoTitle: "Piyamas de Mujer",
+    seoDescription: "Piyamas cómodos y elegantes para mujer",
+    updatedAt: now,
+  }).returning();
 
   console.log("✅ Collections created");
 
-  // Importar URLs del blob
-  const { getBlobUrlsForFolder } = await import('./generate-blob-urls.js');
   const fallbackImage = [
     "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&h=1200&fit=crop&auto=format&q=80",
   ];
@@ -190,59 +182,76 @@ async function main() {
       const imagesForDb = getImagesForFolder(product.folder);
       const finalImages = imagesForDb.length > 0 ? imagesForDb : fallbackImage;
 
-      // Crear un solo producto con múltiples variantes de talla
-      return prisma.product.create({
-        data: {
-          handle: product.handle,
-          title: product.title,
-          description: product.description,
-          descriptionHtml: `<p>${product.description}</p>`,
-          availableForSale: product.sizes.some(s => s.amount > 0),
-          tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
-          seoTitle: product.title,
-          seoDescription: product.description,
-          variants: {
-            create: product.sizes.map((sizeInfo) => ({
-              title: sizeInfo.size,
-              price: product.price,
-              currencyCode: "ARS",
-              availableForSale: sizeInfo.amount > 0,
-              selectedOptions: JSON.stringify([
-                { name: "Talla", value: sizeInfo.size },
-              ]),
-              inventoryQuantity: sizeInfo.amount,
-            })),
-          },
-          images: {
-            create: finalImages.map((imgUrl, imageIdx) => ({
-              url: imgUrl,
-              altText: product.title,
-              width: 1600,
-              height: 1200,
-              isFeatured: imageIdx === 0,
-            })),
-          },
-          collections: {
-            create: [
-              { collectionId: featured.id },
-              { collectionId: carousel.id },
-              { collectionId: womenPajamas.id },
-            ],
-          },
-        },
-      });
+      // Crear el producto
+      const [newProduct] = await db.insert(products).values({
+        handle: product.handle,
+        title: product.title,
+        description: product.description,
+        descriptionHtml: `<p>${product.description}</p>`,
+        availableForSale: product.sizes.some(s => s.amount > 0),
+        tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
+        seoTitle: product.title,
+        seoDescription: product.description,
+        updatedAt: now,
+      }).returning();
+
+      // Crear variantes
+      const variants = await Promise.all(
+        product.sizes.map((sizeInfo) =>
+          db.insert(productVariants).values({
+            productId: newProduct.id,
+            title: sizeInfo.size,
+            price: product.price,
+            currencyCode: "ARS",
+            availableForSale: sizeInfo.amount > 0,
+            selectedOptions: JSON.stringify([
+              { name: "Talla", value: sizeInfo.size },
+            ]),
+            inventoryQuantity: sizeInfo.amount,
+          }).returning()
+        )
+      );
+
+      // Crear imágenes
+      const images = await Promise.all(
+        finalImages.map((imgUrl, imageIdx) =>
+          db.insert(productImages).values({
+            productId: newProduct.id,
+            url: imgUrl,
+            altText: product.title,
+            width: 1600,
+            height: 1200,
+            isFeatured: imageIdx === 0,
+          }).returning()
+        )
+      );
+
+      // Crear relaciones con colecciones
+      await Promise.all([
+        db.insert(productCollections).values({
+          productId: newProduct.id,
+          collectionId: featured.id,
+        }),
+        db.insert(productCollections).values({
+          productId: newProduct.id,
+          collectionId: carousel.id,
+        }),
+        db.insert(productCollections).values({
+          productId: newProduct.id,
+          collectionId: womenPajamas.id,
+        }),
+      ]);
+
+      return newProduct;
     })
   );
 
   console.log(`✅ ${productPayloads.length} productos de piyamas creados`);
-  console.log("🎉 Database seeded successfully!");
+  console.log("🎉 Database seeded successfully with Drizzle!");
 }
 
 main()
   .catch((e) => {
     console.error(e);
     process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
   });
