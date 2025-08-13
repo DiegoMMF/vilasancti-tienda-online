@@ -191,6 +191,7 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 ## Ejemplos rápidos
 
 - **Imagen prioritaria en listado**
+
 ```tsx
 <GridTileImage
   src={product.featuredImage?.url}
@@ -204,14 +205,19 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 ```
 
 - **Revalidación en páginas de listado**
+
 ```ts
 export const revalidate = 600; // 10 minutos
 ```
 
 - **Batch queries (Drizzle)**
+
 ```ts
 const [variants, images] = await Promise.all([
-  db.select().from(productVariants).where(inArray(productVariants.productId, ids)),
+  db
+    .select()
+    .from(productVariants)
+    .where(inArray(productVariants.productId, ids)),
   db.select().from(productImages).where(inArray(productImages.productId, ids)),
 ]);
 ```
