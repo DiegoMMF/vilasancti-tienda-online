@@ -1,23 +1,22 @@
 # Vilasancti Tienda Online (Next.js Commerce adaptada)
 
-Tienda online basada en Next.js App Router, con base de datos en Postgres mediante Prisma y almacenamiento de imágenes en Vercel Blob. Mantiene la UI/UX de Next.js Commerce, pero sin dependencias de Shopify en tiempo de ejecución.
+Tienda online basada en Next.js App Router, con base de datos en Postgres mediante Drizzle ORM y almacenamiento de imágenes en Vercel Blob. Mantiene la UI/UX de Next.js Commerce, eliminando dependencias de Shopify en tiempo de ejecución.
 
 ## Tecnologías
 
 - Next.js 15 (App Router, RSC, Server Actions, Turbopack)
 - React 19
 - Tailwind CSS 4
-- Prisma 5 + Postgres
+- Drizzle ORM + Postgres
 - Vercel Blob (almacenamiento de imágenes)
 
 ## Arquitectura de datos
 
-- Los datos se sirven desde la base de datos a través de `lib/api`:
-  - `lib/api/products.ts`, `lib/api/cart.ts`, `lib/api/pages.ts`, `lib/api/menu.ts`.
-- Se conservan tipos y utilidades en `lib/shopify` únicamente para compatibilidad de tipos y componentes UI, pero no se realizan llamadas a Shopify.
-- Esquema Prisma en `prisma/schema.prisma`. Por defecto se usa Postgres.
+- Acceso a datos con Drizzle en `lib/api/*-drizzle.ts` (productos, carrito, páginas, menú).
+- Esquema y relaciones en `lib/db/schema.ts` y `lib/db/relations.ts`; cliente en `lib/db/index.ts`.
+- Imágenes en Vercel Blob gestionadas vía utilidades en `lib/blob.ts`.
 
-Consulta `MIGRATION.md` para detalles de la migración de Shopify a BD local + Blob.
+Nota: Este repo ya está migrado a Drizzle + Postgres.
 
 ## Variables de entorno
 
@@ -26,10 +25,8 @@ Crea un archivo `.env` en la raíz (o configura variables en tu entorno):
 ```env
 # Base de datos (Postgres)
 DATABASE_URL="postgres://usuario:password@host:puerto/db"
-# Prisma Direct URL (puede ser igual a DATABASE_URL)
-DIRECT_URL="postgres://usuario:password@host:puerto/db"
 
-# Vercel Blob Storage (requerido para subir/listar imágenes en seed y en utilidades)
+# Vercel Blob Storage (requerido para subir/listar/borrar imágenes)
 BLOB_READ_WRITE_TOKEN="your_vercel_blob_token_here"
 
 # Configuración de la App
@@ -42,7 +39,7 @@ NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=""
 
 Notas:
 
-- `DIRECT_URL` es requerido por Prisma en este proyecto; si no dispones de una URL específica, usa el mismo valor que `DATABASE_URL`.
+- `DATABASE_URL` debe ser una cadena de conexión válida a Postgres.
 - Para usar Vercel Blob (subida/listado/borrado de imágenes) necesitas el token `BLOB_READ_WRITE_TOKEN` desde el panel de Vercel (Storage → Blob).
 
 ## Puesta en marcha local
@@ -51,8 +48,7 @@ Requisitos: Node.js 20+, pnpm.
 
 ```bash
 pnpm install
-pnpm db:generate   # genera el cliente de Prisma
-pnpm db:push       # aplica el esquema a la BD
+pnpm db:migrate    # aplica migraciones de Drizzle (si existen)
 pnpm db:seed       # carga datos de ejemplo (7 productos de piyamas mujer)
 pnpm dev           # http://localhost:3000
 ```
@@ -63,11 +59,11 @@ Scripts disponibles (`package.json`):
 - `build` / `start`: build y arranque en producción
 - `lint`: lint con `next lint`
 - `prettier` / `prettier:check`: formato de código
-- `db:generate`, `db:push`, `db:studio`, `db:seed`
+- `db:migrate`, `db:seed`
 
 ## Datos de ejemplo (seed)
 
-El script `scripts/seed.js`:
+El script `scripts/seed-drizzle.js`:
 
 - Limpia tablas y crea colecciones de sistema: `hidden-homepage-featured-items`, `hidden-homepage-carousel`, `piyamas-mujer`.
 - Inserta 7 productos de piyamas para mujer con variantes de color y talla.
@@ -84,7 +80,7 @@ El script `scripts/seed.js`:
   - p06 (`/articles/06`): [S, M, L], [Rosa]
   - p07 (`/articles/07`): [M], [Rosa] (por defecto)
 
-Puedes adaptar precios, imágenes o colecciones editando `scripts/seed.js` y re‑ejecutando `pnpm db:seed`.
+Puedes adaptar precios, imágenes o colecciones editando `scripts/seed-drizzle.js` y re‑ejecutando `pnpm db:seed`.
 
 ## Rutas principales
 
@@ -92,7 +88,7 @@ Puedes adaptar precios, imágenes o colecciones editando `scripts/seed.js` y re�
 - `/category/[handle]` Listado por colección (por ejemplo, `piyamas-mujer`)
 - `/product/[handle]` Ficha de producto
 - `/search/[collection]?q=` Búsqueda/filtrado
-- `/api/revalidate` Stub (no se usan webhooks de Shopify actualmente)
+- `/api/revalidate` Stub (no se usan webhooks externos actualmente)
 
 ## Almacenamiento de imágenes (Vercel Blob)
 
@@ -102,21 +98,28 @@ Utilidades en `lib/blob.ts` permiten:
 - `deleteImage(url)`
 - `listImages(prefix)`
 
-Asegúrate de configurar `BLOB_READ_WRITE_TOKEN` para operaciones de escritura. `next.config.ts` permite cargar imágenes remotas desde dominios de Blob público (y otros remotos permitidos).
+Asegúrate de configurar `BLOB_READ_WRITE_TOKEN` para operaciones de escritura. `next.config.ts` permite cargar imágenes remotas desde dominios de Blob público y Unsplash.
+
+## SEO (resumen)
+
+- Canonicals hacia URLs base sin parámetros en listados y búsqueda.
+- `noindex,follow` cuando haya facetas (`color`, `size`) o `q` en búsqueda.
+- JSON‑LD: `Organization` en `app/layout.tsx`; `Product` (con `brand`/`sku`), `BreadcrumbList` en `product/[handle]`; `ItemList` en listados.
+- Sitemaps segmentados: `app/sitemap-products/route.ts` y `app/sitemap-collections/route.ts`; `robots.ts` referencia ambos.
+- Imágenes AVIF/WebP habilitadas y tamaños consistentes (ver `next.config.ts`).
 
 ## Despliegue
 
 Recomendado: Vercel.
 
 1. Crear proyecto en Vercel y enlazar el repositorio.
-2. Definir variables de entorno (al menos `DATABASE_URL`, `DIRECT_URL`, `SITE_NAME`, `COMPANY_NAME`; y `BLOB_READ_WRITE_TOKEN` si vas a gestionar imágenes).
+2. Definir variables de entorno (al menos `DATABASE_URL`, `SITE_NAME`, `COMPANY_NAME`; y `BLOB_READ_WRITE_TOKEN` si vas a gestionar imágenes).
 3. Desplegar. Para bases de datos gestionadas, sustituye `DATABASE_URL` por la conexión correspondiente (por ejemplo, Postgres) y ejecuta migraciones según convenga.
 
 ## Notas adicionales
 
 - El sistema de revalidación está desactivado por ahora (`app/api/revalidate/route.ts`).
-- Muchos componentes tipan con `lib/shopify/types` para mantener la compatibilidad de la UI del template original.
-- Consulta `docs/SEO_OPTIMIZATION.md` para recomendaciones SEO.
+- Tipificación y utilidades propias en `lib/types.ts`, `lib/utils.ts`, `lib/type-guards.ts`.
 
 ## Licencia y créditos
 
