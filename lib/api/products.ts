@@ -46,23 +46,32 @@ function reshapeProduct(dbProduct: any): Product | undefined {
     };
 
   // Opciones derivadas para el selector de variantes
-  const sizeValues = ["XS", "S", "M", "L", "XL"]; // mostrar siempre todos los talles
+  const sizeValuesSet = new Set<string>();
   const colorValuesSet = new Set<string>();
+  
   for (const variant of variants) {
     for (const opt of variant.selectedOptions) {
-      if (opt.name.toLowerCase() === "color") {
+      if (opt.name.toLowerCase() === "talla") {
+        sizeValuesSet.add(opt.value);
+      } else if (opt.name.toLowerCase() === "color") {
         colorValuesSet.add(opt.value);
       }
     }
   }
+  
+  const sizeValues = Array.from(sizeValuesSet).sort();
   const colorValues = Array.from(colorValuesSet);
-  const options = [
-    { id: "color", name: "Color", values: colorValues },
-    { id: "talla", name: "Talla", values: sizeValues },
-  ];
+  
+  const options = [];
+  if (colorValues.length > 0) {
+    options.push({ id: "color", name: "Color", values: colorValues });
+  }
+  if (sizeValues.length > 0) {
+    options.push({ id: "talla", name: "Talla", values: sizeValues });
+  }
 
-  // Calculate price range (set to a fixed ARS price for all variants)
-  const prices = variants.map((v: any) => 79999);
+  // Calculate price range from actual variant prices
+  const prices = variants.map((v: any) => parseFloat(v.price.amount));
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 

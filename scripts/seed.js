@@ -158,8 +158,9 @@ async function main() {
       description: "Conjunto de de algodón suave para noches placenteras.",
       price: 47999,
       folder: "01",
-      amount: 1,
-      sizes: ["M"],
+      sizes: [
+        { size: "M", amount: 1 }
+      ],
     },
     {
       handle: "piyama-algodon-rosa-con-borde",
@@ -167,8 +168,9 @@ async function main() {
       description: "Algodón deslizante para máximo confort.",
       price: 71999,
       folder: "02",
-      amount: 1,
-      sizes: ["S"],
+      sizes: [
+        { size: "S", amount: 1 }
+      ],
     },
     {
       handle: "piyama-invierno-negro",
@@ -176,8 +178,9 @@ async function main() {
       description: "Tejido cálido ideal para noches frías.",
       price: 79999,
       folder: "03",
-      amount: 0,
-      sizes: [],
+      sizes: [
+        { size: "M", amount: 0 }
+      ],
     },
     {
       handle: "piyama-azul-cuadritos",
@@ -185,8 +188,9 @@ async function main() {
       description: "Acabado lujoso con caída perfecta.",
       price: 85999,
       folder: "04",
-      amount: 1,
-      sizes: ["M"],
+      sizes: [
+        { size: "M", amount: 1 }
+      ],
     },
     {
       handle: "piyama-rosa-saten-largo",
@@ -194,26 +198,11 @@ async function main() {
       description: "Clásico y elegante para un descanso premium.",
       price: 79999,
       folder: "05",
-      amount: 1,
-      sizes: ["M"],
-    },
-    {
-      handle: "piyama-rosa-saten-largo",
-      title: "Piyama Rosa Satén Largo",
-      description: "Clásico y elegante para un descanso premium.",
-      price: 79999,
-      folder: "05",
-      amount: 1,
-      sizes: ["S"],
-    },
-    {
-      handle: "piyama-rosa-saten-largo",
-      title: "Piyama Rosa Satén Largo",
-      description: "Clásico y elegante para un descanso premium.",
-      price: 79999,
-      folder: "05",
-      amount: 1,
-      sizes: ["L"],
+      sizes: [
+        { size: "S", amount: 1 },
+        { size: "M", amount: 1 },
+        { size: "L", amount: 1 }
+      ],
     },
     {
       handle: "piyama-rosa-regalitos",
@@ -221,26 +210,11 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 85999,
       folder: "06",
-      amount: 1,
-      sizes: ["M"],
-    },
-    {
-      handle: "piyama-rosa-regalitos",
-      title: "Piyama Rosa Regalitos",
-      description: "Tela suave y elegante para un descanso premium.",
-      price: 85999,
-      folder: "06",
-      amount: 1,
-      sizes: ["S"],
-    },
-    {
-      handle: "piyama-rosa-regalitos",
-      title: "Piyama Rosa Regalitos",
-      description: "Tela suave y elegante para un descanso premium.",
-      price: 85999,
-      folder: "06",
-      amount: 1,
-      sizes: ["L"],
+      sizes: [
+        { size: "S", amount: 1 },
+        { size: "M", amount: 1 },
+        { size: "L", amount: 1 }
+      ],
     },
     {
       handle: "piyama-rosado-rayas",
@@ -248,17 +222,10 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 69999,
       folder: "07",
-      amount: 1,
-      sizes: ["L"],
-    },
-    {
-      handle: "piyama-rosado-rayas",
-      title: "Piyama Corto a Rayas Rosadas",
-      description: "Tela suave y elegante para un descanso premium.",
-      price: 69999,
-      folder: "07",
-      amount: 1,
-      sizes: ["XL"],
+      sizes: [
+        { size: "L", amount: 1 },
+        { size: "XL", amount: 1 }
+      ],
     },
     {
       handle: "piyama-liso-plateado-corto",
@@ -266,8 +233,9 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 69999,
       folder: "08",
-      amount: 1,
-      sizes: ["M"],
+      sizes: [
+        { size: "M", amount: 1 }
+      ],
     },
     {
       handle: "piyama-liso-plateado-largo",
@@ -275,8 +243,9 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "09",
-      amount: 0,
-      sizes: [],
+      sizes: [
+        { size: "M", amount: 0 }
+      ],
     },
     {
       handle: "piyama-animal-print-largo",
@@ -284,17 +253,10 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 85999,
       folder: "10",
-      amount: 1,
-      sizes: ["M"],
-    },
-    {
-      handle: "piyama-animal-print-largo",
-      title: "Piyama Animal Print Largo",
-      description: "Tela suave y elegante para un descanso premium.",
-      price: 85999,
-      folder: "10",
-      amount: 1,
-      sizes: ["S"],
+      sizes: [
+        { size: "S", amount: 1 },
+        { size: "M", amount: 1 }
+      ],
     },
     {
       handle: "piyama-liso-negro-largo-saten",
@@ -302,73 +264,61 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "11",
-      amount: 0,
-      sizes: [],
+      sizes: [
+        { size: "M", amount: 0 }
+      ],
     },
   ];
 
-  // Agrupar productos por carpeta para compartir imágenes
-  const productsByFolder = {};
-  productPayloads.forEach((product) => {
-    if (!productsByFolder[product.folder]) {
-      productsByFolder[product.folder] = [];
-    }
-    productsByFolder[product.folder].push(product);
-  });
-
-  // Crear productos agrupados por carpeta
+  // Crear un producto por cada carpeta (sin duplicados)
   await Promise.all(
-    Object.entries(productsByFolder).map(async ([folder, products]) => {
-      // Obtener imágenes para esta carpeta (se comparten entre productos de la misma carpeta)
-      const blobImages = await ensureBlobImagesForFolder(folder);
-      const folderIndex = parseInt(folder) - 1; // Convertir "01" a 0, "02" a 1, etc.
+    productPayloads.map(async (product) => {
+      // Obtener imágenes para esta carpeta
+      const blobImages = await ensureBlobImagesForFolder(product.folder);
+      const folderIndex = parseInt(product.folder) - 1; // Convertir "01" a 0, "02" a 1, etc.
       const imagesForDb = blobImages.length ? blobImages : (localImageGroups[folderIndex] || fallbackImage);
 
-      // Crear un producto por cada combinación única de handle + tamaño
-      return Promise.all(
-        products.map(async (product) => {
-          return prisma.product.create({
-            data: {
-              handle: `${product.handle}-${product.sizes.join('-')}`,
-              title: product.title,
-              description: product.description,
-              descriptionHtml: `<p>${product.description}</p>`,
-              availableForSale: product.amount > 0,
-              tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
-              seoTitle: product.title,
-              seoDescription: product.description,
-              variants: {
-                create: product.sizes.map((size) => ({
-                  title: size,
-                  price: product.price,
-                  currencyCode: "ARS",
-                  availableForSale: product.amount > 0,
-                  selectedOptions: JSON.stringify([
-                    { name: "Talla", value: size },
-                  ]),
-                  inventoryQuantity: product.amount,
-                })),
-              },
-              images: {
-                create: imagesForDb.map((imgUrl, imageIdx) => ({
-                  url: imgUrl,
-                  altText: product.title,
-                  width: 1600,
-                  height: 1200,
-                  isFeatured: imageIdx === 0,
-                })),
-              },
-              collections: {
-                create: [
-                  { collectionId: featured.id },
-                  { collectionId: carousel.id },
-                  { collectionId: womenPajamas.id },
-                ],
-              },
-            },
-          });
-        })
-      );
+      // Crear un solo producto con múltiples variantes de talla
+      return prisma.product.create({
+        data: {
+          handle: product.handle,
+          title: product.title,
+          description: product.description,
+          descriptionHtml: `<p>${product.description}</p>`,
+          availableForSale: product.sizes.some(s => s.amount > 0),
+          tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
+          seoTitle: product.title,
+          seoDescription: product.description,
+          variants: {
+            create: product.sizes.map((sizeInfo) => ({
+              title: sizeInfo.size,
+              price: product.price,
+              currencyCode: "ARS",
+              availableForSale: sizeInfo.amount > 0,
+              selectedOptions: JSON.stringify([
+                { name: "Talla", value: sizeInfo.size },
+              ]),
+              inventoryQuantity: sizeInfo.amount,
+            })),
+          },
+          images: {
+            create: imagesForDb.map((imgUrl, imageIdx) => ({
+              url: imgUrl,
+              altText: product.title,
+              width: 1600,
+              height: 1200,
+              isFeatured: imageIdx === 0,
+            })),
+          },
+          collections: {
+            create: [
+              { collectionId: featured.id },
+              { collectionId: carousel.id },
+              { collectionId: womenPajamas.id },
+            ],
+          },
+        },
+      });
     })
   );
 
