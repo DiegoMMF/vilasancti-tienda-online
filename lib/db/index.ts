@@ -8,7 +8,8 @@ config({ path: ".env.local" });
 
 // Cliente de PostgreSQL
 const client = postgres(process.env.DATABASE_URL!, {
-  max: 1,
+  // Permitir concurrencia razonable en SSR/acciones de servidor
+  max: 10,
   ssl: "require",
 });
 

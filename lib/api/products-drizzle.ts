@@ -142,25 +142,40 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
 
 export async function getProducts(): Promise<Product[]> {
   const dbProducts = await db.select().from(products);
-  const results = [];
+  if (dbProducts.length === 0) return [];
 
-  for (const product of dbProducts) {
-    const variants = await db
+  const productIds = dbProducts.map((p) => p.id);
+
+  const [allVariants, allImages] = await Promise.all([
+    db
       .select()
       .from(productVariants)
-      .where(eq(productVariants.productId, product.id));
-    const images = await db
+      .where(inArray(productVariants.productId, productIds)),
+    db
       .select()
       .from(productImages)
-      .where(eq(productImages.productId, product.id));
+      .where(inArray(productImages.productId, productIds)),
+  ]);
 
-    const reshapedProduct = reshapeProduct(product, variants, images);
-    if (reshapedProduct) {
-      results.push(reshapedProduct);
-    }
+  const variantsByProduct = new Map<string, any[]>();
+  for (const v of allVariants) {
+    const arr = variantsByProduct.get(v.productId) || [];
+    arr.push(v);
+    variantsByProduct.set(v.productId, arr);
   }
 
-  return results;
+  const imagesByProduct = new Map<string, any[]>();
+  for (const img of allImages) {
+    const arr = imagesByProduct.get(img.productId) || [];
+    arr.push(img);
+    imagesByProduct.set(img.productId, arr);
+  }
+
+  return dbProducts
+    .map((p) =>
+      reshapeProduct(p, variantsByProduct.get(p.id) || [], imagesByProduct.get(p.id) || []),
+    )
+    .filter(Boolean) as Product[];
 }
 
 export async function getCollection(
@@ -193,26 +208,43 @@ export async function getCollectionProducts(
     )
     .innerJoin(collections, eq(productCollections.collectionId, collections.id))
     .where(eq(collections.handle, collection));
+  if (collectionProducts.length === 0) return [];
 
-  const results = [];
-
-  for (const cp of collectionProducts) {
-    const variants = await db
+  const productIds = collectionProducts.map((cp) => cp.products.id);
+  const [allVariants, allImages] = await Promise.all([
+    db
       .select()
       .from(productVariants)
-      .where(eq(productVariants.productId, cp.products.id));
-    const images = await db
+      .where(inArray(productVariants.productId, productIds)),
+    db
       .select()
       .from(productImages)
-      .where(eq(productImages.productId, cp.products.id));
+      .where(inArray(productImages.productId, productIds)),
+  ]);
 
-    const reshapedProduct = reshapeProduct(cp.products, variants, images);
-    if (reshapedProduct) {
-      results.push(reshapedProduct);
-    }
+  const variantsByProduct = new Map<string, any[]>();
+  for (const v of allVariants) {
+    const arr = variantsByProduct.get(v.productId) || [];
+    arr.push(v);
+    variantsByProduct.set(v.productId, arr);
   }
 
-  return results;
+  const imagesByProduct = new Map<string, any[]>();
+  for (const img of allImages) {
+    const arr = imagesByProduct.get(img.productId) || [];
+    arr.push(img);
+    imagesByProduct.set(img.productId, arr);
+  }
+
+  return collectionProducts
+    .map((cp) =>
+      reshapeProduct(
+        cp.products,
+        variantsByProduct.get(cp.products.id) || [],
+        imagesByProduct.get(cp.products.id) || [],
+      ),
+    )
+    .filter(Boolean) as Product[];
 }
 
 export async function getProductRecommendations(
@@ -260,24 +292,41 @@ export async function getProductRecommendations(
       ),
     )
     .limit(4);
+  if (recommendations.length === 0) return [];
 
-  const results = [];
-
-  for (const rec of recommendations) {
-    const variants = await db
+  const recIds = recommendations.map((r) => r.products.id);
+  const [allVariants, allImages] = await Promise.all([
+    db
       .select()
       .from(productVariants)
-      .where(eq(productVariants.productId, rec.products.id));
-    const images = await db
+      .where(inArray(productVariants.productId, recIds)),
+    db
       .select()
       .from(productImages)
-      .where(eq(productImages.productId, rec.products.id));
+      .where(inArray(productImages.productId, recIds)),
+  ]);
 
-    const reshapedProduct = reshapeProduct(rec.products, variants, images);
-    if (reshapedProduct) {
-      results.push(reshapedProduct);
-    }
+  const variantsByProduct = new Map<string, any[]>();
+  for (const v of allVariants) {
+    const arr = variantsByProduct.get(v.productId) || [];
+    arr.push(v);
+    variantsByProduct.set(v.productId, arr);
   }
 
-  return results;
+  const imagesByProduct = new Map<string, any[]>();
+  for (const img of allImages) {
+    const arr = imagesByProduct.get(img.productId) || [];
+    arr.push(img);
+    imagesByProduct.set(img.productId, arr);
+  }
+
+  return recommendations
+    .map((rec) =>
+      reshapeProduct(
+        rec.products,
+        variantsByProduct.get(rec.products.id) || [],
+        imagesByProduct.get(rec.products.id) || [],
+      ),
+    )
+    .filter(Boolean) as Product[];
 }
