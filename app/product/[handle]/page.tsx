@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { GridTileImage } from 'components/grid/tile';
 import Footer from 'components/layout/footer';
 import { Gallery } from 'components/product/gallery';
@@ -119,6 +120,18 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
           __html: JSON.stringify(breadcrumbJsonLd)
         }}
       />
+      
+      {/* Botón Volver Flotante */}
+      <div className="fixed top-20 left-4 z-50">
+        <Link
+          href="/search/piyamas-mujer"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-sm text-neutral-700 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-lg dark:border-neutral-700 dark:bg-black/90 dark:text-neutral-300 dark:hover:bg-black"
+          aria-label="Volver a Piyamas"
+        >
+          <ArrowLeftIcon className="h-5 w-5" />
+        </Link>
+      </div>
+      
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
           <div className="h-full w-full basis-full lg:basis-4/6">
