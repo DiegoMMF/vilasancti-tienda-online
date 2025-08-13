@@ -1,3 +1,6 @@
+// Cargar variables de entorno desde .env.local
+require('dotenv').config({ path: '.env.local' });
+
 if (!process.env.DIRECT_URL && process.env.DATABASE_URL) {
   process.env.DIRECT_URL = process.env.DATABASE_URL;
 }
@@ -50,105 +53,15 @@ async function main() {
 
   console.log("✅ Collections created");
 
-  // Build local image groups from public/articles/**
-  const publicArticlesDir = path.join(process.cwd(), "public", "articles");
-  const localArticlesDir = path.join(process.cwd(), "articles");
-  const allowedExt = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
-  /**
-   * Returns an array of arrays. Each inner array contains web paths like
-   *   /articles/01/IMG_....jpeg
-   * for every file under each numeric folder in public/articles
-   */
-  function getLocalImageGroups() {
-    if (!fs.existsSync(publicArticlesDir)) return [];
-    const subdirs = fs
-      .readdirSync(publicArticlesDir, { withFileTypes: true })
-      .filter((d) => d.isDirectory())
-      .map((d) => d.name)
-      // sort folders like 01, 02, ... to keep a stable mapping
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-
-    const groups = [];
-    for (const dir of subdirs) {
-      const absoluteDir = path.join(publicArticlesDir, dir);
-      const files = fs
-        .readdirSync(absoluteDir, { withFileTypes: true })
-        .filter((f) => f.isFile())
-        .map((f) => f.name)
-        .filter((name) => allowedExt.has(path.extname(name).toLowerCase()))
-        // Put likely hero images first (IMG_*, then others)
-        .sort();
-
-      const webPaths = files.map((file) => path.posix.join("/articles", dir, file));
-      if (webPaths.length > 0) groups.push(webPaths);
-    }
-    return groups;
-  }
-
-  const localImageGroups = getLocalImageGroups();
+  // Importar URLs del blob
+  const { getBlobUrlsForFolder } = await import('./generate-blob-urls.js');
   const fallbackImage = [
     "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&h=1200&fit=crop&auto=format&q=80",
   ];
 
-  // Prepare Blob helpers (lazy import inside Node CJS)
-  const { put, list } = await import("@vercel/blob");
-
-  async function listBlobImages(prefix) {
-    try {
-      const { blobs } = await list({ prefix: `${prefix}/` });
-      // Sort by pathname for deterministic order
-      return blobs
-        .slice()
-        .sort((a, b) => a.pathname.localeCompare(b.pathname))
-        .map((b) => b.url);
-    } catch (err) {
-      console.warn(`⚠️  No se pudieron listar blobs en '${prefix}':`, err.message);
-      return [];
-    }
-  }
-
-  async function uploadFolderToBlob(folderIndex) {
-    const folder = folderIndex.padStart(2, "0");
-    const absoluteDir = path.join(publicArticlesDir, folder);
-    if (!fs.existsSync(absoluteDir)) return [];
-
-    const files = fs
-      .readdirSync(absoluteDir, { withFileTypes: true })
-      .filter((f) => f.isFile())
-      .map((f) => f.name)
-      .filter((name) => allowedExt.has(path.extname(name).toLowerCase()))
-      .sort();
-
-    const uploadedUrls = [];
-    for (const file of files) {
-      const abs = path.join(absoluteDir, file);
-      const blobPath = `articles/${folder}/${file}`;
-      const data = fs.readFileSync(abs);
-      try {
-        const { url } = await put(blobPath, data, {
-          access: "public",
-          addRandomSuffix: false
-        });
-        uploadedUrls.push(url);
-      } catch (err) {
-        console.warn(`⚠️  Error subiendo '${blobPath}', intentando listar existente:`, err.message);
-        // Si ya existe, intentamos recuperarlo vía listado
-      }
-    }
-    if (uploadedUrls.length) return uploadedUrls;
-    // fallback: si no subió nada porque ya existían, listamos
-    return await listBlobImages(`articles/${folder}`);
-  }
-
-  async function ensureBlobImagesForFolder(folderIndex) {
-    const folder = folderIndex.padStart(2, "0");
-    const prefix = `articles/${folder}`;
-    let urls = await listBlobImages(prefix);
-    if (urls.length === 0) {
-      // Intentamos subir desde carpeta local `articles/<folder>` si existe
-      urls = await uploadFolderToBlob(folder);
-    }
-    return urls;
+  // Función para obtener URLs del blob para una carpeta específica
+  function getImagesForFolder(folderIndex) {
+    return getBlobUrlsForFolder(folderIndex);
   }
 
   const productPayloads = [
@@ -273,10 +186,9 @@ async function main() {
   // Crear un producto por cada carpeta (sin duplicados)
   await Promise.all(
     productPayloads.map(async (product) => {
-      // Obtener imágenes para esta carpeta
-      const blobImages = await ensureBlobImagesForFolder(product.folder);
-      const folderIndex = parseInt(product.folder) - 1; // Convertir "01" a 0, "02" a 1, etc.
-      const imagesForDb = blobImages.length ? blobImages : (localImageGroups[folderIndex] || fallbackImage);
+      // Obtener imágenes para esta carpeta desde el blob
+      const imagesForDb = getImagesForFolder(product.folder);
+      const finalImages = imagesForDb.length > 0 ? imagesForDb : fallbackImage;
 
       // Crear un solo producto con múltiples variantes de talla
       return prisma.product.create({
@@ -302,7 +214,7 @@ async function main() {
             })),
           },
           images: {
-            create: imagesForDb.map((imgUrl, imageIdx) => ({
+            create: finalImages.map((imgUrl, imageIdx) => ({
               url: imgUrl,
               altText: product.title,
               width: 1600,
