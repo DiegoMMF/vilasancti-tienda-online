@@ -10,7 +10,7 @@ export default function ProductGridItems({
 }) {
   return (
     <>
-      {products.map((product) => (
+      {products.map((product, index) => (
         <Grid.Item key={product.handle} className="animate-fadeIn">
           <Link
             className="relative inline-block h-full w-full"
@@ -26,6 +26,10 @@ export default function ProductGridItems({
               }}
               src={product.featuredImage?.url}
               fill
+              // Prioritize the first item image to improve LCP
+              priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : undefined}
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
           </Link>

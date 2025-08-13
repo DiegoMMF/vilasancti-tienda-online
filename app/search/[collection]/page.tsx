@@ -6,6 +6,9 @@ import Grid from "components/grid";
 import ProductGridItems from "components/layout/product-grid-items";
 import { defaultSort, sorting } from "lib/constants";
 
+// Revalidate collection search pages periodically to cache listing content
+export const revalidate = 600;
+
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;

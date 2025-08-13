@@ -162,14 +162,18 @@ export default async function ProductPage(props: {
 
 async function RelatedProducts({ id }: { id: string }) {
   const relatedProducts = await getProductRecommendations(id);
+  // Deduplicate by product id to avoid duplicate keys if backend returns duplicates
+  const unique = relatedProducts.filter(
+    (p, idx, arr) => arr.findIndex((x) => x.id === p.id) === idx,
+  );
 
-  if (!relatedProducts.length) return null;
+  if (!unique.length) return null;
 
   return (
     <div className="py-8">
       <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
       <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {relatedProducts.map((product) => (
+        {unique.map((product) => (
           <li
             key={product.id}
             className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"

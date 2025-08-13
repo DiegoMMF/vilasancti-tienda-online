@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, ne } from "drizzle-orm";
 import { db } from "../db/index";
 import {
   collections,
@@ -173,7 +173,11 @@ export async function getProducts(): Promise<Product[]> {
 
   return dbProducts
     .map((p) =>
-      reshapeProduct(p, variantsByProduct.get(p.id) || [], imagesByProduct.get(p.id) || []),
+      reshapeProduct(
+        p,
+        variantsByProduct.get(p.id) || [],
+        imagesByProduct.get(p.id) || [],
+      ),
     )
     .filter(Boolean) as Product[];
 }
@@ -287,10 +291,11 @@ export async function getProductRecommendations(
     .where(
       and(
         inArray(productCollections.collectionId, collectionIds),
-        eq(products.id, productId),
+        ne(products.id, productId),
         eq(products.availableForSale, true),
       ),
     )
+    .groupBy(products.id)
     .limit(4);
   if (recommendations.length === 0) return [];
 

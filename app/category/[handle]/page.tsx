@@ -5,6 +5,9 @@ import { defaultSort, sorting } from "lib/constants";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+// Revalidate category pages periodically to cache listing content
+export const revalidate = 600;
+
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;

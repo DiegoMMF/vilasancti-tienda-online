@@ -6,6 +6,9 @@ import type { Metadata } from "next";
 
 // metadata is generated dynamically via generateMetadata
 
+// Revalidate search page periodically to avoid DB hits for every request
+export const revalidate = 600;
+
 export async function generateMetadata(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
