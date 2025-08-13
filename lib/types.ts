@@ -22,6 +22,7 @@ export type ProductVariant = {
   id: string;
   title: string;
   availableForSale: boolean;
+  inventoryQuantity: number;
   selectedOptions: {
     name: string;
     value: string;
@@ -72,6 +73,8 @@ export type CartItem = {
   merchandise: {
     id: string;
     title: string;
+    availableForSale: boolean;
+    inventoryQuantity: number;
     selectedOptions: {
       name: string;
       value: string;

@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { useProduct } from 'components/product/product-context';
-import { ProductOption, ProductVariant } from 'lib/shopify/types';
+import { ProductOption, ProductVariant } from 'lib/types';
 
 export function VariantSelector({
   options,
@@ -12,10 +12,9 @@ export function VariantSelector({
   variants: ProductVariant[];
 }) {
   const { state, updateOption } = useProduct();
-  const hasNoOptionsOrJustOneOption =
-    !options.length || (options.length === 1 && options[0]?.values.length === 1);
-
-  if (hasNoOptionsOrJustOneOption) {
+  
+  // Solo ocultar si no hay opciones en absoluto
+  if (!options.length) {
     return null;
   }
 
@@ -26,11 +25,12 @@ export function VariantSelector({
 
   // Función para verificar si una opción está disponible
   const isOptionAvailable = (optionName: string, optionValue: string) => {
-    // Verificar si existe alguna variante con esta opción
+    // Verificar si existe alguna variante con esta opción y que tenga inventario
     return variants.some((variant) => {
-      return variant.selectedOptions.some((option) => 
+      const hasMatchingOption = variant.selectedOptions.some((option) => 
         option.name.toLowerCase() === optionName && option.value === optionValue
       );
+      return hasMatchingOption && variant.availableForSale && variant.inventoryQuantity > 0;
     });
   };
 
@@ -63,7 +63,7 @@ export function VariantSelector({
                 onClick={() => handleOptionToggle(optionNameLowerCase, value)}
                 key={value}
                 disabled={!isAvailable}
-                title={`${option.name} ${value}${!isAvailable ? ' (Out of Stock)' : ''}`}
+                title={`${option.name} ${value}${!isAvailable ? ' (Agotado)' : ''}`}
                 className={clsx(
                   'flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900',
                   {

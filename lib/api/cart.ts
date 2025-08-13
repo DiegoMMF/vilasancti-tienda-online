@@ -21,6 +21,8 @@ function reshapeCart(dbCart: any): Cart {
     merchandise: {
       id: item.variant.id,
       title: item.variant.title,
+      availableForSale: item.variant.availableForSale,
+      inventoryQuantity: item.variant.inventoryQuantity,
       selectedOptions: JSON.parse(item.variant.selectedOptions || "[]"),
       product: {
         id: item.variant.product.id,

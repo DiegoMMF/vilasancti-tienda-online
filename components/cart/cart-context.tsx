@@ -1,18 +1,18 @@
 'use client';
 
 import type {
-  Cart,
-  CartItem,
-  Product,
-  ProductVariant
+    Cart,
+    CartItem,
+    Product,
+    ProductVariant
 } from 'lib/types';
 import React, {
-  createContext,
-  use,
-  useCallback,
-  useContext,
-  useMemo,
-  useOptimistic
+    createContext,
+    use,
+    useCallback,
+    useContext,
+    useMemo,
+    useOptimistic
 } from 'react';
 
 type UpdateType = 'plus' | 'minus' | 'delete';
@@ -86,6 +86,8 @@ function createOrUpdateCartItem(
     merchandise: {
       id: variant.id,
       title: variant.title,
+      availableForSale: variant.availableForSale,
+      inventoryQuantity: variant.inventoryQuantity,
       selectedOptions: variant.selectedOptions,
       product: {
         id: product.id,

@@ -3,20 +3,29 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { updateItemQuantity } from 'components/cart/actions';
-import type { CartItem } from 'lib/shopify/types';
+import type { CartItem } from 'lib/types';
 import { useActionState } from 'react';
 
-function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
+function SubmitButton({ 
+  type, 
+  disabled 
+}: { 
+  type: 'plus' | 'minus';
+  disabled?: boolean;
+}) {
   return (
     <button
       type="submit"
+      disabled={disabled}
       aria-label={
-        type === 'plus' ? 'Increase item quantity' : 'Reduce item quantity'
+        type === 'plus' ? 'Aumentar cantidad' : 'Reducir cantidad'
       }
       className={clsx(
-        'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80',
+        'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200',
         {
-          'ml-auto': type === 'minus'
+          'ml-auto': type === 'minus',
+          'hover:border-neutral-800 hover:opacity-80': !disabled,
+          'cursor-not-allowed opacity-50': disabled
         }
       )}
     >
@@ -39,20 +48,29 @@ export function EditItemQuantityButton({
   optimisticUpdate: any;
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);
+  
+  // Validar límites de inventario
+  const newQuantity = type === 'plus' ? item.quantity + 1 : item.quantity - 1;
+  const isDisabled = type === 'plus' 
+    ? newQuantity > item.merchandise.inventoryQuantity 
+    : newQuantity < 0;
+  
   const payload = {
     merchandiseId: item.merchandise.id,
-    quantity: type === 'plus' ? item.quantity + 1 : item.quantity - 1
+    quantity: newQuantity
   };
   const updateItemQuantityAction = formAction.bind(null, payload);
 
   return (
     <form
       action={async () => {
-        optimisticUpdate(payload.merchandiseId, type);
-        updateItemQuantityAction();
+        if (!isDisabled) {
+          optimisticUpdate(payload.merchandiseId, type);
+          updateItemQuantityAction();
+        }
       }}
     >
-      <SubmitButton type={type} />
+      <SubmitButton type={type} disabled={isDisabled} />
       <p aria-live="polite" className="sr-only" role="status">
         {message}
       </p>

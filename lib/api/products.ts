@@ -20,6 +20,7 @@ function reshapeProduct(dbProduct: any): Product | undefined {
     id: variant.id,
     title: variant.title,
     availableForSale: variant.availableForSale,
+    inventoryQuantity: variant.inventoryQuantity,
     selectedOptions: JSON.parse(variant.selectedOptions || "[]"),
     price: {
       amount: variant.price.toString(),

@@ -1,10 +1,9 @@
 'use client';
 
-import { PlusIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { addItem } from 'components/cart/actions';
 import { useProduct } from 'components/product/product-context';
-import { Product, ProductVariant } from 'lib/shopify/types';
+import { Product, ProductVariant } from 'lib/types';
 import { useActionState } from 'react';
 import { useCart } from './cart-context';
 
@@ -48,9 +47,6 @@ function SubmitButton({
         'hover:opacity-90': true
       })}
     >
-      <div className="absolute left-0 ml-4">
-        <PlusIcon className="h-5" />
-      </div>
       Agregar al Carrito
     </button>
   );
@@ -76,10 +72,10 @@ export function AddToCart({ product }: { product: Product }) {
   );
 
   // Verificar si hay alguna variante disponible en el producto
-  const hasAnyAvailableVariant = variants.some(v => v.availableForSale);
+  const hasAnyAvailableVariant = variants.some(v => v.availableForSale && v.inventoryQuantity > 0);
   
   // Verificar si la variante seleccionada está disponible
-  const isSelectedVariantAvailable = finalVariant?.availableForSale;
+  const isSelectedVariantAvailable = finalVariant?.availableForSale && finalVariant?.inventoryQuantity > 0;
 
   // Determinar el estado del botón
   let buttonState: 'agotado' | 'seleccionar-opcion' | 'agregar-al-carrito' = 'seleccionar-opcion';
