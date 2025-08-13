@@ -28,4 +28,3 @@ export const TAGS = {
 
 export const HIDDEN_PRODUCT_TAG = 'vilasancti-frontend-hidden';
 export const DEFAULT_OPTION = 'Default Title';
-export const SHOPIFY_GRAPHQL_API_ENDPOINT = '/api/2023-01/graphql.json';
