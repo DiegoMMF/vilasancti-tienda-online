@@ -16,8 +16,8 @@ export function WelcomeToast() {
         },
         description: (
           <>
-            This is a high-performance, custom ecommerce storefront implemented by
-            Diego M. Maldini Freyre.
+            This is a high-performance, custom ecommerce storefront implemented
+            by Diego M. Maldini Freyre.
             <br />
             <br />
             <a

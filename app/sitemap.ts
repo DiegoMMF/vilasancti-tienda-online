@@ -1,34 +1,34 @@
-import { getCollections, getProducts } from 'lib/api/products-drizzle';
-import { baseUrl, validateEnvironmentVariables } from 'lib/utils';
-import { MetadataRoute } from 'next';
+import { getCollections, getProducts } from "lib/api/products-drizzle";
+import { baseUrl, validateEnvironmentVariables } from "lib/utils";
+import { MetadataRoute } from "next";
 
 type Route = {
   url: string;
   lastModified: string;
 };
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   validateEnvironmentVariables();
 
-  const routesMap = [''].map((route) => ({
+  const routesMap = [""].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString()
+    lastModified: new Date().toISOString(),
   }));
 
   const collectionsPromise = getCollections().then((collections) =>
     collections.map((collection) => ({
       url: `${baseUrl}${collection.path}`,
-      lastModified: collection.updatedAt
-    }))
+      lastModified: collection.updatedAt,
+    })),
   );
 
   const productsPromise = getProducts().then((products) =>
     products.map((product) => ({
       url: `${baseUrl}/product/${product.handle}`,
-      lastModified: product.updatedAt
-    }))
+      lastModified: product.updatedAt,
+    })),
   );
 
   // Por ahora, no incluimos páginas dinámicas en el sitemap

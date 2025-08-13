@@ -21,7 +21,11 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
 
@@ -32,12 +36,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Organization',
+              "@context": "https://schema.org",
+              "@type": "Organization",
               name: SITE_NAME,
               url: baseUrl,
-              logo: `${baseUrl}/favicon.ico`
-            })
+              logo: `${baseUrl}/favicon.ico`,
+            }),
           }}
         />
         <CartProvider cartPromise={cart}>

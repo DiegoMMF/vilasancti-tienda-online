@@ -1,6 +1,6 @@
 // Por ahora, no implementamos revalidación automática
 // En el futuro, esto podría integrarse con nuestro sistema personalizado
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   // Por ahora, retornamos un éxito básico

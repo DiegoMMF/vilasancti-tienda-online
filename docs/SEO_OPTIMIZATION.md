@@ -1,7 +1,9 @@
 ### Objetivo
+
 Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento en tu ecommerce (Next.js App Router), con foco en productos, colecciones y navegación facetada (color/talla).
 
 ### Fase 1 — Auditoría y baseline
+
 - [ ] Lighthouse/PageSpeed/GSC/GA4/ScreamingFrog baselines
 - [ ] Mapa de plantillas y KPIs definidos
 - **Herramientas**: Lighthouse, PageSpeed Insights, GSC, GA4, Screaming Frog (render JS), Ahrefs/SEMrush.
@@ -9,6 +11,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 - **Mapa de plantillas**: `home`, `search`, `search/[collection]`, `product/[handle]`, páginas informativas (si las hubiera).
 
 ### Fase 2 — SEO técnico (indexación, canonicals, facetas, datos estructurados)
+
 - [x] Meta robots dinámico en colecciones con facetas (`noindex,follow`)
 - [x] Meta robots dinámico en `/search` con facetas (`noindex,follow`)
 - [x] Canonical en colecciones hacia URL base sin parámetros
@@ -45,6 +48,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - 404 personalizadas con enlaces útiles; usar 410 en productos eliminados definitivamente; 301 para migraciones de `handle`.
 
 ### Fase 3 — SEO on-page (plantillas y contenidos)
+
 - [ ] Títulos y descripciones únicos por plantilla
 - [ ] Jerarquía de encabezados consistente (H1/H2/H3)
 - [ ] Contenido en colecciones (100–200 palabras)
@@ -70,6 +74,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - En colecciones: enlaces a subcolecciones/colecciones hermanas.
 
 ### Fase 4 — Rendimiento (Core Web Vitals)
+
 - [ ] Preload imagen LCP en producto
 - [ ] `font-display: swap` y preload de fuentes críticas
 - [ ] Reducir JS cliente (quitar `use client` innecesario)
@@ -90,6 +95,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - Poda de dependencias no usadas, divide componentes pesados.
 
 ### Fase 5 — Estrategia de URLs y migraciones
+
 - [ ] Validar estructura final de URLs
 - [ ] Plan de redirecciones 301 si cambian rutas/handles
 - **Estructura**:
@@ -101,6 +107,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - [x] 301 de `/search/:collection` a `/category/:handle` en `next.config.ts`.
 
 ### Fase 6 — Señales externas y confiabilidad
+
 - [ ] Páginas corporativas (sobre/envíos/devoluciones/contacto)
 - [ ] Reviews + AggregateRating
 - [ ] Plan de backlinks/PR
@@ -113,10 +120,12 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - Directrices para link-building y PR de marca.
 
 ### Fase 7 — Internacionalización (opcional)
+
 - [ ] i18n + hreflang (si aplica)
 - **i18n/hreflang**: si sumas idiomas/mercados, `hreflang` y segmentación de sitemaps por locale.
 
 ### Fase 8 — Analítica y monitorización
+
 - [ ] GA4 e-commerce events
 - [ ] GSC: sitemaps y parámetros
 - [ ] Alerting 404/500 y variaciones de cobertura
@@ -126,6 +135,7 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
 - **Experimentos**: A/B en títulos/meta/hero (con cuidado de no romper indexación).
 
 ### Implementación sugerida en el código
+
 - **Canonicals/robots en listados**:
   - `app/search/page.tsx` y `app/search/[collection]/page.tsx`: si detectas `color`, `size` o `q`, setear metadata con `robots: noindex,follow` y `alternates.canonical` sin params.
 - **JSON-LD**:
@@ -140,12 +150,14 @@ Plan exhaustivo para optimizar SEO técnico, on-page, contenidos y rendimiento e
   - `app/not-found.tsx`; endpoint admin para marcar producto 410 si discontinuado (y excluir de sitemap).
 
 ### Roadmap (semanas)
+
 - **Semana 1**: Auditoría + quick wins (canonicals/robots en facetas, OG/Twitter, alt/headers, preload LCP, JSON-LD Organization).
 - **Semana 2**: Breadcrumb + ItemList + Product enriquecido; sitemaps segmentados; 404/410; redirects.
 - **Semana 3**: Contenidos de colección/producto; FAQs; interlinking; guía de talles.
 - **Semana 4**: Perf (INP/CLS), poda de JS, monitorización, GSC tuning y primeros experiments.
 
 ### Entregables
+
 - Checklist de verificación (por plantilla).
 - Informe de cobertura GSC pre/post.
 - Tablero de KPIs (CWV, indexación, CTR, revenue orgánico).

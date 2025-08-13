@@ -1,13 +1,13 @@
-import { Carousel } from 'components/carousel';
-import { ThreeItemGrid } from 'components/grid/three-items';
-import Footer from 'components/layout/footer';
+import { Carousel } from "components/carousel";
+import { ThreeItemGrid } from "components/grid/three-items";
+import Footer from "components/layout/footer";
 
 export const metadata = {
   description:
-    'High-performance custom ecommerce store implemented by Diego M. Maldini Freyre.',
+    "High-performance custom ecommerce store implemented by Diego M. Maldini Freyre.",
   openGraph: {
-    type: 'website'
-  }
+    type: "website",
+  },
 };
 
 export default function HomePage() {

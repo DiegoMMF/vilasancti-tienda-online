@@ -1,4 +1,4 @@
-import type { Page } from '../types';
+import type { Page } from "../types";
 
 export async function getPage(handle: string): Promise<Page | undefined> {
   // Por ahora, retornamos undefined para que se muestre la página 404

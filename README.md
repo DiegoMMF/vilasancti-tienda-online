@@ -41,6 +41,7 @@ NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=""
 ```
 
 Notas:
+
 - `DIRECT_URL` es requerido por Prisma en este proyecto; si no dispones de una URL específica, usa el mismo valor que `DATABASE_URL`.
 - Para usar Vercel Blob (subida/listado/borrado de imágenes) necesitas el token `BLOB_READ_WRITE_TOKEN` desde el panel de Vercel (Storage → Blob).
 
@@ -67,6 +68,7 @@ Scripts disponibles (`package.json`):
 ## Datos de ejemplo (seed)
 
 El script `scripts/seed.js`:
+
 - Limpia tablas y crea colecciones de sistema: `hidden-homepage-featured-items`, `hidden-homepage-carousel`, `piyamas-mujer`.
 - Inserta 7 productos de piyamas para mujer con variantes de color y talla.
 - Gestiona imágenes en Vercel Blob bajo los prefijos `articles/01`, `articles/02`, ..., `articles/06` (y `articles/07` para el 7º producto):
@@ -95,6 +97,7 @@ Puedes adaptar precios, imágenes o colecciones editando `scripts/seed.js` y re�
 ## Almacenamiento de imágenes (Vercel Blob)
 
 Utilidades en `lib/blob.ts` permiten:
+
 - `uploadImage(file, folder)`
 - `deleteImage(url)`
 - `listImages(prefix)`

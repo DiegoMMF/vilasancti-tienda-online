@@ -1,12 +1,12 @@
 import { relations } from "drizzle-orm";
 import {
-    cartItems,
-    carts,
-    collections,
-    productCollections,
-    productImages,
-    products,
-    productVariants,
+  cartItems,
+  carts,
+  collections,
+  productCollections,
+  productImages,
+  products,
+  productVariants,
 } from "./schema";
 
 // Relaciones de Collections
@@ -30,7 +30,7 @@ export const productVariantsRelations = relations(
       references: [products.id],
     }),
     cartItems: many(cartItems),
-  })
+  }),
 );
 
 // Relaciones de ProductImages
@@ -53,7 +53,7 @@ export const productCollectionsRelations = relations(
       fields: [productCollections.collectionId],
       references: [collections.id],
     }),
-  })
+  }),
 );
 
 // Relaciones de Cart

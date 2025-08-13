@@ -1,7 +1,13 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { db } from "../db/index";
-import { cartItems, carts, productImages, productVariants, products } from "../db/schema";
+import {
+  cartItems,
+  carts,
+  productImages,
+  productVariants,
+  products,
+} from "../db/schema";
 import type { Cart, CartItem } from "../types";
 
 const CART_COOKIE_NAME = "cartId";
@@ -31,7 +37,8 @@ function reshapeCart(cartData: any, itemsData: any[]): Cart {
         handle: item.product.handle,
         title: item.product.title,
         featuredImage: (() => {
-          const featured = item.images.find((img: any) => img.isFeatured) || item.images[0];
+          const featured =
+            item.images.find((img: any) => img.isFeatured) || item.images[0];
           return {
             url: featured?.url || "",
             altText: item.product.title,
@@ -46,7 +53,7 @@ function reshapeCart(cartData: any, itemsData: any[]): Cart {
   const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = lines.reduce(
     (sum, item) => sum + Number(item.cost.totalAmount.amount),
-    0
+    0,
   );
   const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? "USD";
 
@@ -69,14 +76,17 @@ async function getOrCreateCart(): Promise<string> {
 
   if (!cartId) {
     const sessionId = Math.random().toString(36).substring(2);
-    const [cart] = await db.insert(carts).values({
-      sessionId,
-    }).returning();
-    
+    const [cart] = await db
+      .insert(carts)
+      .values({
+        sessionId,
+      })
+      .returning();
+
     if (!cart) {
-      throw new Error('Failed to create cart');
+      throw new Error("Failed to create cart");
     }
-    
+
     const newCartId: string = cart.id;
     cartId = newCartId;
 
@@ -95,35 +105,43 @@ async function getOrCreateCart(): Promise<string> {
 async function getCartWithItems(cartId: string) {
   // Obtener el carrito
   const [cartData] = await db.select().from(carts).where(eq(carts.id, cartId));
-  
+
   if (!cartData) {
     return null;
   }
 
   // Obtener items del carrito con sus variantes
-  const itemsData = await db.select()
+  const itemsData = await db
+    .select()
     .from(cartItems)
     .innerJoin(productVariants, eq(cartItems.variantId, productVariants.id))
     .innerJoin(products, eq(productVariants.productId, products.id))
     .where(eq(cartItems.cartId, cartId));
 
   // Obtener imágenes para todos los productos
-  const productIds = itemsData.map(item => item.products.id);
-  const allImages = productIds.length > 0 
-    ? await db.select().from(productImages).where(inArray(productImages.productId, productIds))
-    : [];
+  const productIds = itemsData.map((item) => item.products.id);
+  const allImages =
+    productIds.length > 0
+      ? await db
+          .select()
+          .from(productImages)
+          .where(inArray(productImages.productId, productIds))
+      : [];
 
   // Agrupar imágenes por producto
-  const imagesByProduct = allImages.reduce((acc, image) => {
-    if (!acc[image.productId]) acc[image.productId] = [];
-    acc[image.productId]!.push(image);
-    return acc;
-  }, {} as { [key: string]: any[] });
+  const imagesByProduct = allImages.reduce(
+    (acc, image) => {
+      if (!acc[image.productId]) acc[image.productId] = [];
+      acc[image.productId]!.push(image);
+      return acc;
+    },
+    {} as { [key: string]: any[] },
+  );
 
   // Combinar datos
-  const itemsWithImages = itemsData.map(item => ({
+  const itemsWithImages = itemsData.map((item) => ({
     ...item,
-    images: imagesByProduct[item.products?.id || ''] || []
+    images: imagesByProduct[item.products?.id || ""] || [],
   }));
 
   return { cartData, itemsData: itemsWithImages };
@@ -151,19 +169,26 @@ export async function createCart(): Promise<Cart> {
 }
 
 export async function addToCart(
-  lines: { merchandiseId: string; quantity: number }[]
+  lines: { merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
   const cartId = await getOrCreateCart();
 
   for (const line of lines) {
     // Verificar si el item ya existe
-    const [existingItem] = await db.select()
+    const [existingItem] = await db
+      .select()
       .from(cartItems)
-      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.variantId, line.merchandiseId)));
+      .where(
+        and(
+          eq(cartItems.cartId, cartId),
+          eq(cartItems.variantId, line.merchandiseId),
+        ),
+      );
 
     if (existingItem) {
       // Actualizar cantidad
-      await db.update(cartItems)
+      await db
+        .update(cartItems)
         .set({ quantity: existingItem.quantity + line.quantity })
         .where(eq(cartItems.id, existingItem.id));
     } else {
@@ -178,7 +203,7 @@ export async function addToCart(
 
   const cartWithItems = await getCartWithItems(cartId);
   if (!cartWithItems) {
-    throw new Error('Failed to get cart with items');
+    throw new Error("Failed to get cart with items");
   }
   return reshapeCart(cartWithItems.cartData, cartWithItems.itemsData);
 }
@@ -186,11 +211,9 @@ export async function addToCart(
 export async function removeFromCart(lineIds: string[]): Promise<Cart> {
   const cartId = await getOrCreateCart();
 
-  await db.delete(cartItems)
-    .where(and(
-      inArray(cartItems.id, lineIds),
-      eq(cartItems.cartId, cartId)
-    ));
+  await db
+    .delete(cartItems)
+    .where(and(inArray(cartItems.id, lineIds), eq(cartItems.cartId, cartId)));
 
   const cartWithItems = await getCartWithItems(cartId);
 
@@ -212,7 +235,7 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
 }
 
 export async function updateCart(
-  lines: { id: string; merchandiseId: string; quantity: number }[]
+  lines: { id: string; merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
   const cartId = await getOrCreateCart();
 
@@ -220,7 +243,8 @@ export async function updateCart(
     if (line.quantity <= 0) {
       await db.delete(cartItems).where(eq(cartItems.id, line.id));
     } else {
-      await db.update(cartItems)
+      await db
+        .update(cartItems)
         .set({ quantity: line.quantity })
         .where(eq(cartItems.id, line.id));
     }

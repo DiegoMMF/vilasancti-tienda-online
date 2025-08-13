@@ -116,4 +116,4 @@ export type Page = {
   seo?: SEO;
   createdAt: string;
   updatedAt: string;
-}; 
+};

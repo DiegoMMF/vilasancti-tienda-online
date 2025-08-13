@@ -1,17 +1,20 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { GridTileImage } from 'components/grid/tile';
-import Footer from 'components/layout/footer';
-import { Gallery } from 'components/product/gallery';
-import { ProductProvider } from 'components/product/product-context';
-import { ProductDescription } from 'components/product/product-description';
-import { getProduct, getProductRecommendations } from 'lib/api/products-drizzle';
-import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
-import { Image } from 'lib/types';
-import Link from 'next/link';
-import { Suspense } from 'react';
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { GridTileImage } from "components/grid/tile";
+import Footer from "components/layout/footer";
+import { Gallery } from "components/product/gallery";
+import { ProductProvider } from "components/product/product-context";
+import { ProductDescription } from "components/product/product-description";
+import {
+  getProduct,
+  getProductRecommendations,
+} from "lib/api/products-drizzle";
+import { HIDDEN_PRODUCT_TAG } from "lib/constants";
+import { Image } from "lib/types";
+import Link from "next/link";
+import { Suspense } from "react";
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -32,8 +35,8 @@ export async function generateMetadata(props: {
       follow: indexable,
       googleBot: {
         index: indexable,
-        follow: indexable
-      }
+        follow: indexable,
+      },
     },
     openGraph: url
       ? {
@@ -42,80 +45,80 @@ export async function generateMetadata(props: {
               url,
               width,
               height,
-              alt
-            }
-          ]
+              alt,
+            },
+          ],
         }
-      : null
+      : null,
   };
 }
 
-export default async function ProductPage(props: { params: Promise<{ handle: string }> }) {
+export default async function ProductPage(props: {
+  params: Promise<{ handle: string }>;
+}) {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
   if (!product) return notFound();
 
   const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
+    "@context": "https://schema.org",
+    "@type": "Product",
     name: product.title,
     description: product.description,
     image: product.featuredImage.url,
-    brand: product.seo?.title || 'Marca',
+    brand: product.seo?.title || "Marca",
     offers: {
-      '@type': 'AggregateOffer',
+      "@type": "AggregateOffer",
       availability: product.availableForSale
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
       priceCurrency: product.priceRange.minVariantPrice.currencyCode,
       highPrice: product.priceRange.maxVariantPrice.amount,
-      lowPrice: product.priceRange.minVariantPrice.amount
-    }
+      lowPrice: product.priceRange.minVariantPrice.amount,
+    },
   };
 
   const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
     itemListElement: [
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 1,
-        name: 'Inicio',
-        item: '/'
+        name: "Inicio",
+        item: "/",
       },
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 2,
-        name: 'Piyamas Mujer',
-        item: '/search/piyamas-mujer'
+        name: "Piyamas Mujer",
+        item: "/search/piyamas-mujer",
       },
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 3,
         name: product.title,
-        item: `/product/${product.handle}`
-      }
-    ]
+        item: `/product/${product.handle}`,
+      },
+    ],
   };
-
-
 
   return (
     <ProductProvider product={product}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd)
+          __html: JSON.stringify(productJsonLd),
         }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbJsonLd)
+          __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
-      
+
       {/* Botón Volver Flotante */}
       <div className="fixed top-20 left-4 z-50">
         <Link
@@ -126,7 +129,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
           <ArrowLeftIcon className="h-5 w-5" />
         </Link>
       </div>
-      
+
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
           <div className="h-full w-full basis-full lg:basis-4/6">
@@ -138,7 +141,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               <Gallery
                 images={product.images.slice(0, 5).map((image: Image) => ({
                   src: image.url,
-                  altText: image.altText
+                  altText: image.altText,
                 }))}
               />
             </Suspense>
@@ -181,7 +184,7 @@ async function RelatedProducts({ id }: { id: string }) {
                 label={{
                   title: product.title,
                   amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
                 }}
                 src={product.featuredImage?.url}
                 fill

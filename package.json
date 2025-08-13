@@ -8,6 +8,13 @@
     "db:migrate": "drizzle-kit migrate",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
+    "prettier:fix": "prettier --write --ignore-unknown .",
+    "prettier:ts": "prettier --write --ignore-unknown \"**/*.{ts,tsx}\"",
+    "prettier:js": "prettier --write --ignore-unknown \"**/*.{js,jsx}\"",
+    "prettier:css": "prettier --write --ignore-unknown \"**/*.{css,scss}\"",
+    "prettier:json": "prettier --write --ignore-unknown \"**/*.json\"",
+    "format": "pnpm prettier:fix && pnpm lint",
+    "format:check": "pnpm prettier:check && pnpm lint",
     "test": "pnpm prettier:check",
     "lint": "next lint",
     "db:seed": "tsx scripts/seed-drizzle.js"

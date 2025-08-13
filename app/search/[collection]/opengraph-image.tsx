@@ -1,8 +1,8 @@
-import OpengraphImage from 'components/opengraph-image';
-import { getCollection } from 'lib/api/products-drizzle';
+import OpengraphImage from "components/opengraph-image";
+import { getCollection } from "lib/api/products-drizzle";
 
 export default async function Image({
-  params
+  params,
 }: {
   params: { collection: string };
 }) {

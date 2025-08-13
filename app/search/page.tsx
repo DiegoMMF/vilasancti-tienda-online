@@ -11,7 +11,7 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const searchParams = (await props.searchParams) || {};
   const hasFacets = Boolean(
-    searchParams["color"] || searchParams["size"] || searchParams["q"]
+    searchParams["color"] || searchParams["size"] || searchParams["q"],
   );
   return {
     robots: hasFacets
@@ -39,15 +39,15 @@ export default async function SearchPage(props: {
   const products = await getProducts();
   const resultsText = products.length > 1 ? "results" : "result";
   const itemListJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
+    "@context": "https://schema.org",
+    "@type": "ItemList",
     itemListElement: products.map((p, idx) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: idx + 1,
       url: `/product/${p.handle}`,
-      name: p.title
+      name: p.title,
     })),
-    numberOfItems: products.length
+    numberOfItems: products.length,
   };
 
   return (

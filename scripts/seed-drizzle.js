@@ -1,10 +1,16 @@
 // Cargar variables de entorno desde .env.local
-import { config } from 'dotenv';
-config({ path: '.env.local' });
+import { config } from "dotenv";
+config({ path: ".env.local" });
 
-import { db } from '../lib/db/index.js';
-import { collections, productCollections, productImages, products, productVariants } from '../lib/db/schema.js';
-import { getBlobUrlsForFolder } from './generate-blob-urls.js';
+import { db } from "../lib/db/index.js";
+import {
+  collections,
+  productCollections,
+  productImages,
+  products,
+  productVariants,
+} from "../lib/db/schema.js";
+import { getBlobUrlsForFolder } from "./generate-blob-urls.js";
 
 async function main() {
   console.log("🌱 Reseeding database con Drizzle (women pajamas)...");
@@ -18,32 +24,41 @@ async function main() {
 
   // Create needed collections
   const now = new Date();
-  const [featured] = await db.insert(collections).values({
-    handle: "hidden-homepage-featured-items",
-    title: "Destacados",
-    description: "Piyamas destacados para la portada",
-    seoTitle: "Piyamas Destacados",
-    seoDescription: "Descubre nuestros piyamas destacados para mujer",
-    updatedAt: now,
-  }).returning();
+  const [featured] = await db
+    .insert(collections)
+    .values({
+      handle: "hidden-homepage-featured-items",
+      title: "Destacados",
+      description: "Piyamas destacados para la portada",
+      seoTitle: "Piyamas Destacados",
+      seoDescription: "Descubre nuestros piyamas destacados para mujer",
+      updatedAt: now,
+    })
+    .returning();
 
-  const [carousel] = await db.insert(collections).values({
-    handle: "hidden-homepage-carousel",
-    title: "Carrusel Portada",
-    description: "Piyamas para el carrusel de portada",
-    seoTitle: "Carrusel de Piyamas",
-    seoDescription: "Explora nuestros piyamas en el carrusel de portada",
-    updatedAt: now,
-  }).returning();
+  const [carousel] = await db
+    .insert(collections)
+    .values({
+      handle: "hidden-homepage-carousel",
+      title: "Carrusel Portada",
+      description: "Piyamas para el carrusel de portada",
+      seoTitle: "Carrusel de Piyamas",
+      seoDescription: "Explora nuestros piyamas en el carrusel de portada",
+      updatedAt: now,
+    })
+    .returning();
 
-  const [womenPajamas] = await db.insert(collections).values({
-    handle: "piyamas-mujer",
-    title: "Piyamas Mujer",
-    description: "Colección de piyamas para mujer",
-    seoTitle: "Piyamas de Mujer",
-    seoDescription: "Piyamas cómodos y elegantes para mujer",
-    updatedAt: now,
-  }).returning();
+  const [womenPajamas] = await db
+    .insert(collections)
+    .values({
+      handle: "piyamas-mujer",
+      title: "Piyamas Mujer",
+      description: "Colección de piyamas para mujer",
+      seoTitle: "Piyamas de Mujer",
+      seoDescription: "Piyamas cómodos y elegantes para mujer",
+      updatedAt: now,
+    })
+    .returning();
 
   console.log("✅ Collections created");
 
@@ -63,9 +78,7 @@ async function main() {
       description: "Conjunto de de algodón suave para noches placenteras.",
       price: 47999,
       folder: "01",
-      sizes: [
-        { size: "M", amount: 1 }
-      ],
+      sizes: [{ size: "M", amount: 1 }],
     },
     {
       handle: "piyama-algodon-rosa-con-borde",
@@ -73,9 +86,7 @@ async function main() {
       description: "Algodón deslizante para máximo confort.",
       price: 71999,
       folder: "02",
-      sizes: [
-        { size: "S", amount: 1 }
-      ],
+      sizes: [{ size: "S", amount: 1 }],
     },
     {
       handle: "piyama-invierno-negro",
@@ -83,9 +94,7 @@ async function main() {
       description: "Tejido cálido ideal para noches frías.",
       price: 79999,
       folder: "03",
-      sizes: [
-        { size: "M", amount: 0 }
-      ],
+      sizes: [{ size: "M", amount: 0 }],
     },
     {
       handle: "piyama-azul-cuadritos",
@@ -93,9 +102,7 @@ async function main() {
       description: "Acabado lujoso con caída perfecta.",
       price: 85999,
       folder: "04",
-      sizes: [
-        { size: "M", amount: 1 }
-      ],
+      sizes: [{ size: "M", amount: 1 }],
     },
     {
       handle: "piyama-rosa-saten-largo",
@@ -106,7 +113,7 @@ async function main() {
       sizes: [
         { size: "S", amount: 1 },
         { size: "M", amount: 1 },
-        { size: "L", amount: 1 }
+        { size: "L", amount: 1 },
       ],
     },
     {
@@ -118,7 +125,7 @@ async function main() {
       sizes: [
         { size: "S", amount: 1 },
         { size: "M", amount: 1 },
-        { size: "L", amount: 1 }
+        { size: "L", amount: 1 },
       ],
     },
     {
@@ -129,7 +136,7 @@ async function main() {
       folder: "07",
       sizes: [
         { size: "L", amount: 1 },
-        { size: "XL", amount: 1 }
+        { size: "XL", amount: 1 },
       ],
     },
     {
@@ -138,9 +145,7 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 69999,
       folder: "08",
-      sizes: [
-        { size: "M", amount: 1 }
-      ],
+      sizes: [{ size: "M", amount: 1 }],
     },
     {
       handle: "piyama-liso-plateado-largo",
@@ -148,9 +153,7 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "09",
-      sizes: [
-        { size: "M", amount: 0 }
-      ],
+      sizes: [{ size: "M", amount: 0 }],
     },
     {
       handle: "piyama-animal-print-largo",
@@ -160,7 +163,7 @@ async function main() {
       folder: "10",
       sizes: [
         { size: "S", amount: 1 },
-        { size: "M", amount: 1 }
+        { size: "M", amount: 1 },
       ],
     },
     {
@@ -169,9 +172,7 @@ async function main() {
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "11",
-      sizes: [
-        { size: "M", amount: 0 }
-      ],
+      sizes: [{ size: "M", amount: 0 }],
     },
   ];
 
@@ -183,47 +184,56 @@ async function main() {
       const finalImages = imagesForDb.length > 0 ? imagesForDb : fallbackImage;
 
       // Crear el producto
-      const [newProduct] = await db.insert(products).values({
-        handle: product.handle,
-        title: product.title,
-        description: product.description,
-        descriptionHtml: `<p>${product.description}</p>`,
-        availableForSale: product.sizes.some(s => s.amount > 0),
-        tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
-        seoTitle: product.title,
-        seoDescription: product.description,
-        updatedAt: now,
-      }).returning();
+      const [newProduct] = await db
+        .insert(products)
+        .values({
+          handle: product.handle,
+          title: product.title,
+          description: product.description,
+          descriptionHtml: `<p>${product.description}</p>`,
+          availableForSale: product.sizes.some((s) => s.amount > 0),
+          tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
+          seoTitle: product.title,
+          seoDescription: product.description,
+          updatedAt: now,
+        })
+        .returning();
 
       // Crear variantes
       const variants = await Promise.all(
         product.sizes.map((sizeInfo) =>
-          db.insert(productVariants).values({
-            productId: newProduct.id,
-            title: sizeInfo.size,
-            price: product.price,
-            currencyCode: "ARS",
-            availableForSale: sizeInfo.amount > 0,
-            selectedOptions: JSON.stringify([
-              { name: "Talla", value: sizeInfo.size },
-            ]),
-            inventoryQuantity: sizeInfo.amount,
-          }).returning()
-        )
+          db
+            .insert(productVariants)
+            .values({
+              productId: newProduct.id,
+              title: sizeInfo.size,
+              price: product.price,
+              currencyCode: "ARS",
+              availableForSale: sizeInfo.amount > 0,
+              selectedOptions: JSON.stringify([
+                { name: "Talla", value: sizeInfo.size },
+              ]),
+              inventoryQuantity: sizeInfo.amount,
+            })
+            .returning(),
+        ),
       );
 
       // Crear imágenes
       const images = await Promise.all(
         finalImages.map((imgUrl, imageIdx) =>
-          db.insert(productImages).values({
-            productId: newProduct.id,
-            url: imgUrl,
-            altText: product.title,
-            width: 1600,
-            height: 1200,
-            isFeatured: imageIdx === 0,
-          }).returning()
-        )
+          db
+            .insert(productImages)
+            .values({
+              productId: newProduct.id,
+              url: imgUrl,
+              altText: product.title,
+              width: 1600,
+              height: 1200,
+              isFeatured: imageIdx === 0,
+            })
+            .returning(),
+        ),
       );
 
       // Crear relaciones con colecciones
@@ -243,15 +253,14 @@ async function main() {
       ]);
 
       return newProduct;
-    })
+    }),
   );
 
   console.log(`✅ ${productPayloads.length} productos de piyamas creados`);
   console.log("🎉 Database seeded successfully with Drizzle!");
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

@@ -1,35 +1,33 @@
-'use client';
+"use client";
 
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
-import { updateItemQuantity } from 'components/cart/actions';
-import type { CartItem } from 'lib/types';
-import { useActionState } from 'react';
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import { updateItemQuantity } from "components/cart/actions";
+import type { CartItem } from "lib/types";
+import { useActionState } from "react";
 
-function SubmitButton({ 
-  type, 
-  disabled 
-}: { 
-  type: 'plus' | 'minus';
+function SubmitButton({
+  type,
+  disabled,
+}: {
+  type: "plus" | "minus";
   disabled?: boolean;
 }) {
   return (
     <button
       type="submit"
       disabled={disabled}
-      aria-label={
-        type === 'plus' ? 'Aumentar cantidad' : 'Reducir cantidad'
-      }
+      aria-label={type === "plus" ? "Aumentar cantidad" : "Reducir cantidad"}
       className={clsx(
-        'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200',
+        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200",
         {
-          'ml-auto': type === 'minus',
-          'hover:border-neutral-800 hover:opacity-80': !disabled,
-          'cursor-not-allowed opacity-50': disabled
-        }
+          "ml-auto": type === "minus",
+          "hover:border-neutral-800 hover:opacity-80": !disabled,
+          "cursor-not-allowed opacity-50": disabled,
+        },
       )}
     >
-      {type === 'plus' ? (
+      {type === "plus" ? (
         <PlusIcon className="h-4 w-4 dark:text-neutral-500" />
       ) : (
         <MinusIcon className="h-4 w-4 dark:text-neutral-500" />
@@ -41,23 +39,24 @@ function SubmitButton({
 export function EditItemQuantityButton({
   item,
   type,
-  optimisticUpdate
+  optimisticUpdate,
 }: {
   item: CartItem;
-  type: 'plus' | 'minus';
+  type: "plus" | "minus";
   optimisticUpdate: any;
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);
-  
+
   // Validar límites de inventario
-  const newQuantity = type === 'plus' ? item.quantity + 1 : item.quantity - 1;
-  const isDisabled = type === 'plus' 
-    ? newQuantity > item.merchandise.inventoryQuantity 
-    : newQuantity < 0;
-  
+  const newQuantity = type === "plus" ? item.quantity + 1 : item.quantity - 1;
+  const isDisabled =
+    type === "plus"
+      ? newQuantity > item.merchandise.inventoryQuantity
+      : newQuantity < 0;
+
   const payload = {
     merchandiseId: item.merchandise.id,
-    quantity: newQuantity
+    quantity: newQuantity,
   };
   const updateItemQuantityAction = formAction.bind(null, payload);
 
