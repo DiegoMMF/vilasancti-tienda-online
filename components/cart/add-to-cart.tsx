@@ -6,6 +6,7 @@ import { useProduct } from "components/product/product-context";
 import { Product, ProductVariant } from "lib/types";
 import { useActionState } from "react";
 import { useCart } from "./cart-context";
+import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 
 function SubmitButton({
   availableForSale,
@@ -22,7 +23,11 @@ function SubmitButton({
 
   if (buttonState === "agotado") {
     return (
-      <button disabled className={clsx(buttonClasses, disabledClasses)}>
+      <button
+        type="button"
+        disabled
+        className={clsx(buttonClasses, disabledClasses)}
+      >
         Agotado
       </button>
     );
@@ -31,6 +36,7 @@ function SubmitButton({
   if (buttonState === "seleccionar-opcion") {
     return (
       <button
+        type="button"
         aria-label="Selecciona una talla"
         disabled
         className={clsx(buttonClasses, disabledClasses)}
@@ -42,6 +48,7 @@ function SubmitButton({
 
   return (
     <button
+      type="submit"
       aria-label="Agregar al carrito"
       className={clsx(buttonClasses, {
         "hover:opacity-90": true,
@@ -57,6 +64,7 @@ export function AddToCart({ product }: { product: Product }) {
   const { addCartItem } = useCart();
   const { state } = useProduct();
   const [message, formAction] = useActionState(addItem, null);
+  const { show, hide } = useLoadingOverlay();
 
   // Encontrar la variante que coincide con el estado actual
   const variant = variants.find((variant: ProductVariant) =>
@@ -98,8 +106,13 @@ export function AddToCart({ product }: { product: Product }) {
     <form
       action={async () => {
         if (buttonState === "agregar-al-carrito" && finalVariant) {
-          addCartItem(finalVariant, product);
-          addItemAction();
+          try {
+            show();
+            addCartItem(finalVariant, product);
+            await addItemAction();
+          } finally {
+            hide();
+          }
         }
       }}
     >

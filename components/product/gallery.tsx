@@ -21,7 +21,7 @@ export function Gallery({
     "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center";
 
   return (
-    <form>
+    <div>
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
         {images[imageIndex] && (
           <Image
@@ -38,7 +38,8 @@ export function Gallery({
           <div className="absolute bottom-[15%] flex w-full justify-center">
             <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur-sm dark:border-black dark:bg-neutral-900/80">
               <button
-                formAction={() => {
+                type="button"
+                onClick={() => {
                   updateImage(previousImageIndex.toString());
                 }}
                 aria-label="Previous product image"
@@ -48,7 +49,8 @@ export function Gallery({
               </button>
               <div className="mx-1 h-6 w-px bg-neutral-500"></div>
               <button
-                formAction={() => {
+                type="button"
+                onClick={() => {
                   updateImage(nextImageIndex.toString());
                 }}
                 aria-label="Next product image"
@@ -69,7 +71,8 @@ export function Gallery({
             return (
               <li key={image.src} className="h-20 w-20">
                 <button
-                  formAction={() => {
+                  type="button"
+                  onClick={() => {
                     updateImage(index.toString());
                   }}
                   aria-label="Select product image"
@@ -88,6 +91,6 @@ export function Gallery({
           })}
         </ul>
       ) : null}
-    </form>
+    </div>
   );
 }

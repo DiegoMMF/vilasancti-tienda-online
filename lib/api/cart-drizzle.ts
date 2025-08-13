@@ -17,38 +17,48 @@ function calculateItemCost(quantity: number, price: string): string {
 }
 
 function reshapeCart(cartData: any, itemsData: any[]): Cart {
-  const lines: CartItem[] = itemsData.map((item) => ({
-    id: item.id,
-    quantity: item.quantity,
-    cost: {
-      totalAmount: {
-        amount: calculateItemCost(item.quantity, item.variant.price.toString()),
-        currencyCode: item.variant.currencyCode,
+  const lines: CartItem[] = itemsData.map((item) => {
+    // Drizzle join shape: { cartItems, productVariants, products }
+    const variant = item.productVariants || {};
+    const product = item.products || {};
+    const line = item.cartItems || {};
+
+    const currencyCode = variant.currencyCode || "USD";
+    const priceStr = (variant.price ?? 0).toString();
+
+    return {
+      id: line.id,
+      quantity: line.quantity ?? 1,
+      cost: {
+        totalAmount: {
+          amount: calculateItemCost(line.quantity ?? 1, priceStr),
+          currencyCode,
+        },
       },
-    },
-    merchandise: {
-      id: item.variant.id,
-      title: item.variant.title,
-      availableForSale: item.variant.availableForSale,
-      inventoryQuantity: item.variant.inventoryQuantity,
-      selectedOptions: JSON.parse(item.variant.selectedOptions || "[]"),
-      product: {
-        id: item.product.id,
-        handle: item.product.handle,
-        title: item.product.title,
-        featuredImage: (() => {
-          const featured =
-            item.images.find((img: any) => img.isFeatured) || item.images[0];
-          return {
-            url: featured?.url || "",
-            altText: item.product.title,
-            width: featured?.width || 800,
-            height: featured?.height || 600,
-          };
-        })(),
+      merchandise: {
+        id: variant.id,
+        title: variant.title,
+        availableForSale: Boolean(variant.availableForSale),
+        inventoryQuantity: variant.inventoryQuantity ?? 0,
+        selectedOptions: JSON.parse(variant.selectedOptions || "[]"),
+        product: {
+          id: product.id,
+          handle: product.handle,
+          title: product.title,
+          featuredImage: (() => {
+            const imgs = item.images || [];
+            const featured = imgs.find((img: any) => img.isFeatured) || imgs[0];
+            return {
+              url: featured?.url || "",
+              altText: product.title,
+              width: featured?.width || 800,
+              height: featured?.height || 600,
+            };
+          })(),
+        },
       },
-    },
-  }));
+    };
+  });
 
   const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = lines.reduce(

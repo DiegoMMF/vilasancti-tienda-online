@@ -2,6 +2,7 @@ import { GridTileImage } from "components/grid/tile";
 import { getCollectionProducts } from "lib/api/products-drizzle";
 import type { Product } from "lib/types";
 import Link from "next/link";
+import { OverlayLink } from "components/ui/overlay-link";
 
 function ThreeItemGridItem({
   item,
@@ -20,7 +21,7 @@ function ThreeItemGridItem({
           : "md:col-span-2 md:row-span-1"
       }
     >
-      <Link
+      <OverlayLink
         className="relative block aspect-square h-full w-full"
         href={`/product/${item.handle}`}
         prefetch={true}
@@ -42,7 +43,7 @@ function ThreeItemGridItem({
             currencyCode: item.priceRange.maxVariantPrice.currencyCode,
           }}
         />
-      </Link>
+      </OverlayLink>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import Grid from "components/grid";
 import { GridTileImage } from "components/grid/tile";
 import { Product } from "lib/types";
 import Link from "next/link";
+import { OverlayLink } from "components/ui/overlay-link";
 
 export default function ProductGridItems({
   products,
@@ -12,7 +13,7 @@ export default function ProductGridItems({
     <>
       {products.map((product, index) => (
         <Grid.Item key={product.handle} className="animate-fadeIn">
-          <Link
+          <OverlayLink
             className="relative inline-block h-full w-full"
             href={`/product/${product.handle}`}
             prefetch={true}
@@ -32,7 +33,7 @@ export default function ProductGridItems({
               fetchPriority={index === 0 ? "high" : undefined}
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
-          </Link>
+          </OverlayLink>
         </Grid.Item>
       ))}
     </>

@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, ne } from "drizzle-orm";
+import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { db } from "../db/index";
 import {
   collections,
@@ -281,8 +281,9 @@ export async function getProductRecommendations(
     return [];
   }
 
-  const recommendations = await db
-    .select()
+  // First, fetch distinct product IDs of recommendations to satisfy GROUP BY rules
+  const recIdRows = await db
+    .select({ id: products.id })
     .from(products)
     .innerJoin(
       productCollections,
@@ -295,11 +296,19 @@ export async function getProductRecommendations(
         eq(products.availableForSale, true),
       ),
     )
+    .orderBy(sql`random()`)
     .groupBy(products.id)
     .limit(4);
-  if (recommendations.length === 0) return [];
 
-  const recIds = recommendations.map((r) => r.products.id);
+  if (recIdRows.length === 0) return [];
+
+  const recIds = recIdRows.map((r) => r.id);
+
+  // Then fetch full product records for those IDs
+  const dbRecProducts = await db
+    .select()
+    .from(products)
+    .where(inArray(products.id, recIds));
   const [allVariants, allImages] = await Promise.all([
     db
       .select()
@@ -325,12 +334,12 @@ export async function getProductRecommendations(
     imagesByProduct.set(img.productId, arr);
   }
 
-  return recommendations
+  return dbRecProducts
     .map((rec) =>
       reshapeProduct(
-        rec.products,
-        variantsByProduct.get(rec.products.id) || [],
-        imagesByProduct.get(rec.products.id) || [],
+        rec,
+        variantsByProduct.get(rec.id) || [],
+        imagesByProduct.get(rec.id) || [],
       ),
     )
     .filter(Boolean) as Product[];

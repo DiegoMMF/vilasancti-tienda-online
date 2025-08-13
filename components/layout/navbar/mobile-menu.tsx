@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { OverlayLink } from "components/ui/overlay-link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, Suspense, useEffect, useState } from "react";
 
@@ -83,13 +84,13 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                         className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
                         key={item.title}
                       >
-                        <Link
+                        <OverlayLink
                           href={item.path}
                           prefetch={true}
                           onClick={closeMobileMenu}
                         >
                           {item.title}
-                        </Link>
+                        </OverlayLink>
                       </li>
                     ))}
                   </ul>

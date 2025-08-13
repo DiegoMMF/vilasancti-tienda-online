@@ -33,9 +33,8 @@ export function ProductProvider({
 
     if (searchParams) {
       for (const [key, value] of searchParams.entries()) {
-        if (key !== "image") {
-          urlState[key] = value;
-        }
+        // Incluir todos los parámetros (incluido 'image') en el estado
+        urlState[key] = value;
       }
     }
 

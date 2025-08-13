@@ -14,6 +14,7 @@ import {
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
 import Link from "next/link";
+import { OverlayLink } from "components/ui/overlay-link";
 import { Suspense } from "react";
 
 export async function generateMetadata(props: {
@@ -121,13 +122,13 @@ export default async function ProductPage(props: {
 
       {/* Botón Volver Flotante */}
       <div className="fixed top-20 left-4 z-50">
-        <Link
+        <OverlayLink
           href="/search/piyamas-mujer"
           className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-sm text-neutral-700 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-lg dark:border-neutral-700 dark:bg-black/90 dark:text-neutral-300 dark:hover:bg-black"
           aria-label="Volver a Piyamas"
         >
           <ArrowLeftIcon className="h-5 w-5" />
-        </Link>
+        </OverlayLink>
       </div>
 
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
@@ -178,7 +179,7 @@ async function RelatedProducts({ id }: { id: string }) {
             key={product.id}
             className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
           >
-            <Link
+            <OverlayLink
               className="relative h-full w-full"
               href={`/product/${product.handle}`}
               prefetch={true}
@@ -194,7 +195,7 @@ async function RelatedProducts({ id }: { id: string }) {
                 fill
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
               />
-            </Link>
+            </OverlayLink>
           </li>
         ))}
       </ul>

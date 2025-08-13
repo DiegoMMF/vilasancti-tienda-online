@@ -3,14 +3,19 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Form from "next/form";
 import { useSearchParams } from "next/navigation";
+import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 
 export default function Search() {
   const searchParams = useSearchParams();
+  const { show } = useLoadingOverlay();
 
   return (
     <Form
       action="/search"
       className="w-max-[550px] relative w-full lg:w-80 xl:w-full"
+      onSubmit={() => {
+        show();
+      }}
     >
       <input
         key={searchParams?.get("q")}

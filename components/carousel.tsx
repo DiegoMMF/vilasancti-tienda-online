@@ -1,5 +1,6 @@
 import { getCollectionProducts } from "lib/api/products-drizzle";
 import Link from "next/link";
+import { OverlayLink } from "components/ui/overlay-link";
 import { GridTileImage } from "./grid/tile";
 
 export async function Carousel() {
@@ -19,7 +20,7 @@ export async function Carousel() {
             key={`${product.handle}${i}`}
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
-            <Link
+            <OverlayLink
               href={`/product/${product.handle}`}
               className="relative h-full w-full"
             >
@@ -34,7 +35,7 @@ export async function Carousel() {
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
               />
-            </Link>
+            </OverlayLink>
           </li>
         ))}
       </ul>
