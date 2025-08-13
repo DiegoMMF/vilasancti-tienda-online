@@ -16,11 +16,6 @@ export function ProductDescription({ product }: { product: Product }) {
               currencyCode={product.priceRange.maxVariantPrice.currencyCode}
             />
           </div>
-          {!product.availableForSale ? (
-            <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
-              AGOTADO
-            </span>
-          ) : null}
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />

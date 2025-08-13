@@ -10,41 +10,40 @@ import { useCart } from './cart-context';
 
 function SubmitButton({
   availableForSale,
-  selectedVariantId
+  selectedVariantId,
+  buttonState
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
+  buttonState: 'agotado' | 'seleccionar-opcion' | 'agregar-al-carrito';
 }) {
   const buttonClasses =
     'relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white';
   const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
 
-  if (!availableForSale) {
+  if (buttonState === 'agotado') {
     return (
       <button disabled className={clsx(buttonClasses, disabledClasses)}>
-        Out Of Stock
+        Agotado
       </button>
     );
   }
 
-  if (!selectedVariantId) {
+  if (buttonState === 'seleccionar-opcion') {
     return (
       <button
-        aria-label="Please select an option"
+        aria-label="Selecciona una talla"
         disabled
         className={clsx(buttonClasses, disabledClasses)}
       >
-        <div className="absolute left-0 ml-4">
-          <PlusIcon className="h-5" />
-        </div>
-        Add To Cart
+        Selecciona una talla
       </button>
     );
   }
 
   return (
     <button
-      aria-label="Add to cart"
+      aria-label="Agregar al carrito"
       className={clsx(buttonClasses, {
         'hover:opacity-90': true
       })}
@@ -52,39 +51,62 @@ function SubmitButton({
       <div className="absolute left-0 ml-4">
         <PlusIcon className="h-5" />
       </div>
-      Add To Cart
+      Agregar al Carrito
     </button>
   );
 }
 
 export function AddToCart({ product }: { product: Product }) {
-  const { variants, availableForSale } = product;
+  const { variants } = product;
   const { addCartItem } = useCart();
   const { state } = useProduct();
   const [message, formAction] = useActionState(addItem, null);
 
+  // Encontrar la variante que coincide con el estado actual
   const variant = variants.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
       (option) => option.value === state[option.name.toLowerCase()]
     )
   );
-  const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
-  const selectedVariantId = variant?.id || defaultVariantId;
+
+  const selectedVariantId = variant?.id;
   const addItemAction = formAction.bind(null, selectedVariantId);
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
-  )!;
+  );
+
+  // Verificar si hay alguna variante disponible en el producto
+  const hasAnyAvailableVariant = variants.some(v => v.availableForSale);
+  
+  // Verificar si la variante seleccionada está disponible
+  const isSelectedVariantAvailable = finalVariant?.availableForSale;
+
+  // Determinar el estado del botón
+  let buttonState: 'agotado' | 'seleccionar-opcion' | 'agregar-al-carrito' = 'seleccionar-opcion';
+  
+  if (!hasAnyAvailableVariant) {
+    buttonState = 'agotado';
+  } else if (!selectedVariantId) {
+    buttonState = 'seleccionar-opcion';
+  } else if (isSelectedVariantAvailable) {
+    buttonState = 'agregar-al-carrito';
+  } else {
+    buttonState = 'agotado';
+  }
 
   return (
     <form
       action={async () => {
-        addCartItem(finalVariant, product);
-        addItemAction();
+        if (buttonState === 'agregar-al-carrito' && finalVariant) {
+          addCartItem(finalVariant, product);
+          addItemAction();
+        }
       }}
     >
       <SubmitButton
-        availableForSale={availableForSale}
-        selectedVariantId={selectedVariantId}
+        availableForSale={buttonState === 'agregar-al-carrito'}
+        selectedVariantId={buttonState === 'agregar-al-carrito' ? selectedVariantId : undefined}
+        buttonState={buttonState}
       />
       <p aria-live="polite" className="sr-only" role="status">
         {message}

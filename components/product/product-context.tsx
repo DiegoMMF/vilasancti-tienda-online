@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import React, { createContext, useCallback, useContext, useMemo, useOptimistic } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { createContext, useCallback, useContext, useMemo } from 'react';
 
 type ProductState = {
   [key: string]: string;
@@ -11,39 +11,70 @@ type ProductState = {
 
 type ProductContextType = {
   state: ProductState;
-  updateOption: (name: string, value: string) => ProductState;
-  updateImage: (index: string) => ProductState;
+  updateOption: (name: string, value: string) => void;
+  updateImage: (index: string) => void;
 };
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
-export function ProductProvider({ children, initialState }: { children: React.ReactNode; initialState?: Record<string, string> }) {
-  const getInitialState = () => ({ ...(initialState || {}) } as ProductState);
-
-  const [state, setOptimisticState] = useOptimistic(
-    getInitialState(),
-    (prevState: ProductState, update: ProductState) => ({
-      ...prevState,
-      ...update
-    })
-  );
+export function ProductProvider({ 
+  children, 
+  product 
+}: { 
+  children: React.ReactNode; 
+  product?: any;
+}) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Estado derivado directamente de searchParams
+  const state = useMemo(() => {
+    const urlState: ProductState = {};
+    
+    if (searchParams) {
+      for (const [key, value] of searchParams.entries()) {
+        if (key !== 'image') {
+          urlState[key] = value;
+        }
+      }
+    }
+    
+    // Solo preseleccionar si hay UNA sola variante y no hay parámetros en URL
+    if (Object.keys(urlState).length === 0 && product?.variants?.length === 1) {
+      const variant = product.variants[0];
+      variant.selectedOptions.forEach((option: any) => {
+        urlState[option.name.toLowerCase()] = option.value;
+      });
+    }
+    
+    return urlState;
+  }, [searchParams, product]);
 
   const updateOption = useCallback(
     (name: string, value: string) => {
-      const newState = { [name]: value };
-      setOptimisticState(newState);
-      return { ...state, ...newState };
+      const newParams = new URLSearchParams(window.location.search);
+      
+      if (value === '') {
+        // Deseleccionar: remover parámetro
+        newParams.delete(name);
+      } else {
+        // Seleccionar: agregar/actualizar parámetro
+        newParams.set(name, value);
+      }
+      
+      // Actualizar URL
+      router.push(`?${newParams.toString()}`, { scroll: false });
     },
-    [setOptimisticState, state]
+    [router]
   );
 
   const updateImage = useCallback(
     (index: string) => {
-      const newState = { image: index };
-      setOptimisticState(newState);
-      return { ...state, ...newState };
+      const newParams = new URLSearchParams(window.location.search);
+      newParams.set('image', index);
+      router.push(`?${newParams.toString()}`, { scroll: false });
     },
-    [setOptimisticState, state]
+    [router]
   );
 
   const value = useMemo(
@@ -72,7 +103,11 @@ export function useUpdateURL() {
   return (state: ProductState) => {
     const newParams = new URLSearchParams(window.location.search);
     Object.entries(state).forEach(([key, value]) => {
-      newParams.set(key, value);
+      if (value) {
+        newParams.set(key, value);
+      } else {
+        newParams.delete(key);
+      }
     });
     router.push(`?${newParams.toString()}`, { scroll: false });
   };
