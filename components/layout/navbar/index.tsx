@@ -1,9 +1,8 @@
 import CartModal from "components/cart/modal";
 import LogoSquare from "components/logo-square";
+import { OverlayLink } from "components/ui/overlay-link";
 import { getMenu } from "lib/api/menu-drizzle";
 import { Menu } from "lib/types";
-import Link from "next/link";
-import { OverlayLink } from "components/ui/overlay-link";
 import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";

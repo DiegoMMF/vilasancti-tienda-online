@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { useProduct } from "components/product/product-context";
+import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 import { ProductOption, ProductVariant } from "lib/types";
 
 export function VariantSelector({
@@ -12,6 +13,7 @@ export function VariantSelector({
   variants: ProductVariant[];
 }) {
   const { state, updateOption } = useProduct();
+  const { show, hide } = useLoadingOverlay();
 
   // Solo ocultar si no hay opciones en absoluto
   if (!options.length) {
@@ -41,15 +43,24 @@ export function VariantSelector({
   };
 
   // Función para manejar el toggle de opciones
-  const handleOptionToggle = (optionName: string, optionValue: string) => {
+  const handleOptionToggle = async (optionName: string, optionValue: string) => {
     const isCurrentlyActive = isOptionActive(optionName, optionValue);
 
-    if (isCurrentlyActive) {
-      // Si está activa, deseleccionar
-      updateOption(optionName, "");
-    } else {
-      // Si no está activa, seleccionar
-      updateOption(optionName, optionValue);
+    try {
+      show();
+      
+      if (isCurrentlyActive) {
+        // Si está activa, deseleccionar
+        updateOption(optionName, "");
+      } else {
+        // Si no está activa, seleccionar
+        updateOption(optionName, optionValue);
+      }
+      
+      // Pequeño delay para que el loader sea visible
+      await new Promise(resolve => setTimeout(resolve, 300));
+    } finally {
+      hide();
     }
   };
 

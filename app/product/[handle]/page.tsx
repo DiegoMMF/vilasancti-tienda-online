@@ -7,14 +7,13 @@ import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
 import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
+import { OverlayLink } from "components/ui/overlay-link";
 import {
-  getProduct,
-  getProductRecommendations,
+    getProduct,
+    getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
-import Link from "next/link";
-import { OverlayLink } from "components/ui/overlay-link";
 import { Suspense } from "react";
 
 export async function generateMetadata(props: {
@@ -133,7 +132,17 @@ export default async function ProductPage(props: {
 
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
-          <div className="h-full w-full basis-full lg:basis-4/6">
+          {/* Espacio adicional entre secciones en mobile */}
+          <div className="mb-6 lg:mb-0" />
+          {/* Información del producto - arriba en mobile, derecha en desktop */}
+          <div className="order-1 basis-full lg:order-2 lg:basis-2/6">
+            <Suspense fallback={null}>
+              <ProductDescription product={product} />
+            </Suspense>
+          </div>
+
+          {/* Galería de imágenes - abajo en mobile, izquierda en desktop */}
+          <div className="order-2 h-full w-full basis-full lg:order-1 lg:basis-4/6">
             <Suspense
               fallback={
                 <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
@@ -145,12 +154,6 @@ export default async function ProductPage(props: {
                   altText: image.altText,
                 }))}
               />
-            </Suspense>
-          </div>
-
-          <div className="basis-full lg:basis-2/6">
-            <Suspense fallback={null}>
-              <ProductDescription product={product} />
             </Suspense>
           </div>
         </div>

@@ -9,6 +9,12 @@ export function ProductDescription({ product }: { product: Product }) {
     <>
       <div className="mb-6 flex flex-col border-b pb-6 dark:border-neutral-700">
         <h1 className="mb-2 text-5xl font-medium">{product.title}</h1>
+        {product.descriptionHtml ? (
+          <Prose
+            className="mb-4 text-sm leading-tight dark:text-white/[60%]"
+            html={product.descriptionHtml}
+          />
+        ) : null}
         <div className="flex items-center gap-3">
           <div className="mr-auto w-auto rounded-full bg-blue-600 p-2 text-sm text-white">
             <Price
@@ -19,13 +25,9 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
-      {product.descriptionHtml ? (
-        <Prose
-          className="mb-6 text-sm leading-tight dark:text-white/[60%]"
-          html={product.descriptionHtml}
-        />
-      ) : null}
       <AddToCart product={product} />
+      {/* Espacio adicional para separar del botón de las imágenes en mobile */}
+      <div className="mb-8 lg:mb-0" />
     </>
   );
 }

@@ -3,10 +3,11 @@
 import clsx from "clsx";
 import { addItem } from "components/cart/actions";
 import { useProduct } from "components/product/product-context";
+import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 import { Product, ProductVariant } from "lib/types";
 import { useActionState } from "react";
 import { useCart } from "./cart-context";
-import { useLoadingOverlay } from "components/ui/loading-overlay-context";
+import { useCartModal } from "./use-cart-modal";
 
 function SubmitButton({
   availableForSale,
@@ -65,6 +66,7 @@ export function AddToCart({ product }: { product: Product }) {
   const { state } = useProduct();
   const [message, formAction] = useActionState(addItem, null);
   const { show, hide } = useLoadingOverlay();
+  const { openCart } = useCartModal();
 
   // Encontrar la variante que coincide con el estado actual
   const variant = variants.find((variant: ProductVariant) =>
@@ -110,6 +112,10 @@ export function AddToCart({ product }: { product: Product }) {
             show();
             addCartItem(finalVariant, product);
             await addItemAction();
+            // Abrir el carrito después de agregar el producto
+            setTimeout(() => {
+              openCart();
+            }, 500);
           } finally {
             hide();
           }

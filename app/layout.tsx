@@ -1,7 +1,8 @@
 import { CartProvider } from "components/cart/cart-context";
+import { CartModalProvider } from "components/cart/use-cart-modal";
 import { Navbar } from "components/layout/navbar";
-import { GeistSans } from "geist/font/sans";
 import { LoadingOverlayProvider } from "components/ui/loading-overlay-context";
+import { GeistSans } from "geist/font/sans";
 import { getCart } from "lib/api/cart-drizzle";
 import { baseUrl } from "lib/utils";
 import { ReactNode, Suspense } from "react";
@@ -46,16 +47,18 @@ export default async function RootLayout({
           }}
         />
         <CartProvider cartPromise={cart}>
-          <Suspense fallback={null}>
-            <LoadingOverlayProvider>
-              <Navbar />
-              <main>
-                {children}
-                <Toaster closeButton />
-                {/* <WelcomeToast /> */}
-              </main>
-            </LoadingOverlayProvider>
-          </Suspense>
+          <CartModalProvider>
+            <Suspense fallback={null}>
+              <LoadingOverlayProvider>
+                <Navbar />
+                <main>
+                  {children}
+                  <Toaster closeButton />
+                  {/* <WelcomeToast /> */}
+                </main>
+              </LoadingOverlayProvider>
+            </Suspense>
+          </CartModalProvider>
         </CartProvider>
       </body>
     </html>
