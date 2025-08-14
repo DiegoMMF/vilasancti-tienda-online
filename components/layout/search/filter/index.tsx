@@ -27,7 +27,7 @@ export default function FilterList({
     <>
       <nav>
         {title ? (
-          <h3 className="hidden text-xs text-neutral-500 md:block dark:text-neutral-400">
+          <h3 className="hidden text-lg font-semibold text-[#bf9d6d] font-cormorant md:block mb-4">
             {title}
           </h3>
         ) : null}

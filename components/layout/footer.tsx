@@ -59,22 +59,22 @@ export default async function Footer() {
             <h3 className="text-lg font-semibold text-[#bf9d6d] font-cormorant">Enlaces Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <OverlayLink href="/" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200 font-inter">
+                <OverlayLink href="/" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter">
                   Inicio
                 </OverlayLink>
               </li>
               <li>
-                <OverlayLink href="/search" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200 font-inter">
+                <OverlayLink href="/search" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter">
                   Todos los Productos
                 </OverlayLink>
               </li>
               <li>
-                <OverlayLink href="/search/piyamas" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200 font-inter">
+                <OverlayLink href="/search/piyamas" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter">
                   Pijamas
                 </OverlayLink>
               </li>
               <li>
-                <OverlayLink href="/search/novedades" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200 font-inter">
+                <OverlayLink href="/search/novedades" className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter">
                   Novedades
                 </OverlayLink>
               </li>

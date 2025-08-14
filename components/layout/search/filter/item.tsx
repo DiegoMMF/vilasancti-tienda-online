@@ -19,11 +19,11 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
   newParams.delete("q");
 
   return (
-    <li className="mt-2 flex text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200" key={item.title}>
+    <li className="mt-2 flex text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200" key={item.title}>
       <DynamicTag
         href={createUrl(item.path, newParams)}
         className={clsx(
-          "w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100",
+          "w-full text-sm underline-offset-4 hover:no-underline dark:hover:text-neutral-100",
           {
             "underline underline-offset-4": active,
           },
@@ -53,13 +53,13 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
 
   return (
     <li
-      className="mt-2 flex text-sm text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200"
+      className="mt-2 flex text-sm text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200"
       key={item.title}
     >
       <DynamicTag
         prefetch={!active ? false : undefined}
         href={href}
-        className={clsx("w-full hover:underline hover:underline-offset-4", {
+        className={clsx("w-full hover:no-underline hover:underline-offset-4", {
           "underline underline-offset-4": active,
         })}
         onClick={() => !active && show()}
