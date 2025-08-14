@@ -1,9 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { Menu } from "lib/types";
-import Link from "next/link";
 import { OverlayLink } from "components/ui/overlay-link";
+import { Menu } from "lib/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,9 +19,9 @@ export function FooterMenuItem({ item }: { item: Menu }) {
       <OverlayLink
         href={item.path}
         className={clsx(
-          "block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300",
+          "block p-2 text-lg underline-offset-4 hover:text-[#bf9d6d]/70 hover:underline md:inline-block md:text-sm",
           {
-            "text-black dark:text-neutral-300": active,
+            "text-[#bf9d6d]": active,
           },
         )}
       >

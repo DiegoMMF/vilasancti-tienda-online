@@ -25,7 +25,7 @@ export default async function DesignToolkitPage() {
       {/* Tipografía */}
       <section>
         <h1 className="mb-2 text-4xl font-bold tracking-tight">Tipografía</h1>
-        <p className="text-neutral-600 dark:text-neutral-300 mb-6">
+        <p className="text-[#bf9d6d] mb-6">
           Jerarquía tipográfica base usando Geist Sans.
         </p>
         <div className="space-y-3">
@@ -36,7 +36,7 @@ export default async function DesignToolkitPage() {
           <h5 className="text-lg font-semibold">Heading 5</h5>
           <h6 className="text-base font-semibold">Heading 6</h6>
           <p className="text-base">Body text: tamaño y leading cómodos.</p>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-[#bf9d6d]">
             Small text
           </p>
         </div>
@@ -47,7 +47,7 @@ export default async function DesignToolkitPage() {
         <h2 className="mb-2 text-3xl font-semibold tracking-tight">
           Paleta de Colores
         </h2>
-        <p className="text-neutral-600 dark:text-neutral-300 mb-6">
+        <p className="text-[#bf9d6d] mb-6">
           Neutrales y estados. Asegurar contraste AA mínimo.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -78,11 +78,11 @@ export default async function DesignToolkitPage() {
           <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">
             Primario
           </button>
-          <button className="rounded-lg border border-neutral-200 px-4 py-2 text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900">
+          <button className="rounded-lg border border-neutral-200 px-4 py-2 text-[#bf9d6d] transition hover:bg-neutral-100">
             Secundario
           </button>
           <button
-            className="rounded-lg bg-neutral-200 px-4 py-2 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+            className="rounded-lg bg-neutral-200 px-4 py-2 text-[#bf9d6d]"
             disabled
           >
             Disabled

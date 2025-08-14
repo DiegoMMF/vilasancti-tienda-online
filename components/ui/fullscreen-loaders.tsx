@@ -43,7 +43,7 @@ export function LoaderShowcase() {
   return (
     <section className="space-y-4">
       <h2 className="mb-2 text-3xl font-semibold tracking-tight">Loader</h2>
-      <p className="text-neutral-600 dark:text-neutral-300">
+      <p className="text-[#bf9d6d]">
         Overlay de pantalla completa con alta transparencia y blur.
       </p>
       <div className="flex flex-wrap gap-3">

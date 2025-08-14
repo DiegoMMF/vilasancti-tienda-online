@@ -11,7 +11,7 @@ export function ProductDescription({ product }: { product: Product }) {
         <h1 className="mb-2 text-5xl font-medium text-[#bf9d6d] font-cormorant">{product.title}</h1>
         {product.descriptionHtml ? (
           <Prose
-            className="mb-4 text-sm leading-tight text-neutral-800 font-inter"
+            className="mb-4 text-sm leading-tight text-[#bf9d6d] font-inter"
             html={product.descriptionHtml}
           />
         ) : null}

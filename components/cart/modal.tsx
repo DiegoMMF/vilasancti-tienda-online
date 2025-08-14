@@ -155,7 +155,7 @@ export default function CartModal() {
                                     </span>
                                     {item.merchandise.title !==
                                     DEFAULT_OPTION ? (
-                                      <p className="text-sm text-neutral-600 font-inter">
+                                      <p className="text-sm text-[#bf9d6d] font-inter">
                                         {item.merchandise.title}
                                       </p>
                                     ) : null}
@@ -193,7 +193,7 @@ export default function CartModal() {
                         );
                       })}
                   </ul>
-                  <div className="py-4 text-sm text-neutral-600 font-inter">
+                  <div className="py-4 text-sm text-[#bf9d6d] font-inter">
                     <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1">
                       <p>Impuestos</p>
                                               <Price
