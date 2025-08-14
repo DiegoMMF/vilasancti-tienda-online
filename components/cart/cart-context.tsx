@@ -2,12 +2,12 @@
 
 import type { Cart, CartItem, Product, ProductVariant } from "lib/types";
 import React, {
-    createContext,
-    use,
-    useCallback,
-    useContext,
-    useMemo,
-    useOptimistic,
+  createContext,
+  use,
+  useCallback,
+  useContext,
+  useMemo,
+  useOptimistic,
 } from "react";
 
 type UpdateType = "plus" | "minus" | "delete";
@@ -121,9 +121,9 @@ function createEmptyCart(): Cart {
     totalQuantity: 0,
     lines: [],
     cost: {
-          subtotalAmount: { amount: "0", currencyCode: "ARS" },
-    totalAmount: { amount: "0", currencyCode: "ARS" },
-    totalTaxAmount: { amount: "0", currencyCode: "ARS" },
+      subtotalAmount: { amount: "0", currencyCode: "ARS" },
+      totalAmount: { amount: "0", currencyCode: "ARS" },
+      totalTaxAmount: { amount: "0", currencyCode: "ARS" },
     },
   };
 }

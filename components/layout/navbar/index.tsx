@@ -25,7 +25,10 @@ export async function Navbar() {
             prefetch={true}
             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
           >
-            <div className="text-2xl font-bold uppercase text-[#bf9d6d] tracking-wide" style={{ fontFamily: 'var(--font-cormorant)' }}>
+            <div
+              className="text-2xl font-bold uppercase text-[#bf9d6d] tracking-wide"
+              style={{ fontFamily: "var(--font-cormorant)" }}
+            >
               VILASANCTI
             </div>
           </OverlayLink>

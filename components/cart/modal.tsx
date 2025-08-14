@@ -75,7 +75,9 @@ export default function CartModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px]">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
+                <p className="text-lg font-semibold font-cormorant">
+                  Mi Carrito
+                </p>
                 <button aria-label="Cerrar carrito" onClick={closeCart}>
                   <CloseCart />
                 </button>
@@ -196,11 +198,11 @@ export default function CartModal() {
                   <div className="py-4 text-sm text-[#bf9d6d] font-inter">
                     <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1">
                       <p>Impuestos</p>
-                                              <Price
-                          className="text-right text-base text-[#bf9d6d]"
-                          amount={cart.cost.totalTaxAmount.amount}
-                          currencyCode={cart.cost.totalTaxAmount.currencyCode}
-                        />
+                      <Price
+                        className="text-right text-base text-[#bf9d6d]"
+                        amount={cart.cost.totalTaxAmount.amount}
+                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
+                      />
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
                       <p>Envío</p>

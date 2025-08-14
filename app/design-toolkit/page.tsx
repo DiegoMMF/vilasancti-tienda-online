@@ -36,9 +36,7 @@ export default async function DesignToolkitPage() {
           <h5 className="text-lg font-semibold">Heading 5</h5>
           <h6 className="text-base font-semibold">Heading 6</h6>
           <p className="text-base">Body text: tamaño y leading cómodos.</p>
-          <p className="text-sm text-[#bf9d6d]">
-            Small text
-          </p>
+          <p className="text-sm text-[#bf9d6d]">Small text</p>
         </div>
       </section>
 

@@ -8,7 +8,9 @@ type CartModalContextType = {
   isOpen: boolean;
 };
 
-const CartModalContext = createContext<CartModalContextType | undefined>(undefined);
+const CartModalContext = createContext<CartModalContextType | undefined>(
+  undefined,
+);
 
 export function CartModalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);

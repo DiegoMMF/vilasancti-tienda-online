@@ -1,11 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
 import {
-    boolean,
-    decimal,
-    integer,
-    pgTable,
-    text,
-    timestamp,
+  boolean,
+  decimal,
+  integer,
+  pgTable,
+  text,
+  timestamp,
 } from "drizzle-orm/pg-core";
 
 // Tabla Collections

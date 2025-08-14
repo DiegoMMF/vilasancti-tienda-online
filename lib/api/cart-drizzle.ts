@@ -2,11 +2,11 @@ import { and, eq, inArray } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { db } from "../db/index";
 import {
-    cartItems,
-    carts,
-    productImages,
-    productVariants,
-    products,
+  cartItems,
+  carts,
+  productImages,
+  productVariants,
+  products,
 } from "../db/schema";
 import type { Cart, CartItem } from "../types";
 

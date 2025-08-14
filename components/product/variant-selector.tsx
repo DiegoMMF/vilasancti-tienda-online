@@ -43,12 +43,15 @@ export function VariantSelector({
   };
 
   // Función para manejar el toggle de opciones
-  const handleOptionToggle = async (optionName: string, optionValue: string) => {
+  const handleOptionToggle = async (
+    optionName: string,
+    optionValue: string,
+  ) => {
     const isCurrentlyActive = isOptionActive(optionName, optionValue);
 
     try {
       show();
-      
+
       if (isCurrentlyActive) {
         // Si está activa, deseleccionar
         updateOption(optionName, "");
@@ -56,9 +59,9 @@ export function VariantSelector({
         // Si no está activa, seleccionar
         updateOption(optionName, optionValue);
       }
-      
+
       // Pequeño delay para que el loader sea visible
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 300));
     } finally {
       hide();
     }

@@ -16,7 +16,7 @@ const db = drizzle(client);
 async function resetDatabase() {
   try {
     console.log("🗑️  Limpiando base de datos...");
-    
+
     // Eliminar tablas en orden correcto (respetando foreign keys)
     await db.execute(sql`DROP TABLE IF EXISTS "cart_items" CASCADE`);
     await db.execute(sql`DROP TABLE IF EXISTS "carts" CASCADE`);
@@ -25,7 +25,7 @@ async function resetDatabase() {
     await db.execute(sql`DROP TABLE IF EXISTS "product_variants" CASCADE`);
     await db.execute(sql`DROP TABLE IF EXISTS "products" CASCADE`);
     await db.execute(sql`DROP TABLE IF EXISTS "collections" CASCADE`);
-    
+
     console.log("✅ Base de datos limpiada exitosamente");
   } catch (error) {
     console.error("❌ Error limpiando base de datos:", error);

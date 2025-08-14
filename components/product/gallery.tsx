@@ -40,7 +40,8 @@ export function Gallery({
     setCurrentImageIndex(imageIndex);
   }, [imageIndex]);
 
-  const nextImageIndex = currentImageIndex + 1 < images.length ? currentImageIndex + 1 : 0;
+  const nextImageIndex =
+    currentImageIndex + 1 < images.length ? currentImageIndex + 1 : 0;
   const previousImageIndex =
     currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
 
@@ -64,7 +65,7 @@ export function Gallery({
     <div>
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
         {isLoading && <ImageLoader />}
-        
+
         {images[currentImageIndex] && (
           <Image
             className="h-full w-full object-contain"
