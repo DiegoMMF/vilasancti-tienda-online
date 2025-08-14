@@ -19,7 +19,7 @@ function SubmitButton({
   buttonState: "agotado" | "seleccionar-opcion" | "agregar-al-carrito";
 }) {
   const buttonClasses =
-    "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
+    "relative flex w-full items-center justify-center rounded-full bg-[#bf9d6d] p-4 tracking-wide text-[#f0e3d7]";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (buttonState === "agotado") {

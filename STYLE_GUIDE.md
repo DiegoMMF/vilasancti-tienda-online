@@ -10,10 +10,13 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 
 - **Consistencia primero**
   - Reutiliza patrones y componentes existentes (grid, cards, navbar, modals, formularios).
-  - Mantén tokens (colores, tipografías, espaciados) coherentes.
+  - Mantén tokens (colores, tipografías, espaciados) coherentes con la paleta de marca.
 - **Contenido y legibilidad**
   - Jerarquía tipográfica clara (H1–H6, subtítulos, body).
-  - Contraste AA mínimo (WCAG 2.1) en texto y elementos interactivos.
+  - Contraste AA mínimo (WCAG 2.1) en texto y elementos interactivos sobre fondo antiquewhite.
+- **Identidad de marca**
+  - Usa `darkkhaki` (#bf9d6d) para elementos de marca, títulos principales y acentos.
+  - Mantén el fondo `antiquewhite` (#f0e3d7) como base para crear una experiencia visual cálida y elegante.
 - **Accesibilidad por defecto**
   - Navegación por teclado, focus visible, ARIA donde aplique.
   - Labels asociados, textos alternativos descriptivos en imágenes.
@@ -28,25 +31,27 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 ## Sistema de diseño (tokens)
 
 - **Colores**
-  - Base clara/oscura: usa variables y utilidades de Tailwind (`neutral`, `blue` para estados, `red/green` para errores/éxitos).
-  - Estados: `hover`, `focus`, `active`, `disabled` deben tener color/contraste definido.
+  - Base principal: `antiquewhite` (#f0e3d7) para fondos y `darkkhaki` (#bf9d6d) para textos de marca.
+  - Paleta complementaria: usa `neutral` para textos secundarios, `blue` para estados interactivos, `red/green` para errores/éxitos.
+  - Estados: `hover`, `focus`, `active`, `disabled` deben mantener contraste AA con el fondo antiquewhite.
 - **Tipografía**
   - Fuente: Geist Sans (ya integrada en `app/layout.tsx`).
   - Escalas sugeridas:
-    - H1: text-3xl/4xl
-    - H2: text-2xl/3xl
-    - H3: text-xl/2xl
-    - Body: text-base
-    - Small: text-sm
+    - H1: text-3xl/4xl text-[#bf9d6d] (color de marca)
+    - H2: text-2xl/3xl text-[#bf9d6d] (color de marca)
+    - H3: text-xl/2xl text-[#bf9d6d] (color de marca)
+    - Body: text-base text-neutral-800 (contraste con antiquewhite)
+    - Small: text-sm text-neutral-600
   - Line-height cómoda (leading-6/7) y `tracking-tight` en títulos.
 - **Espaciado**
   - Usa escala de Tailwind (2, 4, 6, 8, 12, 16, 24, 32…)
   - Márgenes/espaciados verticales consistentes entre secciones (p.ej. `py-8`, `py-12`).
 - **Bordes y radios**
   - Radio base en tarjetas e inputs: `rounded-lg`.
-  - Borde sutil por defecto: `border-neutral-200 dark:border-neutral-800`.
+  - Borde sutil por defecto: `border-[#bf9d6d]/20` para mantener coherencia con la paleta de marca.
 - **Sombra**
   - Elevaciones discretas: `shadow-sm` en hover, `shadow` en modals/dropdowns.
+  - Considera sombras con tinte cálido (`shadow-[#bf9d6d]/10`) para elementos de marca.
 
 ---
 
@@ -79,6 +84,7 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 ## Accesibilidad (A11y)
 
 - **Focus**: `focus-visible:outline` o estilo equivalente en todos los controles.
+- **Contraste**: Asegura contraste AA mínimo con el fondo antiquewhite (#f0e3d7) para todos los textos.
 - **Semántica**: Usa `section`, `nav`, `main`, `footer`, `h1–h6` correctamente.
 - **ARIA**: Solo cuando sea necesario; no dupliques semántica nativa.
 - **Teclado**: Navegación completa sin mouse; orden de tabulación lógico.
@@ -158,7 +164,7 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
 - **Hover/Active**
   - Transiciones de 150–300ms; nunca bloquees scroll o input.
 - **Focus**
-  - Estilo visible y consistente (`ring-2 ring-blue-600 ring-offset-2`).
+  - Estilo visible y consistente (`ring-2 ring-[#bf9d6d] ring-offset-2`) para mantener coherencia con la paleta de marca.
 - **Gestos y scroll**
   - Áreas táctiles adecuadas; `snap` sólo si mejora la UX.
 - **Feedback**

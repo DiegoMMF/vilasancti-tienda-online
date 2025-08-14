@@ -27,7 +27,7 @@ export async function Navbar() {
             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
           >
             <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
+            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block text-[#bf9d6d]">
               {SITE_NAME}
             </div>
           </OverlayLink>
@@ -38,7 +38,7 @@ export async function Navbar() {
                   <OverlayLink
                     href={item.path}
                     prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+                    className="text-neutral-600 underline-offset-4 hover:text-[#bf9d6d] hover:underline"
                   >
                     {item.title}
                   </OverlayLink>

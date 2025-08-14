@@ -123,7 +123,7 @@ export default async function ProductPage(props: {
       <div className="fixed top-20 left-4 z-50">
         <OverlayLink
           href="/search/piyamas-mujer"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-sm text-neutral-700 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-lg dark:border-neutral-700 dark:bg-black/90 dark:text-neutral-300 dark:hover:bg-black"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7]/90 backdrop-blur-sm text-[#bf9d6d] transition-all duration-200 hover:bg-[#f0e3d7] hover:scale-110 hover:shadow-lg"
           aria-label="Volver a Piyamas"
         >
           <ArrowLeftIcon className="h-5 w-5" />
@@ -131,7 +131,7 @@ export default async function ProductPage(props: {
       </div>
 
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
-        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
+        <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
           {/* Espacio adicional entre secciones en mobile */}
           <div className="mb-6 lg:mb-0" />
           {/* Información del producto - arriba en mobile, derecha en desktop */}
@@ -175,7 +175,7 @@ async function RelatedProducts({ id }: { id: string }) {
 
   return (
     <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
+      <h2 className="mb-4 text-2xl font-bold text-[#bf9d6d]">Related Products</h2>
       <ul className="flex w-full gap-4 overflow-x-auto pt-1">
         {unique.map((product) => (
           <li
