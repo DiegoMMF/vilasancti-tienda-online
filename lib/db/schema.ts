@@ -1,11 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
 import {
-  boolean,
-  decimal,
-  integer,
-  pgTable,
-  text,
-  timestamp,
+    boolean,
+    decimal,
+    integer,
+    pgTable,
+    text,
+    timestamp,
 } from "drizzle-orm/pg-core";
 
 // Tabla Collections
@@ -49,7 +49,7 @@ export const productVariants = pgTable("product_variants", {
     .references(() => products.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-  currencyCode: text("currencyCode").notNull().default("USD"),
+  currencyCode: text("currencyCode").notNull().default("ARS"),
   availableForSale: boolean("availableForSale").notNull().default(true),
   selectedOptions: text("selectedOptions"), // JSON string
   inventoryQuantity: integer("inventoryQuantity").notNull().default(0),

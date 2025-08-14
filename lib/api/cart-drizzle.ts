@@ -2,11 +2,11 @@ import { and, eq, inArray } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { db } from "../db/index";
 import {
-  cartItems,
-  carts,
-  productImages,
-  productVariants,
-  products,
+    cartItems,
+    carts,
+    productImages,
+    productVariants,
+    products,
 } from "../db/schema";
 import type { Cart, CartItem } from "../types";
 
@@ -23,7 +23,7 @@ function reshapeCart(cartData: any, itemsData: any[]): Cart {
     const product = item.products || {};
     const line = item.cartItems || {};
 
-    const currencyCode = variant.currencyCode || "USD";
+    const currencyCode = variant.currencyCode || "ARS";
     const priceStr = (variant.price ?? 0).toString();
 
     return {
@@ -65,7 +65,7 @@ function reshapeCart(cartData: any, itemsData: any[]): Cart {
     (sum, item) => sum + Number(item.cost.totalAmount.amount),
     0,
   );
-  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? "USD";
+  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? "ARS";
 
   return {
     id: cartData.id,
@@ -168,9 +168,9 @@ export async function createCart(): Promise<Cart> {
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: "0", currencyCode: "USD" },
-        totalAmount: { amount: "0", currencyCode: "USD" },
-        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+        subtotalAmount: { amount: "0", currencyCode: "ARS" },
+        totalAmount: { amount: "0", currencyCode: "ARS" },
+        totalTaxAmount: { amount: "0", currencyCode: "ARS" },
       },
     };
   }
@@ -234,9 +234,9 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: "0", currencyCode: "USD" },
-        totalAmount: { amount: "0", currencyCode: "USD" },
-        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+        subtotalAmount: { amount: "0", currencyCode: "ARS" },
+        totalAmount: { amount: "0", currencyCode: "ARS" },
+        totalTaxAmount: { amount: "0", currencyCode: "ARS" },
       },
     };
   }
@@ -269,9 +269,9 @@ export async function updateCart(
       totalQuantity: 0,
       lines: [],
       cost: {
-        subtotalAmount: { amount: "0", currencyCode: "USD" },
-        totalAmount: { amount: "0", currencyCode: "USD" },
-        totalTaxAmount: { amount: "0", currencyCode: "USD" },
+        subtotalAmount: { amount: "0", currencyCode: "ARS" },
+        totalAmount: { amount: "0", currencyCode: "ARS" },
+        totalTaxAmount: { amount: "0", currencyCode: "ARS" },
       },
     };
   }

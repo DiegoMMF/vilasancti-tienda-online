@@ -1,8 +1,8 @@
-import Grid from "components/grid";
 import { Carousel } from "components/carousel";
+import Grid from "components/grid";
 import { ThreeItemGrid } from "components/grid/three-items";
-import ProductGridItems from "components/layout/product-grid-items";
 import Label from "components/label";
+import ProductGridItems from "components/layout/product-grid-items";
 import { LoaderShowcase } from "components/ui/fullscreen-loaders";
 import { getProducts } from "lib/api/products-drizzle";
 
@@ -95,7 +95,7 @@ export default async function DesignToolkitPage() {
             <option>Opc 1</option>
             <option>Opc 2</option>
           </select>
-          <Label title="Etiqueta" amount="199.00" currencyCode="USD" />
+          <Label title="Etiqueta" amount="199.00" currencyCode="ARS" />
         </div>
       </section>
 
