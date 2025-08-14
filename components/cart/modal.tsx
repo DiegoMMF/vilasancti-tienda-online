@@ -75,7 +75,7 @@ export default function CartModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px]">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">Mi Carrito</p>
+                <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
                 <button aria-label="Cerrar carrito" onClick={closeCart}>
                   <CloseCart />
                 </button>
@@ -84,7 +84,7 @@ export default function CartModal() {
               {!cart || cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">
+                  <p className="mt-6 text-center text-2xl font-bold font-cormorant">
                     Tu carrito está vacío.
                   </p>
                 </div>
@@ -150,12 +150,12 @@ export default function CartModal() {
                                   className="z-30 ml-2 flex flex-row space-x-4"
                                 >
                                   <div className="flex flex-1 flex-col text-base">
-                                    <span className="leading-tight">
+                                    <span className="leading-tight font-cormorant">
                                       {item.merchandise.product.title}
                                     </span>
                                     {item.merchandise.title !==
                                     DEFAULT_OPTION ? (
-                                      <p className="text-sm text-neutral-600">
+                                      <p className="text-sm text-neutral-600 font-inter">
                                         {item.merchandise.title}
                                       </p>
                                     ) : null}
@@ -193,7 +193,7 @@ export default function CartModal() {
                         );
                       })}
                   </ul>
-                  <div className="py-4 text-sm text-neutral-600">
+                  <div className="py-4 text-sm text-neutral-600 font-inter">
                     <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1">
                       <p>Impuestos</p>
                                               <Price
@@ -246,7 +246,7 @@ function CheckoutButton() {
 
   return (
     <button
-      className="block w-full rounded-full bg-[#bf9d6d] p-3 text-center text-sm font-medium text-[#f0e3d7] opacity-90 hover:opacity-100"
+      className="block w-full rounded-full bg-[#bf9d6d] p-3 text-center text-sm font-medium text-[#f0e3d7] opacity-90 hover:opacity-100 font-inter"
       type="submit"
       disabled={pending}
     >

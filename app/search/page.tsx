@@ -60,7 +60,7 @@ export default async function SearchPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
       {searchValue ? (
-        <p className="mb-4 text-[#bf9d6d]">
+        <p className="mb-4 text-[#bf9d6d] font-cormorant">
           {products.length === 0
             ? "There are no products that match "
             : `Showing ${products.length} ${resultsText} for `}

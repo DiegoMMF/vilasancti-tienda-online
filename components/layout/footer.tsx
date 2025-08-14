@@ -16,11 +16,11 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || "";
 
   return (
-    <footer className="text-sm text-neutral-600">
+    <footer className="text-sm text-neutral-600 font-inter">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-[#bf9d6d]/20 px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
         <div>
           <OverlayLink
-            className="flex items-center gap-2 text-[#bf9d6d] md:pt-1"
+            className="flex items-center gap-2 text-[#bf9d6d] md:pt-1 font-cormorant"
             href="/"
           >
             <LogoSquare size="sm" />
@@ -53,7 +53,7 @@ export default async function Footer() {
           </p>
           <hr className="mx-4 hidden h-4 w-[1px] border-l border-[#bf9d6d]/40 md:inline-block" />
           <p className="md:ml-auto">
-            <span className="text-[#bf9d6d]">
+            <span className="text-[#bf9d6d] font-cormorant">
               Implemented by Diego M. Maldini Freyre
             </span>
           </p>

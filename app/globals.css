@@ -3,6 +3,11 @@
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --font-family-cormorant: 'Cormorant', serif;
+  --font-family-inter: 'Inter', sans-serif;
+}
+
 @layer base {
   *,
   ::after,
@@ -11,7 +16,17 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  
+  .font-cormorant {
+    font-family: var(--font-family-cormorant);
+  }
+  
+  .font-inter {
+    font-family: var(--font-family-inter);
+  }
 }
+
+
 
 @media (prefers-color-scheme: dark) {
   html {

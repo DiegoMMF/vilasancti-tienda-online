@@ -9,8 +9,8 @@ import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
 import { OverlayLink } from "components/ui/overlay-link";
 import {
-    getProduct,
-    getProductRecommendations,
+  getProduct,
+  getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
@@ -175,7 +175,7 @@ async function RelatedProducts({ id }: { id: string }) {
 
   return (
     <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold text-[#bf9d6d]">Related Products</h2>
+      <h2 className="mb-4 text-2xl font-bold text-[#bf9d6d] font-cormorant">Related Products</h2>
       <ul className="flex w-full gap-4 overflow-x-auto pt-1">
         {unique.map((product) => (
           <li

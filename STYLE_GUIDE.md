@@ -35,13 +35,14 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
   - Paleta complementaria: usa `neutral` para textos secundarios, `blue` para estados interactivos, `red/green` para errores/éxitos.
   - Estados: `hover`, `focus`, `active`, `disabled` deben mantener contraste AA con el fondo antiquewhite.
 - **Tipografía**
-  - Fuente: Geist Sans (ya integrada en `app/layout.tsx`).
+  - **Principal (marca y títulos):** Cormorant (serif elegante)
+  - **Secundaria (body y UI):** Inter (sans-serif legible)
   - Escalas sugeridas:
-    - H1: text-3xl/4xl text-[#bf9d6d] (color de marca)
-    - H2: text-2xl/3xl text-[#bf9d6d] (color de marca)
-    - H3: text-xl/2xl text-[#bf9d6d] (color de marca)
-    - Body: text-base text-neutral-800 (contraste con antiquewhite)
-    - Small: text-sm text-neutral-600
+    - H1: text-3xl/4xl text-[#bf9d6d] font-cormorant (color de marca)
+    - H2: text-2xl/3xl text-[#bf9d6d] font-cormorant (color de marca)
+    - H3: text-xl/2xl text-[#bf9d6d] font-cormorant (color de marca)
+    - Body: text-base text-neutral-800 font-inter (contraste con antiquewhite)
+    - Small: text-sm text-neutral-600 font-inter
   - Line-height cómoda (leading-6/7) y `tracking-tight` en títulos.
 - **Espaciado**
   - Usa escala de Tailwind (2, 4, 6, 8, 12, 16, 24, 32…)

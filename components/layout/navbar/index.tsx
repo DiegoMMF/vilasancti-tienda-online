@@ -1,5 +1,4 @@
 import CartModal from "components/cart/modal";
-import LogoSquare from "components/logo-square";
 import { OverlayLink } from "components/ui/overlay-link";
 import { getMenu } from "lib/api/menu-drizzle";
 import { Menu } from "lib/types";
@@ -26,9 +25,8 @@ export async function Navbar() {
             prefetch={true}
             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
           >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block text-[#bf9d6d]">
-              {SITE_NAME}
+            <div className="text-2xl font-bold uppercase text-[#bf9d6d] tracking-wide" style={{ fontFamily: 'var(--font-cormorant)' }}>
+              VILASANCTI
             </div>
           </OverlayLink>
           {menu.length ? (
@@ -38,7 +36,7 @@ export async function Navbar() {
                   <OverlayLink
                     href={item.path}
                     prefetch={true}
-                    className="text-neutral-600 underline-offset-4 hover:text-[#bf9d6d] hover:underline"
+                    className="text-neutral-600 underline-offset-4 hover:text-[#bf9d6d] hover:underline font-inter"
                   >
                     {item.title}
                   </OverlayLink>

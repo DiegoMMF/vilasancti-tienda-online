@@ -8,15 +8,15 @@ export function ProductDescription({ product }: { product: Product }) {
   return (
     <>
       <div className="mb-6 flex flex-col border-b border-[#bf9d6d]/20 pb-6">
-        <h1 className="mb-2 text-5xl font-medium text-[#bf9d6d]">{product.title}</h1>
+        <h1 className="mb-2 text-5xl font-medium text-[#bf9d6d] font-cormorant">{product.title}</h1>
         {product.descriptionHtml ? (
           <Prose
-            className="mb-4 text-sm leading-tight text-neutral-800"
+            className="mb-4 text-sm leading-tight text-neutral-800 font-inter"
             html={product.descriptionHtml}
           />
         ) : null}
         <div className="flex items-center gap-3">
-          <div className="mr-auto w-auto rounded-full bg-[#bf9d6d] p-2 text-sm text-[#f0e3d7]">
+          <div className="mr-auto w-auto rounded-full bg-[#bf9d6d] p-2 text-sm text-[#f0e3d7] font-inter">
             <Price
               amount={product.priceRange.maxVariantPrice.amount}
               currencyCode={product.priceRange.maxVariantPrice.currencyCode}

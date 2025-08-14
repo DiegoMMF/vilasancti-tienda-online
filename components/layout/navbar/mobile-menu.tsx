@@ -80,7 +80,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                   <ul className="flex w-full flex-col">
                     {menu.map((item: Menu) => (
                       <li
-                        className="py-2 text-xl text-[#bf9d6d] transition-colors hover:text-neutral-600"
+                        className="py-2 text-xl text-[#bf9d6d] transition-colors hover:text-neutral-600 font-cormorant"
                         key={item.title}
                       >
                         <OverlayLink

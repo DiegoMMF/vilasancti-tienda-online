@@ -2,12 +2,24 @@ import { CartProvider } from "components/cart/cart-context";
 import { CartModalProvider } from "components/cart/use-cart-modal";
 import { Navbar } from "components/layout/navbar";
 import { LoadingOverlayProvider } from "components/ui/loading-overlay-context";
-import { GeistSans } from "geist/font/sans";
 import { getCart } from "lib/api/cart-drizzle";
 import { baseUrl } from "lib/utils";
+import { Cormorant, Inter } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
+
+const cormorant = Cormorant({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const { SITE_NAME } = process.env;
 
@@ -32,7 +44,7 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="bg-[#f0e3d7] text-[#bf9d6d] selection:bg-[#bf9d6d] selection:text-[#f0e3d7]">
         <script
           type="application/ld+json"
