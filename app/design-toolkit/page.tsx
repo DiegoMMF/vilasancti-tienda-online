@@ -21,7 +21,7 @@ export default async function DesignToolkitPage() {
   const sampleProducts = products.slice(0, 6);
 
   return (
-    <main className="mx-auto max-w-(--breakpoint-2xl) px-4 py-10 space-y-16">
+    <main className="mx-auto max-w-(--breakpoint-2xl) px-6 py-16 space-y-20 lg:px-12 lg:py-24">
       {/* Tipografía */}
       <section>
         <h1 className="mb-2 text-4xl font-bold tracking-tight">Tipografía</h1>

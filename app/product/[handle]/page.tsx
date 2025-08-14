@@ -130,7 +130,7 @@ export default async function ProductPage(props: {
         </OverlayLink>
       </div>
 
-      <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
+      <div className="mx-auto max-w-(--breakpoint-2xl) px-6 lg:px-12">
         <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
           {/* Espacio adicional entre secciones en mobile */}
           <div className="mb-6 lg:mb-0" />

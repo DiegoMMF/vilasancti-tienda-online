@@ -1,8 +1,7 @@
 import { GridTileImage } from "components/grid/tile";
+import { OverlayLink } from "components/ui/overlay-link";
 import { getCollectionProducts } from "lib/api/products-drizzle";
 import type { Product } from "lib/types";
-import Link from "next/link";
-import { OverlayLink } from "components/ui/overlay-link";
 
 function ThreeItemGridItem({
   item,
@@ -59,7 +58,7 @@ export async function ThreeItemGrid() {
   const [firstProduct, secondProduct, thirdProduct] = homepageItems;
 
   return (
-    <section className="mx-auto grid max-w-(--breakpoint-2xl) gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
+    <section className="mx-auto grid max-w-(--breakpoint-2xl) gap-6 px-6 pb-8 md:grid-cols-6 md:grid-rows-2 lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)]">
       <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
       <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
       <ThreeItemGridItem size="half" item={thirdProduct} />

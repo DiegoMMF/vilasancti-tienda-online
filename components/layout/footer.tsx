@@ -14,7 +14,7 @@ export default async function Footer() {
   return (
     <footer className="bg-[#f0e3d7]/50 border-t border-[#bf9d6d]/20">
       {/* Sección principal del footer */}
-      <div className="mx-auto max-w-7xl px-6 py-16 md:px-4 min-[1320px]:px-0">
+      <div className="mx-auto max-w-7xl px-6 py-20 md:px-4 min-[1320px]:px-0 lg:py-32">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           
           {/* Logo y descripción */}

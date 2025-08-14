@@ -17,7 +17,7 @@ const Label = ({
       className={clsx(
         "absolute bottom-0 left-0 flex w-full px-4 pb-4 @container/label",
         {
-          "lg:px-20 lg:pb-[35%]": position === "center",
+          "lg:px-24 lg:pb-[40%]": position === "center",
         },
       )}
     >

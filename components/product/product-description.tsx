@@ -7,7 +7,7 @@ import { VariantSelector } from "./variant-selector";
 export function ProductDescription({ product }: { product: Product }) {
   return (
     <>
-      <div className="mb-6 flex flex-col border-b border-[#bf9d6d]/20 pb-6">
+      <div className="mb-8 flex flex-col border-b border-[#bf9d6d]/20 pb-8 lg:mb-12 lg:pb-12">
         <h1 className="mb-2 text-5xl font-medium text-[#bf9d6d] font-cormorant">{product.title}</h1>
         {product.descriptionHtml ? (
           <Prose
@@ -27,7 +27,7 @@ export function ProductDescription({ product }: { product: Product }) {
       <VariantSelector options={product.options} variants={product.variants} />
       <AddToCart product={product} />
       {/* Espacio adicional para separar del botón de las imágenes en mobile */}
-      <div className="mb-8 lg:mb-0" />
+      <div className="mb-12 lg:mb-0" />
     </>
   );
 }
