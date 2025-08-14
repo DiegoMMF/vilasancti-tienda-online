@@ -19,7 +19,7 @@ export function FooterMenuItem({ item }: { item: Menu }) {
       <OverlayLink
         href={item.path}
         className={clsx(
-          "block p-2 text-lg underline-offset-4 hover:text-[#bf9d6d]/70 hover:underline md:inline-block md:text-sm",
+          "block p-2 px-3 rounded-md text-lg text-[#bf9d6d] transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] md:inline-block md:text-sm",
           {
             "text-[#bf9d6d]": active,
           },

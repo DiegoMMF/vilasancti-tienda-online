@@ -19,7 +19,7 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
   newParams.delete("q");
 
   return (
-    <li className="mt-2 flex text-[#bf9d6d]" key={item.title}>
+    <li className="mt-2 flex text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200" key={item.title}>
       <DynamicTag
         href={createUrl(item.path, newParams)}
         className={clsx(
@@ -53,7 +53,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
 
   return (
     <li
-      className="mt-2 flex text-sm text-[#bf9d6d]"
+      className="mt-2 flex text-sm text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] px-2 py-1 rounded-md transition-all duration-200"
       key={item.title}
     >
       <DynamicTag

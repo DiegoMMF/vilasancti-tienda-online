@@ -45,7 +45,7 @@ export function Gallery({
     currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
 
   const buttonClassName =
-    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-[#bf9d6d] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100";
+    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100";
 
   const handleImageChange = (newIndex: number) => {
     setIsLoading(true);

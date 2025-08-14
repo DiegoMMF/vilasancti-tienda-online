@@ -36,7 +36,7 @@ export async function Navbar() {
                   <OverlayLink
                     href={item.path}
                     prefetch={true}
-                    className="text-[#bf9d6d] underline-offset-4 hover:text-neutral-600 hover:underline font-inter"
+                    className="text-[#bf9d6d] px-3 py-1 rounded-md transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] font-inter"
                   >
                     {item.title}
                   </OverlayLink>

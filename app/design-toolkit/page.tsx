@@ -78,7 +78,7 @@ export default async function DesignToolkitPage() {
           <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">
             Primario
           </button>
-          <button className="rounded-lg border border-neutral-200 px-4 py-2 text-[#bf9d6d] transition hover:bg-neutral-100">
+          <button className="rounded-lg border border-neutral-200 px-4 py-2 text-[#bf9d6d] transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d]">
             Secundario
           </button>
           <button
