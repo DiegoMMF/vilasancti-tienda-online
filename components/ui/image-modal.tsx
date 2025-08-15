@@ -163,38 +163,41 @@ export default function ImageModal({
           </div>
         </div>
 
-        {/* Imagen con zoom y pan */}
-        <div
-          className="relative max-w-full max-h-full cursor-grab active:cursor-grabbing"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          <Image
-            src={imageUrl}
-            alt={altText}
-            fill
-            className={`transition-all duration-300 ${
-              isLoaded ? "opacity-100" : "opacity-0"
-            }`}
-            style={{
-              transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
-              transformOrigin: "center",
-              objectFit: "contain",
-              userSelect: "none",
-              pointerEvents: scale > 1 ? "none" : "auto",
-            }}
-            onLoad={() => setIsLoaded(true)}
-            unoptimized
-          />
+        {/* Contenedor de la imagen con dimensiones definidas */}
+        <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+          {/* Imagen con zoom y pan */}
+          <div
+            className="relative w-full h-full cursor-grab active:cursor-grabbing"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            <Image
+              src={imageUrl}
+              alt={altText}
+              fill
+              className={`transition-all duration-300 ${
+                isLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              style={{
+                transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+                transformOrigin: "center",
+                objectFit: "contain",
+                userSelect: "none",
+                pointerEvents: scale > 1 ? "none" : "auto",
+              }}
+              onLoad={() => setIsLoaded(true)}
+              unoptimized
+            />
 
-          {/* Loading state */}
-          {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-[#bf9d6d]/30 border-t-[#bf9d6d] rounded-full animate-spin" />
-            </div>
-          )}
+            {/* Loading state */}
+            {!isLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-[#bf9d6d]/30 border-t-[#bf9d6d] rounded-full animate-spin" />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Controles de navegación (solo si hay múltiples imágenes) */}
