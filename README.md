@@ -30,7 +30,7 @@ DATABASE_URL="postgres://usuario:password@host:puerto/db"
 BLOB_READ_WRITE_TOKEN="your_vercel_blob_token_here"
 
 # Configuración de la App
-SITE_NAME="Vilasancti Tienda"
+SITE_NAME="Vilasancti Tienda Online"
 COMPANY_NAME="Vilasancti"
 
 # Opcional: Analytics

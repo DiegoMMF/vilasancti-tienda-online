@@ -8,7 +8,7 @@ export function WelcomeToast() {
     // ignore if screen height is too small
     if (window.innerHeight < 650) return;
     if (!document.cookie.includes("welcome-toast=2")) {
-      toast("🛍️ Welcome to Vilasancti Tienda!", {
+      toast("🛍️ Welcome to VILASANCTI!", {
         id: "welcome-toast",
         duration: Infinity,
         onDismiss: () => {

@@ -26,8 +26,8 @@ const { SITE_NAME } = process.env;
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`,
+    default: "Vilasancti",
+    template: `%s | Vilasancti`,
   },
   description:
     "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
