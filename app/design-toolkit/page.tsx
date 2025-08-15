@@ -52,10 +52,22 @@ export default async function DesignToolkitPage() {
           {[
             { name: "Beige Claro", cls: "bg-[#f0e3d7] text-[#bf9d6d]" },
             { name: "Marrón Dorado", cls: "bg-[#bf9d6d] text-[#f0e3d7]" },
-            { name: "Beige Transparente", cls: "bg-[#f0e3d7]/50 text-[#bf9d6d]" },
-            { name: "Marrón Transparente", cls: "bg-[#bf9d6d]/20 text-[#bf9d6d]" },
-            { name: "Borde Sutil", cls: "bg-[#f0e3d7] border-[#bf9d6d]/20 text-[#bf9d6d]" },
-            { name: "Hover", cls: "bg-[#bf9d6d] text-[#f0e3d7] hover:opacity-90" },
+            {
+              name: "Beige Transparente",
+              cls: "bg-[#f0e3d7]/50 text-[#bf9d6d]",
+            },
+            {
+              name: "Marrón Transparente",
+              cls: "bg-[#bf9d6d]/20 text-[#bf9d6d]",
+            },
+            {
+              name: "Borde Sutil",
+              cls: "bg-[#f0e3d7] border-[#bf9d6d]/20 text-[#bf9d6d]",
+            },
+            {
+              name: "Hover",
+              cls: "bg-[#bf9d6d] text-[#f0e3d7] hover:opacity-90",
+            },
           ].map((c) => (
             <div
               key={c.name}

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export function LogoLink() {
   const pathname = usePathname();
   const { show } = useLoadingOverlay();
-  
+
   const isHomePage = pathname === "/";
 
   return (

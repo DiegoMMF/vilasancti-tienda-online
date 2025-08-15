@@ -16,9 +16,7 @@ export default function CategoryLayout({
           <Collections />
         </div>
         <div className="order-last min-h-screen w-full md:order-none">
-          <Suspense fallback={null}>
-            {children}
-          </Suspense>
+          <Suspense fallback={null}>{children}</Suspense>
         </div>
         <div className="order-none flex-none md:order-last md:w-[125px]">
           <FilterList list={sorting} title="Ordenar por" />

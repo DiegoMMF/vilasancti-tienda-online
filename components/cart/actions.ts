@@ -1,11 +1,11 @@
 "use server";
 
 import {
-    addToCart,
-    createCart,
-    getCart,
-    removeFromCart,
-    updateCart,
+  addToCart,
+  createCart,
+  getCart,
+  removeFromCart,
+  updateCart,
 } from "lib/api/cart-drizzle";
 import { TAGS } from "lib/constants";
 import { revalidateTag } from "next/cache";

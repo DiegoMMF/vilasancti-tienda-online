@@ -275,39 +275,54 @@ async function main() {
       // Determinar a qué colecciones pertenece el producto basado en su título y características
       const productTitle = product.title.toLowerCase();
       const productHandle = product.handle.toLowerCase();
-      
+
       const collectionsToAssign = [featured.id, carousel.id];
-      
+
       // Asignar a colecciones por diseño
-      if (productTitle.includes('liso') || productTitle.includes('plateado') || productTitle.includes('negro')) {
+      if (
+        productTitle.includes("liso") ||
+        productTitle.includes("plateado") ||
+        productTitle.includes("negro")
+      ) {
         collectionsToAssign.push(lisos.id);
       }
-      if (productTitle.includes('estampado') || productTitle.includes('cuadritos') || productTitle.includes('rayas') || productTitle.includes('animal') || productTitle.includes('regalitos')) {
+      if (
+        productTitle.includes("estampado") ||
+        productTitle.includes("cuadritos") ||
+        productTitle.includes("rayas") ||
+        productTitle.includes("animal") ||
+        productTitle.includes("regalitos")
+      ) {
         collectionsToAssign.push(estampados.id);
       }
-      
+
       // Asignar a colecciones por longitud
-      if (productTitle.includes('corto') || productHandle.includes('corto')) {
+      if (productTitle.includes("corto") || productHandle.includes("corto")) {
         collectionsToAssign.push(cortos.id);
       }
-      if (productTitle.includes('largo') || productHandle.includes('largo')) {
+      if (productTitle.includes("largo") || productHandle.includes("largo")) {
         collectionsToAssign.push(largos.id);
       }
-      
+
       // Si no está especificado como corto o largo, asignar por defecto según el handle
-      if (!productTitle.includes('corto') && !productTitle.includes('largo') && !productHandle.includes('corto') && !productHandle.includes('largo')) {
+      if (
+        !productTitle.includes("corto") &&
+        !productTitle.includes("largo") &&
+        !productHandle.includes("corto") &&
+        !productHandle.includes("largo")
+      ) {
         // Asignar a largos por defecto si no está especificado
         collectionsToAssign.push(largos.id);
       }
 
       // Crear relaciones con colecciones
       await Promise.all(
-        collectionsToAssign.map(collectionId =>
+        collectionsToAssign.map((collectionId) =>
           db.insert(productCollections).values({
             productId: newProduct.id,
             collectionId: collectionId,
-          })
-        )
+          }),
+        ),
       );
 
       return newProduct;

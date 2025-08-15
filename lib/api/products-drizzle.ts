@@ -159,34 +159,40 @@ export async function getProducts({
   // Búsqueda por texto en título y descripción con expansión de términos
   if (query) {
     const searchTerms = expandSearchTerms(query);
-    const titleDescriptionConditions = searchTerms.map(term => 
+    const titleDescriptionConditions = searchTerms.map((term) =>
       or(
         like(sql`LOWER(${products.title})`, `%${term.toLowerCase()}%`),
-        like(sql`LOWER(${products.description})`, `%${term.toLowerCase()}%`)
-      )
+        like(sql`LOWER(${products.description})`, `%${term.toLowerCase()}%`),
+      ),
     );
     whereConditions.push(or(...titleDescriptionConditions));
   }
 
   // Filtros por colores y tallas con expansión
-  if (colors && colors.length > 0 || sizes && sizes.length > 0) {
+  if ((colors && colors.length > 0) || (sizes && sizes.length > 0)) {
     const variantConditions = [];
-    
+
     if (colors && colors.length > 0) {
-      const expandedColors = colors.flatMap(color => expandSearchTerms(color));
+      const expandedColors = colors.flatMap((color) =>
+        expandSearchTerms(color),
+      );
       variantConditions.push(
-        or(...expandedColors.map(color => 
-          like(productVariants.selectedOptions, `%"value":"${color}"%`)
-        ))
+        or(
+          ...expandedColors.map((color) =>
+            like(productVariants.selectedOptions, `%"value":"${color}"%`),
+          ),
+        ),
       );
     }
-    
+
     if (sizes && sizes.length > 0) {
-      const expandedSizes = sizes.flatMap(size => expandSearchTerms(size));
+      const expandedSizes = sizes.flatMap((size) => expandSearchTerms(size));
       variantConditions.push(
-        or(...expandedSizes.map(size => 
-          like(productVariants.selectedOptions, `%"value":"${size}"%`)
-        ))
+        or(
+          ...expandedSizes.map((size) =>
+            like(productVariants.selectedOptions, `%"value":"${size}"%`),
+          ),
+        ),
       );
     }
 
@@ -195,10 +201,13 @@ export async function getProducts({
         .selectDistinct({ productId: productVariants.productId })
         .from(productVariants)
         .where(or(...variantConditions));
-      
+
       if (productIdsWithVariants.length > 0) {
         whereConditions.push(
-          inArray(products.id, productIdsWithVariants.map(v => v.productId))
+          inArray(
+            products.id,
+            productIdsWithVariants.map((v) => v.productId),
+          ),
         );
       } else {
         // Si no hay variantes que coincidan, devolver array vacío
@@ -272,7 +281,9 @@ export async function getProducts({
       sortedProducts.sort((a, b) => {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
-        return reverse ? titleB.localeCompare(titleA) : titleA.localeCompare(titleB);
+        return reverse
+          ? titleB.localeCompare(titleA)
+          : titleA.localeCompare(titleB);
       });
       break;
     case "RELEVANCE":
@@ -375,7 +386,9 @@ export async function getCollectionProducts(
       sortedProducts.sort((a, b) => {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
-        return reverse ? titleB.localeCompare(titleA) : titleA.localeCompare(titleB);
+        return reverse
+          ? titleB.localeCompare(titleA)
+          : titleA.localeCompare(titleB);
       });
       break;
     case "RELEVANCE":

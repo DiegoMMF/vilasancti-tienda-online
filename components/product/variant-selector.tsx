@@ -98,48 +98,55 @@ export function VariantSelector({
       {options.map((option) => (
         <div key={option.id}>
           <dl className="mb-8">
-            <dt className="mb-4 text-sm uppercase tracking-wide">{option.name}</dt>
+            <dt className="mb-4 text-sm uppercase tracking-wide">
+              {option.name}
+            </dt>
             <dd className="flex flex-wrap gap-3">
-          {option.values.map((value) => {
-            const optionNameLowerCase = option.name.toLowerCase();
-            const isAvailable = isOptionAvailable(optionNameLowerCase, value);
-            const isActive = isOptionActive(optionNameLowerCase, value);
-            const optionKey = `${optionNameLowerCase}-${value}`;
-            const isLoading = loadingOption === optionKey;
+              {option.values.map((value) => {
+                const optionNameLowerCase = option.name.toLowerCase();
+                const isAvailable = isOptionAvailable(
+                  optionNameLowerCase,
+                  value,
+                );
+                const isActive = isOptionActive(optionNameLowerCase, value);
+                const optionKey = `${optionNameLowerCase}-${value}`;
+                const isLoading = loadingOption === optionKey;
 
-            return (
-              <button
-                type="button"
-                onClick={() => handleOptionToggle(optionNameLowerCase, value)}
-                key={value}
-                disabled={!isAvailable}
-                title={`${option.name} ${value}${!isAvailable ? " (Agotado)" : ""}`}
-                className={clsx(
-                  "variant-selector-button flex min-w-[48px] items-center justify-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7] px-2 py-1 text-sm text-[#bf9d6d] font-inter",
-                  {
-                    "active cursor-default": isActive,
-                    "ring-1 ring-transparent hover:ring-[#bf9d6d] hover:bg-[#bf9d6d] hover:text-[#f0e3d7]":
-                      !isActive && isAvailable,
-                    "relative z-10 cursor-not-allowed overflow-hidden bg-[#f0e3d7]/50 text-[#bf9d6d]/50 ring-1 ring-[#bf9d6d]/20 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-[#bf9d6d]/30 before:transition-transform":
-                      !isAvailable,
-                  },
-                )}
-              >
-                {isLoading ? (
-                  <div className="flex space-x-1">
-                    <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7] [animation-delay:-0.3s]"></div>
-                    <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7] [animation-delay:-0.15s]"></div>
-                    <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7]"></div>
-                  </div>
-                ) : (
-                  value
-                )}
-              </button>
-            );
-          })}
-        </dd>
-      </dl>
-    </div>
+                return (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleOptionToggle(optionNameLowerCase, value)
+                    }
+                    key={value}
+                    disabled={!isAvailable}
+                    title={`${option.name} ${value}${!isAvailable ? " (Agotado)" : ""}`}
+                    className={clsx(
+                      "variant-selector-button flex min-w-[48px] items-center justify-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7] px-2 py-1 text-sm text-[#bf9d6d] font-inter",
+                      {
+                        "active cursor-default": isActive,
+                        "ring-1 ring-transparent hover:ring-[#bf9d6d] hover:bg-[#bf9d6d] hover:text-[#f0e3d7]":
+                          !isActive && isAvailable,
+                        "relative z-10 cursor-not-allowed overflow-hidden bg-[#f0e3d7]/50 text-[#bf9d6d]/50 ring-1 ring-[#bf9d6d]/20 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-[#bf9d6d]/30 before:transition-transform":
+                          !isAvailable,
+                      },
+                    )}
+                  >
+                    {isLoading ? (
+                      <div className="flex space-x-1">
+                        <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7] [animation-delay:-0.3s]"></div>
+                        <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7] [animation-delay:-0.15s]"></div>
+                        <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f0e3d7]"></div>
+                      </div>
+                    ) : (
+                      value
+                    )}
+                  </button>
+                );
+              })}
+            </dd>
+          </dl>
+        </div>
       ))}
     </>
   );

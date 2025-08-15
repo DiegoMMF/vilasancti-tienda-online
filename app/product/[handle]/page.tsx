@@ -9,8 +9,8 @@ import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
 import { OverlayLink } from "components/ui/overlay-link";
 import {
-    getProduct,
-    getProductRecommendations,
+  getProduct,
+  getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
