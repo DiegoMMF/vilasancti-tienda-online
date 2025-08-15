@@ -17,12 +17,14 @@ Tienda online elegante de pijamas para mujer, construida con Next.js 15, React 1
 ## 🏗️ Arquitectura
 
 ### Base de datos (Drizzle ORM)
+
 - **Esquema**: `lib/db/schema.ts` - Productos, variantes, imágenes, colecciones, carrito
 - **Relaciones**: `lib/db/relations.ts` - Relaciones entre entidades
 - **Cliente**: `lib/db/index.ts` - Conexión PostgreSQL con configuración optimizada
 - **API**: `lib/api/*-drizzle.ts` - Acceso a datos con queries optimizadas
 
 ### Estructura de datos
+
 ```sql
 collections (colecciones)
 ├── products (productos)
@@ -34,6 +36,7 @@ collections (colecciones)
 ```
 
 ### Almacenamiento de imágenes
+
 - **Vercel Blob**: Gestión automática de imágenes con `lib/blob.ts`
 - **Funciones**: `uploadImage()`, `deleteImage()`, `listImages()`
 - **Optimización**: Formatos AVIF/WebP automáticos con `next/image`
@@ -61,12 +64,14 @@ NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=""
 ## 🛠️ Puesta en marcha
 
 ### Requisitos
+
 - Node.js 20+
 - pnpm
 - PostgreSQL
 - Cuenta Vercel (para Blob Storage)
 
 ### Instalación
+
 ```bash
 # Clonar e instalar dependencias
 git clone <repo-url>
@@ -82,6 +87,7 @@ pnpm dev           # http://localhost:3000
 ```
 
 ### Scripts disponibles
+
 ```bash
 pnpm dev              # Desarrollo con Turbopack
 pnpm build            # Build de producción
@@ -97,6 +103,7 @@ pnpm db:seed          # Cargar datos de ejemplo
 El script `scripts/seed-drizzle.js` crea:
 
 ### Colecciones
+
 - `hidden-homepage-featured-items` - Productos destacados
 - `hidden-homepage-carousel` - Carrusel de portada
 - `lisos` - Pijamas con diseños lisos
@@ -105,6 +112,7 @@ El script `scripts/seed-drizzle.js` crea:
 - `largos` - Pijamas largos
 
 ### Productos (11 pijamas de ejemplo)
+
 1. **Pijama Estampado Algodón** - $48,300 ARS (M)
 2. **Pijama Algodón Rosa con detalle** - $72,300 ARS (S)
 3. **Pijama Invierno Negro** - $72,300 ARS (sin stock)
@@ -118,6 +126,7 @@ El script `scripts/seed-drizzle.js` crea:
 11. **Pijama Liso Negro Largo Satén** - $81,300 ARS (sin stock)
 
 ### Imágenes
+
 - Gestión automática en Vercel Blob
 - Múltiples imágenes por producto
 - Primera imagen marcada como destacada
@@ -126,15 +135,18 @@ El script `scripts/seed-drizzle.js` crea:
 ## 🎨 Sistema de diseño
 
 ### Paleta de colores
+
 - **Fondo principal**: `#f0e3d7` (antiquewhite)
 - **Color de marca**: `#bf9d6d` (darkkhaki)
 - **Textos**: Neutral scale para contraste
 
 ### Tipografía
+
 - **Títulos**: Cormorant (serif elegante)
 - **Body**: Inter (sans-serif legible)
 
 ### Componentes principales
+
 - **Grid responsivo**: 1 col → 2 cols → 3 cols
 - **Carousel**: Carrusel de productos destacados
 - **Cart Modal**: Carrito deslizable
@@ -144,6 +156,7 @@ El script `scripts/seed-drizzle.js` crea:
 ## 🛍️ Funcionalidades
 
 ### Catálogo
+
 - ✅ Listado de productos con grid responsivo
 - ✅ Filtrado por colecciones
 - ✅ Búsqueda semántica
@@ -151,6 +164,7 @@ El script `scripts/seed-drizzle.js` crea:
 - ✅ Paginación automática
 
 ### Productos
+
 - ✅ Fichas detalladas con galería
 - ✅ Variantes por talla
 - ✅ Precios en ARS
@@ -158,12 +172,14 @@ El script `scripts/seed-drizzle.js` crea:
 - ✅ SEO optimizado
 
 ### Carrito
+
 - ✅ Añadir/eliminar productos
 - ✅ Modificar cantidades
 - ✅ Persistencia en sesión
 - ✅ Modal deslizable
 
 ### UX/UI
+
 - ✅ Diseño mobile-first
 - ✅ Animaciones suaves
 - ✅ Estados de carga
@@ -173,18 +189,21 @@ El script `scripts/seed-drizzle.js` crea:
 ## 🔍 SEO y Performance
 
 ### Optimizaciones
+
 - **ISR**: Revalidación cada 10 minutos en listados
 - **Imágenes**: AVIF/WebP automático, lazy loading
 - **Fonts**: Optimización con `next/font`
 - **Bundle**: Tree shaking automático
 
 ### SEO técnico
+
 - **Metadata**: Generación dinámica por página
 - **JSON-LD**: Product, BreadcrumbList, Organization
 - **Sitemaps**: Segmentados por productos y colecciones
 - **Canonicals**: URLs limpias sin parámetros
 
 ### Datos estructurados
+
 ```json
 {
   "@context": "https://schema.org",
@@ -199,11 +218,13 @@ El script `scripts/seed-drizzle.js` crea:
 ## 🚀 Despliegue
 
 ### Vercel (Recomendado)
+
 1. Conectar repositorio en Vercel
 2. Configurar variables de entorno
 3. Desplegar automáticamente
 
 ### Variables de entorno en producción
+
 ```env
 DATABASE_URL="postgres://..."
 BLOB_READ_WRITE_TOKEN="..."
@@ -213,6 +234,7 @@ NEXT_PUBLIC_SITE_URL="https://tu-dominio.vercel.app"
 ```
 
 ### Base de datos
+
 - **Desarrollo**: PostgreSQL local o Supabase
 - **Producción**: Vercel Postgres, Supabase, o cualquier PostgreSQL
 
@@ -246,6 +268,7 @@ vilasancti-tienda-online/
 ## 🧪 Testing y calidad
 
 ### Linting y formateo
+
 ```bash
 pnpm lint              # ESLint
 pnpm format            # Prettier
@@ -253,6 +276,7 @@ pnpm format:check      # Verificar formato
 ```
 
 ### Performance
+
 - **Lighthouse**: LCP < 2.5s, INP < 200ms
 - **Core Web Vitals**: Optimizado para móviles
 - **Bundle size**: < 500KB inicial
@@ -273,6 +297,7 @@ pnpm format:check      # Verificar formato
 5. Crear Pull Request
 
 ### Estándares de código
+
 - TypeScript estricto
 - ESLint + Prettier
 - Componentes funcionales con hooks

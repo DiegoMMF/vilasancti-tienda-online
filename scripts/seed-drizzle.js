@@ -109,41 +109,46 @@ async function main() {
 
   const productPayloads = [
     {
-      handle: "pijama-estampado-algodon",
-      title: "Pijama Estampado Algodón",
-      description: "Conjunto de de algodón suave para noches placenteras.",
+      handle: "pijama-estampado-algodon-largo",
+      title: "JARDÍN TROPICAL",
+      description:
+        "Naturaleza en cada detalle. Conjunto en algodón suave con vibrante estampado floral en tonos burdeos y blancos. Camisa manga larga y pantalón largo con flores tropicales que evocan paraísos lejanos. Ideal para quienes buscan alegría y frescura en sus momentos de descanso.",
       price: 48500,
       folder: "01",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "pijama-algodon-rosa-con-borde",
-      title: "Pijama de Algodón Rosa con detalle",
-      description: "Algodón deslizante para máximo confort.",
+      handle: "pijama-algodon-rosa-largo",
+      title: "CLÁSICO ROSA",
+      description:
+        "Elegancia minimalista. Conjunto camisero en algodón premium con vivos contrastantes en negro. Diseño atemporal de camisa manga larga y pantalón largo que combina comodidad absoluta con estilo sofisticado. Para quienes valoran los clásicos que nunca pasan de moda.",
       price: 72500,
       folder: "02",
       sizes: [{ size: "S", amount: 1 }],
     },
     {
-      handle: "pijama-algodon-negro",
-      title: "Pijama Algodón Negro",
-      description: "Tejido cálido ideal para noches frías.",
+      handle: "pijama-algodon-negro-largo",
+      title: "NEGRO CLÁSICO",
+      description:
+        "Sofisticación atemporal. Conjunto camisero en algodón negro con delicados vivos blancos. Camisa manga larga y pantalón largo donde la elegancia del negro se encuentra con el confort del algodón premium. Diseño versátil para dormir y relajarse en casa.​​​​​​​​​​​​​​​​",
       price: 72500,
       folder: "03",
       sizes: [{ size: "M", amount: 0 }],
     },
     {
-      handle: "pijama-azul-cuadritos",
-      title: "Pijama Azul Cuadritos",
-      description: "Acabado lujoso con caída perfecta.",
+      handle: "pijama-azul-cuadros-largo",
+      title: "CUADROS AZUL",
+      description:
+        "Elegancia en cada detalle. Conjunto camisero en satén premium con hermoso estampado a cuadros en azul y blanco. Camisa manga larga y pantalón largo confeccionados en satén de calidad superior que brinda suavidad excepcional. Para quienes reconocen la belleza en los diseños atemporales.",
       price: 86500,
       folder: "04",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "pijama-rosa-saten-largo",
-      title: "Pijama Rosa Satén Largo",
-      description: "Clásico y elegante para un descanso premium.",
+      handle: "pijama-rosa-saten-largo-liso",
+      title: "ROSA ENCANTO",
+      description:
+        "Pijama satinado en un delicado tono rosa, suave al tacto y con un brillo elegante. Un clásico atemporal que combina comodidad y feminidad para tus noches y mañanas en casa.",
       price: 81500,
       folder: "05",
       sizes: [
@@ -153,9 +158,10 @@ async function main() {
       ],
     },
     {
-      handle: "pijama-rosa-regalitos",
-      title: "Pijama Rosa Regalitos",
-      description: "Tela suave y elegante para un descanso premium.",
+      handle: "pijama-rosa-saten-largo-estampado",
+      title: "LAZO ROSÉ",
+      description:
+        "Dulzura con personalidad. Conjunto en satén sedoso con delicados moños estampados. Camisa con vivos en contraste y pantalón relajado que combina romance y comodidad. Para quienes aprecian los detalles tiernos sin perder la elegancia.",
       price: 86500,
       folder: "06",
       sizes: [
@@ -165,9 +171,10 @@ async function main() {
       ],
     },
     {
-      handle: "pijama-rosado-rayas",
-      title: "Pijama Corto a Rayas Rosadas",
-      description: "Tela suave y elegante para un descanso premium.",
+      handle: "pijama-rosado-rayas-corto",
+      title: "RAYAS",
+      description:
+        "Dulzura con elegancia. Conjunto camisero en satén con estampado a rayas rosa y blanco de acabado sedoso y brillante. Camisa abotonada manga corta y short a juego donde las rayas clásicas se visten de feminidad y sofisticación. Para quienes buscan comodidad premium con un toque femenino.",
       price: 70000,
       folder: "07",
       sizes: [
@@ -176,25 +183,28 @@ async function main() {
       ],
     },
     {
-      handle: "pijama-liso-plateado-corto",
-      title: "Pijama Satén Plateado Corto",
-      description: "Tela suave y elegante para un descanso premium.",
+      handle: "pijama-liso-champagne-corto",
+      title: "CHAMPAGNE SATINÉ",
+      description:
+        "Delicado. Atemporal. Inolvidable. Este conjunto corto satinado combina suavidad, frescura y elegancia en cada detalle. Corte camisero y ese brillo delicado que te envuelve en feminidad y comodidad. Perfecto para sentirte hermosa en tu propio ritual de descanso.",
       price: 70000,
       folder: "08",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "pijama-liso-plateado-largo",
-      title: "Pijama Satén Plateado Largo",
-      description: "Tela suave y elegante para un descanso premium.",
+      handle: "pijama-liso-champagne-largo",
+      title: "CHAMPAGNE",
+      description:
+        "Diseñado para mujeres que eligen sentirse bien en cada detalle. Este conjunto satinado combina suavidad, elegancia y libertad de movimiento. Su confección delicada, la suavidad de su textura lo convierte en el ideal para noches especiales o momentos de cuidado personal. Liviano, cómodo y con un brillo sutil que acompaña tu feminidad .",
       price: 81500,
       folder: "09",
       sizes: [{ size: "M", amount: 0 }],
     },
     {
-      handle: "pijama-animal-print-largo",
-      title: "Pijama Animal Print Dorado Largo",
-      description: "Tela suave y elegante para un descanso premium.",
+      handle: "pijama-animal-print-largo-dorado",
+      title: "FELINA ORO",
+      description:
+        "Descansar bien empieza por sentirte bien. Confeccionado en satén elastizado de textura suave y brillo delicado, este conjunto fue pensado para quienes disfrutan de los pequeños lujos del día a día. Su diseño camisero clásico, con botones frontales, lo convierte en un ícono clásico que nunca falla. Combina elegancia, confort y libertad de movimiento. Ideal para esas noches en casa donde querés sentirte cómoda pero también increíble. Porque tu descanso merece sentirse especial.",
       price: 86500,
       folder: "10",
       sizes: [
@@ -204,10 +214,38 @@ async function main() {
     },
     {
       handle: "pijama-liso-negro-largo-saten",
-      title: "Pijama Liso Negro Largo Satén",
-      description: "Tela suave y elegante para un descanso premium.",
+      title: "NEGRO ES SATÉN",
+      description:
+        "Este pijama satinado con sutil elasticidad combina elegancia y comodidad. Su textura suave acaricia la piel, mientras su diseño camisero le da un aire clásico y sofisticado. Perfecto para sentirte cómoda, refinada y única, incluso en casa.",
       price: 81500,
       folder: "11",
+      sizes: [{ size: "M", amount: 0 }],
+    },
+    {
+      handle: "pijama-encaje-rosa-corto",
+      title: "ENCAJE ROSA",
+      description:
+        "Elegancia en cada detalle. Satén premium con encaje, donde la delicadeza del rosa se encuentra con la sofisticación del negro. Camisola de tirantes finos y short con lazo decorativo para quien busca sentirse hermosa en la intimidad del hogar.",
+      price: 55500,
+      folder: "12",
+      sizes: [{ size: "M", amount: 0 }],
+    },
+    {
+      handle: "pijama-rayas-rosa-corto-encaje",
+      title: "RAYAS DE ROSA",
+      description:
+        "Dulce, femenino y con un toque de sofisticación. Realizado en satén elastizado con delicado brillo, este conjunto de tiras finas y short con encaje combina frescura y sensualidad. Las rayas rosas y blancas aportan un aire romántico, mientras que el encaje negro le da ese detalle inesperado que enamora. Ideal para las noches cálidas en las que querés sentirte tan cómoda como encantadora.",
+      price: 55500,
+      folder: "13",
+      sizes: [{ size: "M", amount: 0 }],
+    },
+    {
+      handle: "pijama-negro-saten-corto",
+      title: "NEGRO CLÁSICO CORTO",
+      description:
+        "Porque lo esencial nunca pasa de moda. Confeccionado en satén elastizado de textura suave y caída fluida, este conjunto camisero corto combina frescura, elegancia y comodidad. Sus detalles en vivo blanco realzan el contraste y le dan un toque atemporal que siempre queda bien. Perfecto para quienes buscan un descanso ligero sin renunciar al estilo. Dormir bien también es vestirse bien.",
+      price: 70000,
+      folder: "14",
       sizes: [{ size: "M", amount: 0 }],
     },
   ];

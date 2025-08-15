@@ -12,8 +12,8 @@ const BLOB_BASE_URL = "https://a1qadrk81otbmmhi.public.blob.vercel-storage.com";
 function generateBlobUrls() {
   const urls = {};
 
-  // Generar URLs para cada carpeta de artículos (01-11)
-  for (let i = 1; i <= 11; i++) {
+  // Generar URLs para cada carpeta de artículos (01-14)
+  for (let i = 1; i <= 14; i++) {
     const folder = i.toString().padStart(2, "0");
     const folderUrls = [];
 
@@ -124,6 +124,36 @@ function generateBlobUrls() {
         );
         folderUrls.push(
           `${BLOB_BASE_URL}/articles/11/1755081206587-vkxvfr8lwwt.jpeg`,
+        );
+        break;
+      case "12":
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/12/1755297123877-duy9r7sn5im.jpeg`,
+        );
+        break;
+      case "13":
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/13/1755297124775-y124ff6sbpd.jpeg`,
+        );
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/13/1755297125583-zx0e55xfp0n.jpeg`,
+        );
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/13/1755297126303-d4q4fjc198w.jpeg`,
+        );
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/13/1755297127015-prmh9pyrac.jpeg`,
+        );
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/13/1755297127531-xaliag0oper.jpeg`,
+        );
+        break;
+      case "14":
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/14/1755297128247-an5xvrwnf77.jpeg`,
+        );
+        folderUrls.push(
+          `${BLOB_BASE_URL}/articles/14/1755297128985-z909gj06zv.jpeg`,
         );
         break;
     }
