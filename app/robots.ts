@@ -1,17 +1,26 @@
-import { baseUrl } from "lib/utils";
+import { MetadataRoute } from 'next'
 
-export default function robots() {
+export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: "*",
-      },
-    ],
+    rules: [{
+      userAgent: '*',
+      allow: '/',
+      disallow: [
+        '/cart',
+        '/checkout', 
+        '/admin',
+        '/api',
+        '/search',
+        '/*?*utm_*',
+        '/*?*gclid*',
+        '/*?*fbclid*'
+      ]
+    }],
     sitemap: [
-      `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/sitemap-products.xml`,
-      `${baseUrl}/sitemap-collections.xml`,
+      'https://vilasancti.vercel.app/sitemap.xml',
+      'https://vilasancti.vercel.app/sitemap-products/route',
+      'https://vilasancti.vercel.app/sitemap-collections/route'
     ],
-    host: baseUrl,
-  };
+    host: 'https://vilasancti.vercel.app'
+  }
 }
