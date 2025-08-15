@@ -57,7 +57,7 @@ export const metadata = {
       "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
     images: [
       {
-        url: `${baseUrl}/og-image.svg`,
+        url: `${baseUrl}/og-image.webp`,
         width: 1200,
         height: 630,
         alt: "VILASANCTI - Elegancia que se vive en casa",
@@ -69,7 +69,7 @@ export const metadata = {
     title: SITE_NAME,
     description:
       "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
-    images: [`${baseUrl}/og-image.svg`],
+    images: [`${baseUrl}/og-image.webp`],
   },
 };
 
@@ -92,7 +92,7 @@ export default async function RootLayout({
               "@type": "Organization",
               name: SITE_NAME,
               url: baseUrl,
-              logo: `${baseUrl}/favicon.svg`,
+              logo: `${baseUrl}/favicon.png`,
             }),
           }}
         />
