@@ -1,12 +1,13 @@
 import { and, asc, eq, inArray, like, ne, or, sql } from "drizzle-orm";
 import { db } from "../db/index";
 import {
-    collections,
-    productCollections,
-    productImages,
-    products,
-    productVariants,
+  collections,
+  productCollections,
+  productImages,
+  products,
+  productVariants,
 } from "../db/schema";
+import { expandSearchTerms } from "../search-rules";
 import type { Collection, Product } from "../types";
 
 function reshapeProduct(
@@ -151,53 +152,35 @@ export async function getProducts({
 } = {}): Promise<Product[]> {
   let whereConditions = [];
 
-  // Búsqueda por texto en título y descripción
+  // Búsqueda por texto en título y descripción con expansión de términos
   if (query) {
-    const searchTerm = `%${query.toLowerCase()}%`;
-    whereConditions.push(
+    const searchTerms = expandSearchTerms(query);
+    const titleDescriptionConditions = searchTerms.map(term => 
       or(
-        like(sql`LOWER(${products.title})`, searchTerm),
-        like(sql`LOWER(${products.description})`, searchTerm)
+        like(sql`LOWER(${products.title})`, `%${term.toLowerCase()}%`),
+        like(sql`LOWER(${products.description})`, `%${term.toLowerCase()}%`)
       )
     );
+    whereConditions.push(or(...titleDescriptionConditions));
   }
 
-  // Filtros por colores y tallas
+  // Filtros por colores y tallas con expansión
   if (colors && colors.length > 0 || sizes && sizes.length > 0) {
     const variantConditions = [];
     
     if (colors && colors.length > 0) {
+      const expandedColors = colors.flatMap(color => expandSearchTerms(color));
       variantConditions.push(
-        or(...colors.map(color => 
+        or(...expandedColors.map(color => 
           like(productVariants.selectedOptions, `%"value":"${color}"%`)
         ))
       );
     }
     
     if (sizes && sizes.length > 0) {
-      // Mapeo de términos de búsqueda a tallas
-      const sizeMapping: { [key: string]: string[] } = {
-        'chico': ['S'],
-        'pequeño': ['S'],
-        'pequeña': ['S'],
-        'small': ['S'],
-        'mediano': ['M'],
-        'mediana': ['M'],
-        'medium': ['M'],
-        'grande': ['L'],
-        'large': ['L'],
-        'xl': ['XL'],
-        'extra grande': ['XL'],
-        'extra large': ['XL']
-      };
-
-      const searchSizes = sizes.flatMap(size => {
-        const lowerSize = size.toLowerCase();
-        return sizeMapping[lowerSize] || [size];
-      });
-
+      const expandedSizes = sizes.flatMap(size => expandSearchTerms(size));
       variantConditions.push(
-        or(...searchSizes.map(size => 
+        or(...expandedSizes.map(size => 
           like(productVariants.selectedOptions, `%"value":"${size}"%`)
         ))
       );
