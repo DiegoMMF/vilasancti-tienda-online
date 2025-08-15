@@ -4,7 +4,7 @@ function Grid(props: React.ComponentProps<"ul">) {
   return (
     <ul
       {...props}
-      className={clsx("grid grid-flow-row gap-4", props.className)}
+      className={clsx("grid grid-flow-row gap-8 sm:gap-4", props.className)}
     >
       {props.children}
     </ul>
