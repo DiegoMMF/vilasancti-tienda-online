@@ -63,7 +63,7 @@ export function Gallery({
 
   return (
     <div>
-      <div className="relative aspect-square h-full max-h-[70vh] w-full max-w-[70vw] mx-auto overflow-hidden">
+      <div className="relative aspect-square h-full max-h-[80vh] w-full max-w-[80vw] mx-auto overflow-hidden">
         {isLoading && <ImageLoader />}
 
         {images[currentImageIndex] && (

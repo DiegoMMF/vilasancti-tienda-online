@@ -11,7 +11,7 @@ export default function CategoryLayout({
 }) {
   return (
     <>
-      <div className="mx-auto flex max-w-[70vw] flex-col gap-8 px-6 pb-8 text-[#bf9d6d] md:flex-row lg:px-12 lg:pb-16">
+      <div className="mx-auto flex max-w-[80vw] flex-col gap-8 px-6 pb-8 text-[#bf9d6d] md:flex-row lg:px-12 lg:pb-16">
         <div className="order-first w-full flex-none md:max-w-[125px]">
           <Collections />
         </div>

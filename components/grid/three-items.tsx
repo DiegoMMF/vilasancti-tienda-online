@@ -58,7 +58,7 @@ export async function ThreeItemGrid() {
   const [firstProduct, secondProduct, thirdProduct] = homepageItems;
 
   return (
-    <section className="mx-auto grid max-w-[70vw] gap-6 px-6 pb-8 md:grid-cols-6 md:grid-rows-2 lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)]">
+    <section className="mx-auto grid max-w-[80vw] gap-6 px-6 pb-8 md:grid-cols-6 md:grid-rows-2 lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)]">
       <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
       <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
       <ThreeItemGridItem size="half" item={thirdProduct} />
