@@ -310,7 +310,12 @@ export async function getCollections(): Promise<Collection[]> {
     .select()
     .from(collections)
     .orderBy(asc(collections.title));
-  return dbCollections.map(reshapeCollection).filter(Boolean) as Collection[];
+  return dbCollections
+    .map(reshapeCollection)
+    .filter(Boolean)
+    .filter(
+      (collection) => !collection?.handle.startsWith("hidden"),
+    ) as Collection[];
 }
 
 export async function getCollectionProducts(

@@ -47,7 +47,11 @@ export default async function CategoryPage(props: {
     sorting.find((item) => item.slug === sort) || defaultSort;
   const colors = color ? color.split(",").filter(Boolean) : undefined;
   const sizes = size ? size.split(",").filter(Boolean) : undefined;
-  const products = await getCollectionProducts(params.collection);
+  const products = await getCollectionProducts(
+    params.collection,
+    sortKey,
+    reverse,
+  );
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
