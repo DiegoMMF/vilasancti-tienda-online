@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="1200" height="630" fill="#faebd7"/>
+  
+  <!-- Elementos decorativos sutiles -->
+  <circle cx="200" cy="150" r="80" fill="#bdb76b" opacity="0.1"/>
+  <circle cx="1000" cy="480" r="60" fill="#bdb76b" opacity="0.1"/>
+  <circle cx="300" cy="500" r="40" fill="#bdb76b" opacity="0.08"/>
+  <circle cx="900" cy="120" r="50" fill="#bdb76b" opacity="0.08"/>
+  
+  <!-- Letra V grande -->
+  <text x="600" y="280" font-family="Cormorant, serif" font-size="180" font-weight="600" text-anchor="middle" fill="#bdb76b">V</text>
+  
+  <!-- Texto principal -->
+  <text x="600" y="380" font-family="Cormorant, serif" font-size="48" font-weight="500" text-anchor="middle" fill="#bdb76b">VILASANCTI</text>
+  
+  <!-- Subtítulo -->
+  <text x="600" y="420" font-family="Cormorant, serif" font-size="24" font-weight="400" text-anchor="middle" fill="#bdb76b" opacity="0.8">Elegancia que se vive en casa</text>
+  
+  <!-- Descripción -->
+  <text x="600" y="460" font-family="Cormorant, serif" font-size="18" font-weight="400" text-anchor="middle" fill="#bdb76b" opacity="0.7">Tienda Online de Pijamas que realzan tu belleza</text>
+  <text x="600" y="485" font-family="Cormorant, serif" font-size="18" font-weight="400" text-anchor="middle" fill="#bdb76b" opacity="0.7">y transmiten distinción</text>
+</svg>

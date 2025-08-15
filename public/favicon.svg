@@ -1,0 +1,9 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="32" height="32" fill="#faebd7" rx="4"/>
+  <text x="16" y="22" font-family="Cormorant, serif" font-size="20" font-weight="600" text-anchor="middle" fill="#bdb76b">V</text>
+</svg>
