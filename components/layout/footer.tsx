@@ -38,6 +38,7 @@ export default function Footer({
     toast("Próximamente...", {
       duration: 2000,
       className: "vilasancti-toast",
+      closeButton: false,
     });
   };
 
@@ -46,6 +47,7 @@ export default function Footer({
     toast("Próximamente...", {
       duration: 2000,
       className: "vilasancti-toast",
+      closeButton: false,
     });
   };
 
