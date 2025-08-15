@@ -61,7 +61,7 @@ export default async function CategoryPage(props: {
   };
 
   return (
-    <section>
+    <section className="mx-auto max-w-[70vw] px-6 py-8 lg:px-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}

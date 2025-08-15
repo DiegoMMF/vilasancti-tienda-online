@@ -9,8 +9,8 @@ import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
 import { OverlayLink } from "components/ui/overlay-link";
 import {
-  getProduct,
-  getProductRecommendations,
+    getProduct,
+    getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
@@ -130,7 +130,7 @@ export default async function ProductPage(props: {
         </OverlayLink>
       </div>
 
-      <div className="mx-auto max-w-(--breakpoint-2xl) px-6 lg:px-12">
+      <div className="mx-auto max-w-[70vw] px-6 lg:px-12">
         <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
           {/* Espacio adicional entre secciones en mobile */}
           <div className="mb-6 lg:mb-0" />
@@ -145,7 +145,7 @@ export default async function ProductPage(props: {
           <div className="order-2 h-full w-full basis-full lg:order-1 lg:basis-4/6">
             <Suspense
               fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
+                <div className="relative aspect-square h-full max-h-[70vh] w-full max-w-[70vw] mx-auto overflow-hidden" />
               }
             >
               <Gallery
@@ -174,7 +174,7 @@ async function RelatedProducts({ id }: { id: string }) {
   if (!unique.length) return null;
 
   return (
-    <div className="py-8">
+    <div className="py-8 max-w-[70vw] mx-auto">
       <h2 className="mb-4 text-2xl font-bold text-[#bf9d6d] font-cormorant">
         Related Products
       </h2>

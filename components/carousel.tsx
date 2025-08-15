@@ -1,6 +1,5 @@
-import { getCollectionProducts } from "lib/api/products-drizzle";
-import Link from "next/link";
 import { OverlayLink } from "components/ui/overlay-link";
+import { getCollectionProducts } from "lib/api/products-drizzle";
 import { GridTileImage } from "./grid/tile";
 
 export async function Carousel() {
