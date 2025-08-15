@@ -2,14 +2,14 @@
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
-import { db } from "../lib/db/index.js";
+import { db } from "../lib/db/index.ts";
 import {
-    collections,
-    productCollections,
-    productImages,
-    products,
-    productVariants,
-} from "../lib/db/schema.js";
+  collections,
+  productCollections,
+  productImages,
+  products,
+  productVariants,
+} from "../lib/db/schema.ts";
 import { getBlobUrlsForFolder } from "./generate-blob-urls.js";
 
 async function main() {
@@ -31,7 +31,7 @@ async function main() {
       title: "Destacados",
       description: "Pijamas destacados para la portada",
       seoTitle: "Pijamas Destacados",
-      seoDescription: "Descubre nuestros piyamas destacados para mujer",
+      seoDescription: "Descubre nuestros pijamas destacados para mujer",
       updatedAt: now,
     })
     .returning();
@@ -43,19 +43,55 @@ async function main() {
       title: "Carrusel Portada",
       description: "Pijamas para el carrusel de portada",
       seoTitle: "Carrusel de Pijamas",
-      seoDescription: "Explora nuestros piyamas en el carrusel de portada",
+      seoDescription: "Explora nuestros pijamas en el carrusel de portada",
       updatedAt: now,
     })
     .returning();
 
-  const [womenPajamas] = await db
+  const [lisos] = await db
     .insert(collections)
     .values({
-      handle: "piyamas-mujer",
-      title: "Pijamas Mujer",
-      description: "Colección de piyamas para mujer",
-      seoTitle: "Pijamas de Mujer",
-      seoDescription: "Pijamas cómodos y elegantes para mujer",
+      handle: "lisos",
+      title: "Lisos",
+      description: "Pijamas con diseños lisos y elegantes",
+      seoTitle: "Pijamas Lisos",
+      seoDescription: "Pijamas con diseños lisos y elegantes para mujer",
+      updatedAt: now,
+    })
+    .returning();
+
+  const [estampados] = await db
+    .insert(collections)
+    .values({
+      handle: "estampados",
+      title: "Estampados",
+      description: "Pijamas con estampados y diseños únicos",
+      seoTitle: "Pijamas Estampados",
+      seoDescription: "Pijamas con estampados y diseños únicos para mujer",
+      updatedAt: now,
+    })
+    .returning();
+
+  const [cortos] = await db
+    .insert(collections)
+    .values({
+      handle: "cortos",
+      title: "Cortos",
+      description: "Pijamas cortos para mayor comodidad",
+      seoTitle: "Pijamas Cortos",
+      seoDescription: "Pijamas cortos para mayor comodidad y frescura",
+      updatedAt: now,
+    })
+    .returning();
+
+  const [largos] = await db
+    .insert(collections)
+    .values({
+      handle: "largos",
+      title: "Largos",
+      description: "Pijamas largos para mayor cobertura",
+      seoTitle: "Pijamas Largos",
+      seoDescription: "Pijamas largos para mayor cobertura y elegancia",
       updatedAt: now,
     })
     .returning();
@@ -76,7 +112,7 @@ async function main() {
       handle: "pijama-estampado-algodon",
       title: "Pijama Estampado Algodón",
       description: "Conjunto de de algodón suave para noches placenteras.",
-      price: 47999,
+      price: 48300,
       folder: "01",
       sizes: [{ size: "M", amount: 1 }],
     },
@@ -84,7 +120,7 @@ async function main() {
       handle: "pijama-algodon-rosa-con-borde",
       title: "Pijama de Algodón Rosa con detalle",
       description: "Algodón deslizante para máximo confort.",
-      price: 71999,
+      price: 72300,
       folder: "02",
       sizes: [{ size: "S", amount: 1 }],
     },
@@ -92,7 +128,7 @@ async function main() {
       handle: "pijama-invierno-negro",
       title: "Pijama Invierno Negro",
       description: "Tejido cálido ideal para noches frías.",
-      price: 79999,
+      price: 72300,
       folder: "03",
       sizes: [{ size: "M", amount: 0 }],
     },
@@ -100,7 +136,7 @@ async function main() {
       handle: "pijama-azul-cuadritos",
       title: "Pijama Azul Cuadritos",
       description: "Acabado lujoso con caída perfecta.",
-      price: 85999,
+      price: 86500,
       folder: "04",
       sizes: [{ size: "M", amount: 1 }],
     },
@@ -108,7 +144,7 @@ async function main() {
       handle: "pijama-rosa-saten-largo",
       title: "Pijama Rosa Satén Largo",
       description: "Clásico y elegante para un descanso premium.",
-      price: 79999,
+      price: 81300,
       folder: "05",
       sizes: [
         { size: "S", amount: 1 },
@@ -120,7 +156,7 @@ async function main() {
       handle: "pijama-rosa-regalitos",
       title: "Pijama Rosa Regalitos",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 85999,
+      price: 86500,
       folder: "06",
       sizes: [
         { size: "S", amount: 1 },
@@ -132,7 +168,7 @@ async function main() {
       handle: "pijama-rosado-rayas",
       title: "Pijama Corto a Rayas Rosadas",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 69999,
+      price: 70000,
       folder: "07",
       sizes: [
         { size: "L", amount: 1 },
@@ -143,7 +179,7 @@ async function main() {
       handle: "pijama-liso-plateado-corto",
       title: "Pijama Satén Plateado Corto",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 69999,
+      price: 70000,
       folder: "08",
       sizes: [{ size: "M", amount: 1 }],
     },
@@ -151,15 +187,15 @@ async function main() {
       handle: "pijama-liso-plateado-largo",
       title: "Pijama Satén Plateado Largo",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 79999,
+      price: 81300,
       folder: "09",
       sizes: [{ size: "M", amount: 0 }],
     },
     {
       handle: "pijama-animal-print-largo",
-      title: "Pijama Animal Print Largo",
+      title: "Pijama Animal Print Dorado Largo",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 85999,
+      price: 86500,
       folder: "10",
       sizes: [
         { size: "S", amount: 1 },
@@ -170,7 +206,7 @@ async function main() {
       handle: "pijama-liso-negro-largo-saten",
       title: "Pijama Liso Negro Largo Satén",
       description: "Tela suave y elegante para un descanso premium.",
-      price: 79999,
+      price: 81300,
       folder: "11",
       sizes: [{ size: "M", amount: 0 }],
     },
@@ -192,7 +228,7 @@ async function main() {
           description: product.description,
           descriptionHtml: `<p>${product.description}</p>`,
           availableForSale: product.sizes.some((s) => s.amount > 0),
-          tags: JSON.stringify(["piyamas", "mujer", "sleepwear"]),
+          tags: JSON.stringify(["pijamas", "mujer", "sleepwear"]),
           seoTitle: product.title,
           seoDescription: product.description,
           updatedAt: now,
@@ -236,27 +272,49 @@ async function main() {
         ),
       );
 
+      // Determinar a qué colecciones pertenece el producto basado en su título y características
+      const productTitle = product.title.toLowerCase();
+      const productHandle = product.handle.toLowerCase();
+      
+      const collectionsToAssign = [featured.id, carousel.id];
+      
+      // Asignar a colecciones por diseño
+      if (productTitle.includes('liso') || productTitle.includes('plateado') || productTitle.includes('negro')) {
+        collectionsToAssign.push(lisos.id);
+      }
+      if (productTitle.includes('estampado') || productTitle.includes('cuadritos') || productTitle.includes('rayas') || productTitle.includes('animal') || productTitle.includes('regalitos')) {
+        collectionsToAssign.push(estampados.id);
+      }
+      
+      // Asignar a colecciones por longitud
+      if (productTitle.includes('corto') || productHandle.includes('corto')) {
+        collectionsToAssign.push(cortos.id);
+      }
+      if (productTitle.includes('largo') || productHandle.includes('largo')) {
+        collectionsToAssign.push(largos.id);
+      }
+      
+      // Si no está especificado como corto o largo, asignar por defecto según el handle
+      if (!productTitle.includes('corto') && !productTitle.includes('largo') && !productHandle.includes('corto') && !productHandle.includes('largo')) {
+        // Asignar a largos por defecto si no está especificado
+        collectionsToAssign.push(largos.id);
+      }
+
       // Crear relaciones con colecciones
-      await Promise.all([
-        db.insert(productCollections).values({
-          productId: newProduct.id,
-          collectionId: featured.id,
-        }),
-        db.insert(productCollections).values({
-          productId: newProduct.id,
-          collectionId: carousel.id,
-        }),
-        db.insert(productCollections).values({
-          productId: newProduct.id,
-          collectionId: womenPajamas.id,
-        }),
-      ]);
+      await Promise.all(
+        collectionsToAssign.map(collectionId =>
+          db.insert(productCollections).values({
+            productId: newProduct.id,
+            collectionId: collectionId,
+          })
+        )
+      );
 
       return newProduct;
     }),
   );
 
-  console.log(`✅ ${productPayloads.length} productos de piyamas creados`);
+  console.log(`✅ ${productPayloads.length} productos de pijamas creados`);
   console.log("🎉 Database seeded successfully with Drizzle!");
 }
 
