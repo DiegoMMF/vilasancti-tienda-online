@@ -320,7 +320,9 @@ async function main() {
       if (
         productTitle.includes("liso") ||
         productTitle.includes("plateado") ||
-        productTitle.includes("negro")
+        productTitle.includes("negro") ||
+        productTitle.includes("champagne") ||
+        productTitle.includes("encaje")
       ) {
         collectionsToAssign.push(lisos.id);
       }
@@ -329,7 +331,11 @@ async function main() {
         productTitle.includes("cuadritos") ||
         productTitle.includes("rayas") ||
         productTitle.includes("animal") ||
-        productTitle.includes("regalitos")
+        productTitle.includes("regalitos") ||
+        productTitle.includes("jardín") ||
+        productTitle.includes("tropical") ||
+        productTitle.includes("lazo") ||
+        productTitle.includes("felina")
       ) {
         collectionsToAssign.push(estampados.id);
       }
