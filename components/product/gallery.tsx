@@ -3,6 +3,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { GridTileImage } from "components/grid/tile";
 import { useProduct } from "components/product/product-context";
+import ImageModal from "components/ui/image-modal";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -34,6 +35,7 @@ export function Gallery({
   const imageIndex = state.image ? parseInt(state.image) : 0;
   const [isLoading, setIsLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(imageIndex);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sincronizar el estado local con el estado del contexto
   useEffect(() => {
@@ -67,16 +69,22 @@ export function Gallery({
         {isLoading && <ImageLoader />}
 
         {images[currentImageIndex] && (
-          <Image
-            className="h-full w-full object-contain"
-            fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            alt={images[currentImageIndex]?.altText as string}
-            src={images[currentImageIndex]?.src as string}
-            priority={true}
-            onLoad={handleImageLoad}
-            onError={handleImageLoad}
-          />
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="h-full w-full cursor-zoom-in transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            aria-label="Ver imagen en pantalla completa"
+          >
+            <Image
+              className="h-full w-full object-contain"
+              fill
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              alt={images[currentImageIndex]?.altText as string}
+              src={images[currentImageIndex]?.src as string}
+              priority={true}
+              onLoad={handleImageLoad}
+              onError={handleImageLoad}
+            />
+          </button>
         )}
 
         {images.length > 1 ? (
@@ -109,6 +117,26 @@ export function Gallery({
           </div>
         ) : null}
       </div>
+
+      {/* Modal de imagen en pantalla completa */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        imageUrl={images[currentImageIndex]?.src || ""}
+        altText={images[currentImageIndex]?.altText || ""}
+        onPrevious={
+          images.length > 1
+            ? () => handleImageChange(previousImageIndex)
+            : undefined
+        }
+        onNext={
+          images.length > 1
+            ? () => handleImageChange(nextImageIndex)
+            : undefined
+        }
+        hasPrevious={images.length > 1}
+        hasNext={images.length > 1}
+      />
 
       {images.length > 1 ? (
         <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-auto py-1 lg:mb-0">
