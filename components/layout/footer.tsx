@@ -140,7 +140,7 @@ export default async function Footer() {
                 </svg>
                 <div>
                   <p className="text-sm text-[#bf9d6d]/80 font-inter">
-                    Buenos Aires, Argentina
+                    Villa Dolores, Córdoba, Argentina
                   </p>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default async function Footer() {
                 </svg>
                 <div>
                   <p className="text-sm text-[#bf9d6d]/80 font-inter">
-                    info@vilasancti.com
+                    vilasancti@gmail.com
                   </p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default async function Footer() {
                 </svg>
                 <div>
                   <p className="text-sm text-[#bf9d6d]/80 font-inter">
-                    +54 11 1234-5678
+                    +54 9 3544 543637
                   </p>
                 </div>
               </div>
