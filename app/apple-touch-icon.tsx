@@ -1,30 +1,35 @@
 import { ImageResponse } from "next/og";
 
 export const size = {
-  width: 32,
-  height: 32,
+  width: 180,
+  height: 180,
 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default function AppleTouchIcon() {
   return new ImageResponse(
     (
       <div
         style={{
-          fontSize: 20,
-          fontWeight: 600,
           background: "#faebd7",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#bdb76b",
-          fontFamily: "Cormorant, serif",
-          borderRadius: "4px",
+          borderRadius: "22px",
         }}
       >
-        V
+        <div
+          style={{
+            fontSize: 80,
+            fontWeight: 600,
+            color: "#bdb76b",
+            fontFamily: "Cormorant, serif",
+          }}
+        >
+          V
+        </div>
       </div>
     ),
     {

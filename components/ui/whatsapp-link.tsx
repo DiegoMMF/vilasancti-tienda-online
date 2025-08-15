@@ -10,19 +10,19 @@ interface WhatsAppLinkProps {
   showOnClick?: boolean;
 }
 
-export function WhatsAppLink({ 
-  phoneNumber, 
-  message, 
-  className = "", 
-  children, 
-  showOnClick = false 
+export function WhatsAppLink({
+  phoneNumber,
+  message,
+  className = "",
+  children,
+  showOnClick = false,
 }: WhatsAppLinkProps) {
   // Emoji de corazón rosa: 💖
   const heartEmoji = "%F0%9F%92%96";
-  
+
   // Construir el mensaje completo con el emoji
   const fullMessage = `${heartEmoji}%20${message}`;
-  
+
   // Construir la URL de WhatsApp
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${fullMessage}`;
 

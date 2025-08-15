@@ -26,7 +26,7 @@ export function OverlayLink({
       // Hacer scroll suave hacia arriba
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       return;
     }
@@ -36,11 +36,5 @@ export function OverlayLink({
     onClick?.(e);
   };
 
-  return (
-    <Link
-      {...props}
-      href={href}
-      onClick={handleClick}
-    />
-  );
+  return <Link {...props} href={href} onClick={handleClick} />;
 }

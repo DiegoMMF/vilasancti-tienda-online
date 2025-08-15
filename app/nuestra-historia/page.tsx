@@ -4,7 +4,8 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export const metadata = {
   title: "Nuestra Historia | Vilasancti",
-  description: "Descubre la historia detrás de VILASANCTI, un proyecto de madre e hija inspirado en el amor por la elegancia y la feminidad.",
+  description:
+    "Descubre la historia detrás de VILASANCTI, un proyecto de madre e hija inspirado en el amor por la elegancia y la feminidad.",
 };
 
 export default function NuestraHistoriaPage() {
@@ -31,7 +32,8 @@ export default function NuestraHistoriaPage() {
                     <span className="text-3xl md:text-4xl font-bold text-[#bf9d6d] font-cormorant">
                       VILASANCTI
                     </span>{" "}
-                    es un proyecto de madre e hija inspirado en el amor por la elegancia y la feminidad.
+                    es un proyecto de madre e hija inspirado en el amor por la
+                    elegancia y la feminidad.
                   </p>
                 </div>
 
@@ -43,9 +45,10 @@ export default function NuestraHistoriaPage() {
                 {/* Segundo párrafo */}
                 <div className="text-center">
                   <p className="text-lg md:text-xl text-[#bf9d6d]/80 font-inter leading-relaxed">
-                    Seleccionamos cuidadosamente cada prenda, priorizando calidad, diseño y confort, 
-                    para que en tu hogar y en tus momentos de descanso te sientas tan hermosa y segura 
-                    como en cualquier ocasión especial.
+                    Seleccionamos cuidadosamente cada prenda, priorizando
+                    calidad, diseño y confort, para que en tu hogar y en tus
+                    momentos de descanso te sientas tan hermosa y segura como en
+                    cualquier ocasión especial.
                   </p>
                 </div>
 
@@ -57,8 +60,9 @@ export default function NuestraHistoriaPage() {
                 {/* Tercer párrafo */}
                 <div className="text-center">
                   <p className="text-lg md:text-xl text-[#bf9d6d]/80 font-inter leading-relaxed">
-                    Aquí encontrarás pijamas que realzan tu belleza y transmiten distinción, 
-                    porque creemos que la elegancia también se vive en casa.
+                    Aquí encontrarás pijamas que realzan tu belleza y transmiten
+                    distinción, porque creemos que la elegancia también se vive
+                    en casa.
                   </p>
                 </div>
               </div>

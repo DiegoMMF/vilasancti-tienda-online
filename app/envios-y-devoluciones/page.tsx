@@ -5,7 +5,8 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export const metadata = {
   title: "Envíos y Devoluciones | Vilasancti",
-  description: "Información sobre envíos y devoluciones de VILASANCTI. Coordinamos todo vía WhatsApp para brindarte el mejor servicio.",
+  description:
+    "Información sobre envíos y devoluciones de VILASANCTI. Coordinamos todo vía WhatsApp para brindarte el mejor servicio.",
 };
 
 export default function EnviosYDevolucionesPage() {
@@ -29,7 +30,8 @@ export default function EnviosYDevolucionesPage() {
                 {/* Primer párrafo */}
                 <div className="text-center">
                   <p className="text-lg md:text-xl text-[#bf9d6d]/80 font-inter leading-relaxed">
-                    Recién estamos comenzando y está en lista de espera la organización de los envíos de forma automática.
+                    Recién estamos comenzando y está en lista de espera la
+                    organización de los envíos de forma automática.
                   </p>
                 </div>
 
@@ -41,7 +43,8 @@ export default function EnviosYDevolucionesPage() {
                 {/* Segundo párrafo */}
                 <div className="text-center">
                   <p className="text-lg md:text-xl text-[#bf9d6d]/80 font-inter leading-relaxed">
-                    Hasta entonces, los envíos y las devoluciones se coordinarán vía WhatsApp con nosotras.
+                    Hasta entonces, los envíos y las devoluciones se coordinarán
+                    vía WhatsApp con nosotras.
                   </p>
                 </div>
 
@@ -67,7 +70,7 @@ export default function EnviosYDevolucionesPage() {
                   <p className="text-lg md:text-xl text-[#bf9d6d]/80 font-inter leading-relaxed mb-6">
                     Consultas a éste y otros respectos:
                   </p>
-                  
+
                   {/* Botón de WhatsApp con estética del modal de Diego */}
                   <div className="flex justify-center">
                     <WhatsAppLink

@@ -29,8 +29,17 @@ export const metadata = {
     default: SITE_NAME!,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
-  keywords: ["pijamas", "elegancia", "moda", "tienda online", "VILASANCTI", "descanso", "belleza"],
+  description:
+    "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+  keywords: [
+    "pijamas",
+    "elegancia",
+    "moda",
+    "tienda online",
+    "VILASANCTI",
+    "descanso",
+    "belleza",
+  ],
   authors: [{ name: "VILASANCTI" }],
   creator: "VILASANCTI",
   publisher: "VILASANCTI",
@@ -38,28 +47,30 @@ export const metadata = {
     follow: true,
     index: true,
   },
-  openGraph: {
-    type: "website",
-    locale: "es_AR",
-    url: baseUrl,
-    siteName: SITE_NAME,
-    title: SITE_NAME,
-    description: "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
-    images: [
-      {
-        url: `${baseUrl}/og-image.png`,
-        width: 1200,
-        height: 630,
-        alt: "VILASANCTI - Elegancia que se vive en casa",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE_NAME,
-    description: "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
-    images: [`${baseUrl}/og-image.png`],
-  },
+      openGraph: {
+      type: "website",
+      locale: "es_AR",
+      url: baseUrl,
+      siteName: SITE_NAME,
+      title: SITE_NAME,
+      description:
+        "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+      images: [
+        {
+          url: `${baseUrl}/og-image.svg`,
+          width: 1200,
+          height: 630,
+          alt: "VILASANCTI - Elegancia que se vive en casa",
+        },
+      ],
+    },
+      twitter: {
+      card: "summary_large_image",
+      title: SITE_NAME,
+      description:
+        "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+      images: [`${baseUrl}/og-image.svg`],
+    },
 };
 
 export default async function RootLayout({

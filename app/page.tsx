@@ -22,7 +22,7 @@ export default function HomePage() {
       <section className="relative py-16 lg:py-24 overflow-hidden">
         {/* Fondo con gradiente sutil */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#f0e3d7] via-[#f0e3d7]/95 to-[#f0e3d7]/90"></div>
-        
+
         {/* Elementos decorativos de fondo */}
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-16 left-8 w-32 h-32 border border-[#bf9d6d]/8 rounded-full"></div>
@@ -44,7 +44,9 @@ export default function HomePage() {
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#bf9d6d] font-cormorant tracking-wider leading-tight">
                 Elegancia que se vive
                 <br />
-                <span className="text-2xl md:text-4xl lg:text-5xl font-light">en casa</span>
+                <span className="text-2xl md:text-4xl lg:text-5xl font-light">
+                  en casa
+                </span>
               </h2>
 
               {/* Separador central */}
