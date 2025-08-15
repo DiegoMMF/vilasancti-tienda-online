@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 function GlassSpinner() {
   return (
     <div className="relative grid place-items-center">
-      <div className="h-12 w-12 animate-spin rounded-full border-2 border-neutral-200 border-t-blue-600 dark:border-neutral-700 dark:border-t-blue-500 sm:h-8 sm:w-8" />
-      <div className="absolute inset-0 rounded-full bg-white/20 dark:bg-white/10 blur-lg" />
+      <div className="h-12 w-12 animate-spin rounded-full border-2 border-[#bf9d6d]/30 border-t-[#bf9d6d] sm:h-8 sm:w-8" />
+      <div className="absolute inset-0 rounded-full bg-[#f0e3d7]/20 blur-lg" />
     </div>
   );
 }

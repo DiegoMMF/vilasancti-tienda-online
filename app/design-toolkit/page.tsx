@@ -50,16 +50,16 @@ export default async function DesignToolkitPage() {
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
-            { name: "Neutral 50", cls: "bg-neutral-50 text-neutral-900" },
-            { name: "Neutral 200", cls: "bg-neutral-200 text-neutral-900" },
-            { name: "Neutral 800", cls: "bg-neutral-800 text-neutral-100" },
-            { name: "Blue 600", cls: "bg-blue-600 text-white" },
-            { name: "Red 600", cls: "bg-red-600 text-white" },
-            { name: "Green 600", cls: "bg-green-600 text-white" },
+            { name: "Beige Claro", cls: "bg-[#f0e3d7] text-[#bf9d6d]" },
+            { name: "Marrón Dorado", cls: "bg-[#bf9d6d] text-[#f0e3d7]" },
+            { name: "Beige Transparente", cls: "bg-[#f0e3d7]/50 text-[#bf9d6d]" },
+            { name: "Marrón Transparente", cls: "bg-[#bf9d6d]/20 text-[#bf9d6d]" },
+            { name: "Borde Sutil", cls: "bg-[#f0e3d7] border-[#bf9d6d]/20 text-[#bf9d6d]" },
+            { name: "Hover", cls: "bg-[#bf9d6d] text-[#f0e3d7] hover:opacity-90" },
           ].map((c) => (
             <div
               key={c.name}
-              className={`rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 ${c.cls}`}
+              className={`rounded-lg border border-[#bf9d6d]/20 p-4 ${c.cls}`}
             >
               <div className="text-sm font-medium">{c.name}</div>
             </div>
@@ -73,23 +73,23 @@ export default async function DesignToolkitPage() {
           Controles
         </h2>
         <div className="flex flex-wrap items-center gap-3">
-          <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">
+          <button className="rounded-lg bg-[#bf9d6d] px-4 py-2 text-[#f0e3d7] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#bf9d6d]">
             Primario
           </button>
-          <button className="rounded-lg border border-neutral-200 px-4 py-2 text-[#bf9d6d] transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline">
+          <button className="rounded-lg border border-[#bf9d6d]/20 px-4 py-2 text-[#bf9d6d] transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline">
             Secundario
           </button>
           <button
-            className="rounded-lg bg-neutral-200 px-4 py-2 text-[#bf9d6d]"
+            className="rounded-lg bg-[#bf9d6d]/30 px-4 py-2 text-[#bf9d6d]/50"
             disabled
           >
             Disabled
           </button>
           <input
             placeholder="Input de ejemplo"
-            className="rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none focus:border-blue-600 dark:border-neutral-800 dark:bg-black"
+            className="rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-3 py-2 text-sm text-[#bf9d6d] outline-none focus:border-[#bf9d6d] placeholder:text-[#bf9d6d]/70"
           />
-          <select className="rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none focus:border-blue-600 dark:border-neutral-800 dark:bg-black">
+          <select className="rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-3 py-2 text-sm text-[#bf9d6d] outline-none focus:border-[#bf9d6d]">
             <option>Opc 1</option>
             <option>Opc 2</option>
           </select>

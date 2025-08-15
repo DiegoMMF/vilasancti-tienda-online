@@ -30,8 +30,8 @@ export function FullscreenLoader({
 function GlassSpinner() {
   return (
     <div className="relative grid place-items-center">
-      <div className="h-16 w-16 animate-spin rounded-full border-2 border-neutral-200 border-t-blue-600 dark:border-neutral-700 dark:border-t-blue-500" />
-      <div className="absolute inset-0 rounded-full bg-white/20 dark:bg-white/10 blur-xl" />
+      <div className="h-16 w-16 animate-spin rounded-full border-2 border-[#bf9d6d]/30 border-t-[#bf9d6d] sm:h-12 sm:w-12" />
+      <div className="absolute inset-0 rounded-full bg-[#f0e3d7]/20 blur-xl" />
     </div>
   );
 }
@@ -48,7 +48,7 @@ export function LoaderShowcase() {
       </p>
       <div className="flex flex-wrap gap-3">
         <button
-          className="rounded-lg border border-neutral-200 px-4 py-2 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900"
+          className="rounded-lg border border-[#bf9d6d]/20 px-4 py-2 text-[#bf9d6d] hover:bg-[#bf9d6d] hover:text-[#f0e3d7] transition-all duration-200"
           onClick={() => setOpen(true)}
         >
           Mostrar Loader

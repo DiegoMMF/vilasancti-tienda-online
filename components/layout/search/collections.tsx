@@ -10,8 +10,8 @@ async function CollectionList() {
 }
 
 const skeleton = "mb-3 h-4 w-5/6 animate-pulse rounded-sm";
-const activeAndTitles = "bg-neutral-800 dark:bg-neutral-300";
-const items = "bg-neutral-400 dark:bg-neutral-700";
+const activeAndTitles = "bg-[#bf9d6d]";
+const items = "bg-[#bf9d6d]/30";
 
 export default function Collections() {
   return (

@@ -27,7 +27,7 @@ export default function Search() {
         className="text-md w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 py-2 text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 md:text-sm font-inter"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <MagnifyingGlassIcon className="h-4" />
+        <MagnifyingGlassIcon className="h-4 text-[#bf9d6d]" />
       </div>
     </Form>
   );
@@ -41,7 +41,7 @@ export function SearchSkeleton() {
         className="w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 py-2 text-sm text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 font-inter"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <MagnifyingGlassIcon className="h-4" />
+        <MagnifyingGlassIcon className="h-4 text-[#bf9d6d]" />
       </div>
     </form>
   );

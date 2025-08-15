@@ -22,15 +22,15 @@ function SubmitButton({
         "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200",
         {
           "ml-auto": type === "minus",
-          "hover:border-neutral-800 hover:opacity-80": !disabled,
+          "hover:border-[#bf9d6d] hover:opacity-80": !disabled,
           "cursor-not-allowed opacity-50": disabled,
         },
       )}
     >
       {type === "plus" ? (
-        <PlusIcon className="h-4 w-4 dark:text-neutral-500" />
+        <PlusIcon className="h-4 w-4 text-[#bf9d6d]" />
       ) : (
-        <MinusIcon className="h-4 w-4 dark:text-neutral-500" />
+        <MinusIcon className="h-4 w-4 text-[#bf9d6d]" />
       )}
     </button>
   );
