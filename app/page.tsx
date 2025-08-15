@@ -5,6 +5,8 @@ import Footer from "components/layout/footer";
 // Revalidate the home page every 10 minutes to avoid hitting the DB on every request
 export const revalidate = 600;
 
+const { COMPANY_NAME, SITE_NAME } = process.env;
+
 export const metadata = {
   description:
     "High-performance custom ecommerce store implemented by Diego M. Maldini Freyre.",
@@ -18,7 +20,7 @@ export default function HomePage() {
     <>
       <ThreeItemGrid />
       <Carousel />
-      <Footer />
+      <Footer companyName={COMPANY_NAME} siteName={SITE_NAME} />
     </>
   );
 }

@@ -16,6 +16,8 @@ import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
 import { Suspense } from "react";
 
+const { COMPANY_NAME, SITE_NAME } = process.env;
+
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
@@ -159,7 +161,7 @@ export default async function ProductPage(props: {
         </div>
         <RelatedProducts id={product.id} />
       </div>
-      <Footer />
+      <Footer companyName={COMPANY_NAME} siteName={SITE_NAME} />
     </ProductProvider>
   );
 }

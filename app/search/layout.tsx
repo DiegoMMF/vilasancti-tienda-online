@@ -5,6 +5,8 @@ import { sorting } from "lib/constants";
 import { Suspense } from "react";
 import ChildrenWrapper from "./children-wrapper";
 
+const { COMPANY_NAME, SITE_NAME } = process.env;
+
 export default function SearchLayout({
   children,
 }: {
@@ -25,7 +27,7 @@ export default function SearchLayout({
           <FilterList list={sorting} title="Ordenar por" />
         </div>
       </div>
-      <Footer />
+      <Footer companyName={COMPANY_NAME} siteName={SITE_NAME} />
     </>
   );
 }

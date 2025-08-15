@@ -4,6 +4,8 @@ import FilterList from "components/layout/search/filter";
 import { sorting } from "lib/constants";
 import { Suspense } from "react";
 
+const { COMPANY_NAME, SITE_NAME } = process.env;
+
 export default function CategoryLayout({
   children,
 }: {
@@ -22,7 +24,7 @@ export default function CategoryLayout({
           <FilterList list={sorting} title="Ordenar por" />
         </div>
       </div>
-      <Footer />
+      <Footer companyName={COMPANY_NAME} siteName={SITE_NAME} />
     </>
   );
 }
