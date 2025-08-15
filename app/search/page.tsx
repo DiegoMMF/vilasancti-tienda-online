@@ -43,6 +43,8 @@ export default async function SearchPage(props: {
     query: searchValue,
     colors,
     sizes,
+    sortKey,
+    reverse,
   });
   const resultsText = products.length > 1 ? "resultados" : "resultado";
   const itemListJsonLd = {

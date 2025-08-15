@@ -145,10 +145,14 @@ export async function getProducts({
   query,
   colors,
   sizes,
+  sortKey = "RELEVANCE",
+  reverse = false,
 }: {
   query?: string;
   colors?: string[];
   sizes?: string[];
+  sortKey?: "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE";
+  reverse?: boolean;
 } = {}): Promise<Product[]> {
   let whereConditions = [];
 
@@ -237,7 +241,7 @@ export async function getProducts({
     imagesByProduct.set(img.productId, arr);
   }
 
-  return dbProducts
+  let sortedProducts = dbProducts
     .map((p) =>
       reshapeProduct(
         p,
@@ -246,6 +250,38 @@ export async function getProducts({
       ),
     )
     .filter(Boolean) as Product[];
+
+  // Aplicar sorting
+  switch (sortKey) {
+    case "PRICE":
+      sortedProducts.sort((a, b) => {
+        const priceA = parseFloat(a.priceRange.minVariantPrice.amount);
+        const priceB = parseFloat(b.priceRange.minVariantPrice.amount);
+        return reverse ? priceB - priceA : priceA - priceB;
+      });
+      break;
+    case "CREATED_AT":
+      sortedProducts.sort((a, b) => {
+        const dateA = new Date(a.updatedAt).getTime();
+        const dateB = new Date(b.updatedAt).getTime();
+        return reverse ? dateB - dateA : dateA - dateB;
+      });
+      break;
+    case "BEST_SELLING":
+      // Por ahora, ordenar por relevancia (título alfabético)
+      sortedProducts.sort((a, b) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        return reverse ? titleB.localeCompare(titleA) : titleA.localeCompare(titleB);
+      });
+      break;
+    case "RELEVANCE":
+    default:
+      // Mantener el orden original para relevancia
+      break;
+  }
+
+  return sortedProducts;
 }
 
 export async function getCollection(
@@ -268,6 +304,8 @@ export async function getCollections(): Promise<Collection[]> {
 
 export async function getCollectionProducts(
   collection: string,
+  sortKey: "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE" = "RELEVANCE",
+  reverse: boolean = false,
 ): Promise<Product[]> {
   const collectionProducts = await db
     .select()
@@ -306,7 +344,7 @@ export async function getCollectionProducts(
     imagesByProduct.set(img.productId, arr);
   }
 
-  return collectionProducts
+  let sortedProducts = collectionProducts
     .map((cp) =>
       reshapeProduct(
         cp.products,
@@ -315,6 +353,38 @@ export async function getCollectionProducts(
       ),
     )
     .filter(Boolean) as Product[];
+
+  // Aplicar sorting
+  switch (sortKey) {
+    case "PRICE":
+      sortedProducts.sort((a, b) => {
+        const priceA = parseFloat(a.priceRange.minVariantPrice.amount);
+        const priceB = parseFloat(b.priceRange.minVariantPrice.amount);
+        return reverse ? priceB - priceA : priceA - priceB;
+      });
+      break;
+    case "CREATED_AT":
+      sortedProducts.sort((a, b) => {
+        const dateA = new Date(a.updatedAt).getTime();
+        const dateB = new Date(b.updatedAt).getTime();
+        return reverse ? dateB - dateA : dateA - dateB;
+      });
+      break;
+    case "BEST_SELLING":
+      // Por ahora, ordenar por relevancia (título alfabético)
+      sortedProducts.sort((a, b) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        return reverse ? titleB.localeCompare(titleA) : titleA.localeCompare(titleB);
+      });
+      break;
+    case "RELEVANCE":
+    default:
+      // Mantener el orden original para relevancia
+      break;
+  }
+
+  return sortedProducts;
 }
 
 export async function getProductRecommendations(

@@ -21,7 +21,7 @@ export default function CategoryLayout({
           </Suspense>
         </div>
         <div className="order-none flex-none md:order-last md:w-[125px]">
-          <FilterList list={sorting} title="Sort by" />
+          <FilterList list={sorting} title="Ordenar por" />
         </div>
       </div>
       <Footer />
