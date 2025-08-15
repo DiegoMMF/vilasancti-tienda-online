@@ -108,22 +108,49 @@ export async function redirectToCheckout() {
   const cart = await getCart();
   const phone = "5493544543637";
   const lines = cart?.lines ?? [];
-  const first = lines[0];
-  const productTitle = first?.merchandise.product.title || "pijama";
-  const variantTitle = first?.merchandise.title || "";
-  // Intentar extraer talle y color desde selectedOptions si existen
-  const opts = first?.merchandise.selectedOptions || [];
-  const talla = opts.find((o) => o.name.toLowerCase() === "talla")?.value || "";
-  const color = opts.find((o) => o.name.toLowerCase() === "color")?.value || "";
 
-  const messageBase = `Hola, me han redirigido de la web Vilasancti. Quisiera comprar el ${productTitle}`;
-  const messageDetail = [talla && `talle ${talla}`, color && `color ${color}`]
-    .filter(Boolean)
-    .join(" ");
+  if (lines.length === 0) {
+    // Si el carrito está vacío, mensaje genérico
+    const text =
+      "Hola, me han redirigido de la web Vilasancti. Quisiera hacer una consulta.";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    redirect(url);
+  }
 
-  const text = messageDetail
-    ? `${messageBase} ${messageDetail}.`
-    : `${messageBase}.`;
+  // Construir mensaje con todos los items
+  let messageBase =
+    "Hola, me han redirigido de la web Vilasancti. Quisiera comprar:\n\n";
+
+  const itemsList = lines
+    .map((line, index) => {
+      const productTitle = line.merchandise.product.title || "pijama";
+      const variantTitle = line.merchandise.title || "";
+      const quantity = line.quantity;
+
+      // Extraer talle y color desde selectedOptions
+      const opts = line.merchandise.selectedOptions || [];
+      const talla =
+        opts.find((o) => o.name.toLowerCase() === "talla")?.value || "";
+      const color =
+        opts.find((o) => o.name.toLowerCase() === "color")?.value || "";
+
+      // Construir detalles del item
+      const details = [talla && `talle ${talla}`, color && `color ${color}`]
+        .filter(Boolean)
+        .join(" ");
+
+      const itemText = details
+        ? `• ${productTitle} ${details} (cantidad: ${quantity})`
+        : `• ${productTitle} (cantidad: ${quantity})`;
+
+      return itemText;
+    })
+    .join("\n");
+
+  const totalAmount = cart?.cost?.totalAmount?.amount || "0";
+  const currencyCode = cart?.cost?.totalAmount?.currencyCode || "ARS";
+
+  const text = `${messageBase}${itemsList}\n\nTotal: $${totalAmount} ${currencyCode}`;
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
   redirect(url);
 }
