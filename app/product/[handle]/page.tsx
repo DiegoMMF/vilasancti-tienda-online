@@ -92,7 +92,7 @@ export default async function ProductPage(props: {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Piyamas Mujer",
+        name: "Pijamas Mujer",
         item: "/search/piyamas-mujer",
       },
       {
@@ -124,7 +124,7 @@ export default async function ProductPage(props: {
         <OverlayLink
           href="/search/piyamas-mujer"
           className="flex h-12 w-12 items-center justify-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7]/90 backdrop-blur-sm text-[#bf9d6d] transition-all duration-200 hover:bg-[#f0e3d7] hover:scale-110 hover:shadow-lg"
-          aria-label="Volver a Piyamas"
+          aria-label="Volver a Pijamas"
         >
           <ArrowLeftIcon className="h-5 w-5" />
         </OverlayLink>

@@ -1,11 +1,11 @@
 "use server";
 
 import {
-  addToCart,
-  createCart,
-  getCart,
-  removeFromCart,
-  updateCart,
+    addToCart,
+    createCart,
+    getCart,
+    removeFromCart,
+    updateCart,
 } from "lib/api/cart-drizzle";
 import { TAGS } from "lib/constants";
 import { revalidateTag } from "next/cache";
@@ -100,7 +100,7 @@ export async function redirectToCheckout() {
   const phone = "5493544543637";
   const lines = cart?.lines ?? [];
   const first = lines[0];
-  const productTitle = first?.merchandise.product.title || "piyama";
+  const productTitle = first?.merchandise.product.title || "pijama";
   const variantTitle = first?.merchandise.title || "";
   // Intentar extraer talle y color desde selectedOptions si existen
   const opts = first?.merchandise.selectedOptions || [];

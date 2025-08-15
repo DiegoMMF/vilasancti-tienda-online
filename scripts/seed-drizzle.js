@@ -4,11 +4,11 @@ config({ path: ".env.local" });
 
 import { db } from "../lib/db/index.js";
 import {
-  collections,
-  productCollections,
-  productImages,
-  products,
-  productVariants,
+    collections,
+    productCollections,
+    productImages,
+    products,
+    productVariants,
 } from "../lib/db/schema.js";
 import { getBlobUrlsForFolder } from "./generate-blob-urls.js";
 
@@ -29,8 +29,8 @@ async function main() {
     .values({
       handle: "hidden-homepage-featured-items",
       title: "Destacados",
-      description: "Piyamas destacados para la portada",
-      seoTitle: "Piyamas Destacados",
+      description: "Pijamas destacados para la portada",
+      seoTitle: "Pijamas Destacados",
       seoDescription: "Descubre nuestros piyamas destacados para mujer",
       updatedAt: now,
     })
@@ -41,8 +41,8 @@ async function main() {
     .values({
       handle: "hidden-homepage-carousel",
       title: "Carrusel Portada",
-      description: "Piyamas para el carrusel de portada",
-      seoTitle: "Carrusel de Piyamas",
+      description: "Pijamas para el carrusel de portada",
+      seoTitle: "Carrusel de Pijamas",
       seoDescription: "Explora nuestros piyamas en el carrusel de portada",
       updatedAt: now,
     })
@@ -52,10 +52,10 @@ async function main() {
     .insert(collections)
     .values({
       handle: "piyamas-mujer",
-      title: "Piyamas Mujer",
+      title: "Pijamas Mujer",
       description: "Colección de piyamas para mujer",
-      seoTitle: "Piyamas de Mujer",
-      seoDescription: "Piyamas cómodos y elegantes para mujer",
+      seoTitle: "Pijamas de Mujer",
+      seoDescription: "Pijamas cómodos y elegantes para mujer",
       updatedAt: now,
     })
     .returning();
@@ -73,40 +73,40 @@ async function main() {
 
   const productPayloads = [
     {
-      handle: "piyama-estampado-algodon",
-      title: "Piyama Estampado Algodón",
+      handle: "pijama-estampado-algodon",
+      title: "Pijama Estampado Algodón",
       description: "Conjunto de de algodón suave para noches placenteras.",
       price: 47999,
       folder: "01",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "piyama-algodon-rosa-con-borde",
-      title: "Piyama de Algodón Rosa con detalle",
+      handle: "pijama-algodon-rosa-con-borde",
+      title: "Pijama de Algodón Rosa con detalle",
       description: "Algodón deslizante para máximo confort.",
       price: 71999,
       folder: "02",
       sizes: [{ size: "S", amount: 1 }],
     },
     {
-      handle: "piyama-invierno-negro",
-      title: "Piyama Invierno Negro",
+      handle: "pijama-invierno-negro",
+      title: "Pijama Invierno Negro",
       description: "Tejido cálido ideal para noches frías.",
       price: 79999,
       folder: "03",
       sizes: [{ size: "M", amount: 0 }],
     },
     {
-      handle: "piyama-azul-cuadritos",
-      title: "Piyama Azul Cuadritos",
+      handle: "pijama-azul-cuadritos",
+      title: "Pijama Azul Cuadritos",
       description: "Acabado lujoso con caída perfecta.",
       price: 85999,
       folder: "04",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "piyama-rosa-saten-largo",
-      title: "Piyama Rosa Satén Largo",
+      handle: "pijama-rosa-saten-largo",
+      title: "Pijama Rosa Satén Largo",
       description: "Clásico y elegante para un descanso premium.",
       price: 79999,
       folder: "05",
@@ -117,8 +117,8 @@ async function main() {
       ],
     },
     {
-      handle: "piyama-rosa-regalitos",
-      title: "Piyama Rosa Regalitos",
+      handle: "pijama-rosa-regalitos",
+      title: "Pijama Rosa Regalitos",
       description: "Tela suave y elegante para un descanso premium.",
       price: 85999,
       folder: "06",
@@ -129,8 +129,8 @@ async function main() {
       ],
     },
     {
-      handle: "piyama-rosado-rayas",
-      title: "Piyama Corto a Rayas Rosadas",
+      handle: "pijama-rosado-rayas",
+      title: "Pijama Corto a Rayas Rosadas",
       description: "Tela suave y elegante para un descanso premium.",
       price: 69999,
       folder: "07",
@@ -140,24 +140,24 @@ async function main() {
       ],
     },
     {
-      handle: "piyama-liso-plateado-corto",
-      title: "Piyama Satén Plateado Corto",
+      handle: "pijama-liso-plateado-corto",
+      title: "Pijama Satén Plateado Corto",
       description: "Tela suave y elegante para un descanso premium.",
       price: 69999,
       folder: "08",
       sizes: [{ size: "M", amount: 1 }],
     },
     {
-      handle: "piyama-liso-plateado-largo",
-      title: "Piyama Satén Plateado Largo",
+      handle: "pijama-liso-plateado-largo",
+      title: "Pijama Satén Plateado Largo",
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "09",
       sizes: [{ size: "M", amount: 0 }],
     },
     {
-      handle: "piyama-animal-print-largo",
-      title: "Piyama Animal Print Largo",
+      handle: "pijama-animal-print-largo",
+      title: "Pijama Animal Print Largo",
       description: "Tela suave y elegante para un descanso premium.",
       price: 85999,
       folder: "10",
@@ -167,8 +167,8 @@ async function main() {
       ],
     },
     {
-      handle: "piyama-liso-negro-largo-saten",
-      title: "Piyama Liso Negro Largo Satén",
+      handle: "pijama-liso-negro-largo-saten",
+      title: "Pijama Liso Negro Largo Satén",
       description: "Tela suave y elegante para un descanso premium.",
       price: 79999,
       folder: "11",
