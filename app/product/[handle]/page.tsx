@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { GridTileImage } from "components/grid/tile";
 import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
 import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
+import BackButton from "components/ui/back-button";
 import { OverlayLink } from "components/ui/overlay-link";
 import {
   getProduct,
@@ -122,15 +122,7 @@ export default async function ProductPage(props: {
       />
 
       {/* Botón Volver Flotante */}
-      <div className="fixed top-20 left-4 z-50">
-        <OverlayLink
-          href="/search/pijamas-mujer"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7]/90 backdrop-blur-sm text-[#bf9d6d] transition-all duration-200 hover:bg-[#f0e3d7] hover:scale-110 hover:shadow-lg"
-          aria-label="Volver a Pijamas"
-        >
-          <ArrowLeftIcon className="h-5 w-5" />
-        </OverlayLink>
-      </div>
+      <BackButton />
 
       <div className="mx-auto max-w-[80vw] px-6 lg:px-12">
         <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
