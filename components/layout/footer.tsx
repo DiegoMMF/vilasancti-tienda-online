@@ -148,46 +148,38 @@ export default function Footer({
               </div>
             </div>
 
-            {/* Enlaces rápidos */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#bf9d6d] font-cormorant">
-                Enlaces Rápidos
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <OverlayLink
-                    href="/"
-                    className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
-                  >
-                    Inicio
-                  </OverlayLink>
-                </li>
-                <li>
-                  <OverlayLink
-                    href="/search"
-                    className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
-                  >
-                    Todos los Productos
-                  </OverlayLink>
-                </li>
-                <li>
-                  <OverlayLink
-                    href="/search/pijamas"
-                    className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
-                  >
-                    Pijamas
-                  </OverlayLink>
-                </li>
-                <li>
-                  <OverlayLink
-                    href="/search/novedades"
-                    className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
-                  >
-                    Novedades
-                  </OverlayLink>
-                </li>
-              </ul>
-            </div>
+                         {/* Enlaces rápidos */}
+             <div className="space-y-4">
+               <h3 className="text-lg font-semibold text-[#bf9d6d] font-cormorant">
+                 Enlaces Rápidos
+               </h3>
+               <ul className="space-y-2">
+                 <li>
+                   <OverlayLink
+                     href="/"
+                     className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
+                   >
+                     Inicio
+                   </OverlayLink>
+                 </li>
+                 <li>
+                   <OverlayLink
+                     href="/search"
+                     className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
+                   >
+                     Todos los Productos
+                   </OverlayLink>
+                 </li>
+                 <li>
+                   <OverlayLink
+                     href="/nuestra-historia"
+                     className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
+                   >
+                     Nuestra Historia
+                   </OverlayLink>
+                 </li>
+               </ul>
+             </div>
 
             {/* Información de contacto */}
             <div className="space-y-4">
