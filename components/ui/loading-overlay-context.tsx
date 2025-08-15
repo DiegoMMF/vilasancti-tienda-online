@@ -2,13 +2,13 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import {
-    createContext,
-    Suspense,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
+  createContext,
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
 } from "react";
 import { FullscreenLoader } from "./fullscreen-loaders";
 
