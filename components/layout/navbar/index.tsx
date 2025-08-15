@@ -3,6 +3,7 @@ import { OverlayLink } from "components/ui/overlay-link";
 import { getMenu } from "lib/api/menu-drizzle";
 import { Menu } from "lib/types";
 import { Suspense } from "react";
+import { LogoLink } from "./logo-link";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";
 
@@ -20,18 +21,7 @@ export async function Navbar() {
       </div>
       <div className="flex w-full items-center">
         <div className="flex w-full md:w-1/3">
-          <OverlayLink
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <div
-              className="text-2xl font-bold uppercase text-[#bf9d6d] tracking-wide"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              VILASANCTI
-            </div>
-          </OverlayLink>
+          <LogoLink />
           {menu.length ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
