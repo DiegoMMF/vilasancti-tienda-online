@@ -1,17 +1,36 @@
 import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
+import { Metadata } from "next";
 
 // Revalidate the home page every 10 minutes to avoid hitting the DB on every request
 export const revalidate = 600;
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-export const metadata = {
+export const metadata: Metadata = {
   description:
-    "High-performance custom ecommerce store implemented by Diego M. Maldini Freyre.",
+    "Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
   openGraph: {
     type: "website",
+    title: "VILASANCTI - Elegancia que se vive en casa",
+    description:
+      "Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+    images: [
+      {
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "VILASANCTI - Elegancia que se vive en casa",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VILASANCTI - Elegancia que se vive en casa",
+    description:
+      "Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+    images: ["/og-image.webp"],
   },
 };
 

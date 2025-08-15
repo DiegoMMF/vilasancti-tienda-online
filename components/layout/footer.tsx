@@ -15,7 +15,7 @@ interface FooterProps {
 
 export default function Footer({
   companyName = "Vilasancti",
-  siteName = "Vilasancti Tienda",
+  siteName = "VILASANCTI",
 }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2025 + (currentYear > 2025 ? `-${currentYear}` : "");
