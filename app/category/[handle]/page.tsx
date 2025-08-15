@@ -1,81 +1,148 @@
-import Grid from "components/grid";
-import ProductGridItems from "components/layout/product-grid-items";
+import { CategorySchema } from "components/category/category-schema";
+import { BreadcrumbSchema } from "components/layout/breadcrumb-schema";
 import { getCollection, getCollectionProducts } from "lib/api/products-drizzle";
-import { defaultSort, sorting } from "lib/constants";
+import { baseUrl } from "lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 // Revalidate category pages periodically to cache listing content
 export const revalidate = 600;
 
-export async function generateMetadata(props: {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
   params: Promise<{ handle: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const searchParams = (await props.searchParams) || {};
-  const collection = await getCollection(params.handle);
-  if (!collection) return notFound();
-  const hasFacets = Boolean(
-    searchParams["color"] || searchParams["size"] || searchParams["q"],
+  const resolvedParams = await params;
+  const resolvedSearchParams = (await searchParams) || {};
+
+  const collection = await getCollection(resolvedParams.handle);
+  const hasFilters = Object.keys(resolvedSearchParams).length > 0;
+
+  if (!collection) {
+    return {
+      title: "Categoría no encontrada | Vilasancti",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  // No indexar páginas con filtros complejos
+  if (hasFilters) {
+    return {
+      robots: { index: false, follow: true },
+      alternates: {
+        canonical: `${baseUrl}/category/${resolvedParams.handle}`,
+      },
+    };
+  }
+
+  const products = await getCollectionProducts(
+    resolvedParams.handle,
+    "RELEVANCE",
+    false,
   );
+
   return {
-    title: collection.seo?.title || collection.title,
-    description:
-      collection.seo?.description ||
-      collection.description ||
-      `${collection.title} products`,
-    robots: hasFacets
-      ? { index: false, follow: true }
-      : { index: true, follow: true },
-    alternates: { canonical: `/category/${collection.handle}` },
+    title: `${collection.title} - ${products.length} Pijamas Elegantes | Vilasancti`,
+    description: `Descubre ${products.length} ${collection.title.toLowerCase()} de la más alta calidad. Pijamas que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.`,
+    keywords: [
+      `pijamas ${collection.title.toLowerCase()}`,
+      "sleepwear",
+      "elegancia",
+      "Vilasancti",
+      "Argentina",
+    ],
+    alternates: {
+      canonical: `${baseUrl}/category/${resolvedParams.handle}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    openGraph: {
+      title: `${collection.title} | Vilasancti`,
+      description: `Los mejores ${collection.title.toLowerCase()} del mercado. Envío gratis en Argentina.`,
+      images: [],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${collection.title} | Vilasancti`,
+      description: `Los mejores ${collection.title.toLowerCase()} del mercado.`,
+    },
   };
 }
 
-export default async function CategoryPage(props: {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: {
   params: Promise<{ handle: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const params = await props.params;
-  const searchParams = await props.searchParams;
-  const { sort, color, size } = (searchParams || {}) as {
-    [key: string]: string;
-  };
-  const { sortKey, reverse } =
-    sorting.find((item) => item.slug === sort) || defaultSort;
-  const colors = color ? color.split(",").filter(Boolean) : undefined;
-  const sizes = size ? size.split(",").filter(Boolean) : undefined;
-  const products = await getCollectionProducts(params.handle, sortKey, reverse);
-  const itemListJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: products.map((p, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      url: `/product/${p.handle}`,
-      name: p.title,
-    })),
-    numberOfItems: products.length,
-  };
+  const resolvedParams = await params;
+  const resolvedSearchParams = (await searchParams) || {};
 
-  if (!products.length) {
-    const collection = await getCollection(params.handle);
-    if (!collection) return notFound();
+  const collection = await getCollection(resolvedParams.handle);
+  const products = await getCollectionProducts(
+    resolvedParams.handle,
+    "RELEVANCE",
+    false,
+  );
+
+  if (!collection) {
+    notFound();
   }
 
+  // Generar breadcrumbs
+  const breadcrumbs = [
+    { name: "Inicio", url: "/" },
+    { name: collection.title, url: `/category/${collection.handle}` },
+  ];
+
   return (
-    <section>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
-      />
-      {products.length === 0 ? (
-        <p className="py-3 text-lg">{`No products found in this category`}</p>
-      ) : (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          <ProductGridItems products={products} />
-        </Grid>
-      )}
-    </section>
+    <>
+      {/* Schema.org Category */}
+      <CategorySchema collection={collection} products={products} />
+
+      {/* Schema.org Breadcrumbs */}
+      <BreadcrumbSchema breadcrumbs={breadcrumbs} />
+
+      {/* Hero Section */}
+      <section className="category-intro py-16 lg:py-24">
+        <div className="relative mx-auto max-w-4xl px-6">
+          <div className="bg-white/30 backdrop-blur-sm rounded-3xl p-6 md:p-12 border border-[#bf9d6d]/10 shadow-2xl">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#bf9d6d] font-cormorant tracking-wider leading-tight">
+              {collection.title}
+            </h1>
+            <p className="text-base md:text-lg lg:text-xl text-[#bf9d6d]/85 font-inter font-medium leading-relaxed mt-6">
+              {collection.description}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Grid */}
+      <section className="py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <div key={product.id} className="product-card">
+                {/* Product card content */}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

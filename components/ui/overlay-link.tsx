@@ -3,14 +3,14 @@
 import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
 type OverlayLinkProps = LinkProps &
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & {
     showOnClick?: boolean;
   };
 
-export function OverlayLink({
+function OverlayLinkInner({
   showOnClick = true,
   onClick,
   href,
@@ -37,4 +37,12 @@ export function OverlayLink({
   };
 
   return <Link {...props} href={href} onClick={handleClick} />;
+}
+
+export function OverlayLink(props: OverlayLinkProps) {
+  return (
+    <Suspense fallback={<Link {...props} />}>
+      <OverlayLinkInner {...props} />
+    </Suspense>
+  );
 }

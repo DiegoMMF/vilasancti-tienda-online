@@ -1,14 +1,15 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import {
+    createContext,
+    Suspense,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import { FullscreenLoader } from "./fullscreen-loaders";
 
 interface LoadingOverlayContextShape {
@@ -35,7 +36,9 @@ export function LoadingOverlayProvider({
     <LoadingOverlayContext.Provider value={value}>
       {children}
       <FullscreenLoader open={open} onCloseAction={hide} />
-      <NavigationAutoHide onNavigated={hide} />
+      <Suspense fallback={null}>
+        <NavigationAutoHide onNavigated={hide} />
+      </Suspense>
     </LoadingOverlayContext.Provider>
   );
 }

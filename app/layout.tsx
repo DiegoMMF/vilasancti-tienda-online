@@ -26,19 +26,22 @@ const { SITE_NAME } = process.env;
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Vilasancti",
+    default: "Vilasancti - Pijamas Elegantes",
     template: `%s | Vilasancti`,
   },
   description:
-    "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+    "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.",
   keywords: [
     "pijamas",
-    "elegancia",
-    "moda",
+    "pijamas elegantes",
+    "sleepwear",
+    "moda femenina",
     "tienda online",
     "VILASANCTI",
     "descanso",
     "belleza",
+    "elegancia",
+    "Argentina",
   ],
   authors: [{ name: "VILASANCTI" }],
   creator: "VILASANCTI",
@@ -46,13 +49,23 @@ export const metadata = {
   robots: {
     follow: true,
     index: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   openGraph: {
     type: "website",
     locale: "es_AR",
     url: baseUrl,
     siteName: SITE_NAME,
-    title: SITE_NAME,
+    title: "Vilasancti - Pijamas Elegantes",
     description:
       "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
     images: [
@@ -66,10 +79,13 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
+    title: "Vilasancti - Pijamas Elegantes",
     description:
       "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
     images: [`${baseUrl}/og-image.webp`],
+  },
+  alternates: {
+    canonical: baseUrl,
   },
 };
 
@@ -82,32 +98,67 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="es" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="bg-[#f0e3d7] text-[#bf9d6d] selection:bg-[#bf9d6d] selection:text-[#f0e3d7]">
+        {/* Organization Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: SITE_NAME,
+              name: "Vilasancti",
               url: baseUrl,
               logo: `${baseUrl}/favicon.png`,
+              description:
+                "Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                availableLanguage: ["Spanish"],
+              },
+              sameAs: [
+                "https://www.facebook.com/vilasancti",
+                "https://www.instagram.com/vilasancti",
+              ],
             }),
           }}
         />
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
+                    page_title: 'Vilasancti',
+                    page_location: window.location.href,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
         <CartProvider cartPromise={cart}>
           <CartModalProvider>
-            <Suspense fallback={null}>
-              <LoadingOverlayProvider>
+            <LoadingOverlayProvider>
+              <div className="relative flex min-h-screen flex-col">
                 <Navbar />
-                <main>
-                  {children}
-                  <Toaster closeButton />
-                  {/* <WelcomeToast /> */}
-                </main>
-              </LoadingOverlayProvider>
-            </Suspense>
+                <main className="flex-1">{children}</main>
+                <Suspense fallback={null}>
+                  <Toaster />
+                </Suspense>
+              </div>
+            </LoadingOverlayProvider>
           </CartModalProvider>
         </CartProvider>
       </body>

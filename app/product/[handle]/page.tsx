@@ -1,133 +1,144 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-
 import { GridTileImage } from "components/grid/tile";
-import Footer from "components/layout/footer";
+import { BreadcrumbSchema } from "components/layout/breadcrumb-schema";
 import { Gallery } from "components/product/gallery";
 import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
-import BackButton from "components/ui/back-button";
-import { OverlayLink } from "components/ui/overlay-link";
+import { ProductSchema } from "components/product/product-schema";
 import {
   getProduct,
   getProductRecommendations,
 } from "lib/api/products-drizzle";
-import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { Image } from "lib/types";
+import { baseUrl } from "lib/utils";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-const { COMPANY_NAME, SITE_NAME } = process.env;
+export const revalidate = 600; // 10 minutos
 
-export async function generateMetadata(props: {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.handle);
 
-  if (!product) return notFound();
-
-  const { url, width, height, altText: alt } = product.featuredImage || {};
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
+  if (!product) {
+    return {
+      title: "Producto no encontrado | Vilasancti",
+      robots: { index: false, follow: true },
+    };
+  }
 
   return {
-    title: product.seo.title || product.title,
-    description: product.seo.description || product.description,
+    title: `${product.title} - Pijamas Elegantes | Vilasancti`,
+    description:
+      product.seo?.description ||
+      product.description?.slice(0, 155) ||
+      `Descubre ${product.title}, pijama elegante de Vilasancti. Calidad premium y diseño sofisticado.`,
+    keywords: [
+      product.title,
+      "pijamas elegantes",
+      "sleepwear",
+      "Vilasancti",
+      "Argentina",
+    ],
+    alternates: {
+      canonical: `${baseUrl}/product/${product.handle}`,
+    },
     robots: {
-      index: indexable,
-      follow: indexable,
+      index: product.availableForSale,
+      follow: true,
       googleBot: {
-        index: indexable,
-        follow: indexable,
+        index: product.availableForSale,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
+    openGraph: {
+      title: product.title,
+      description: product.seo?.description || product.description,
+      images: product.images.map((img) => ({
+        url: img.url,
+        width: img.width,
+        height: img.height,
+        alt: img.altText || product.title,
+      })),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description: product.seo?.description || product.description,
+      images: product.featuredImage?.url ? [product.featuredImage.url] : [],
+    },
   };
 }
 
-export default async function ProductPage(props: {
+async function RelatedProducts({ id }: { id: string }) {
+  const relatedProducts = await getProductRecommendations(id);
+
+  if (!relatedProducts.length) return null;
+
+  return (
+    <div className="py-8">
+      <h2 className="mb-4 text-2xl font-bold">Productos Relacionados</h2>
+      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
+        {relatedProducts.map((product) => (
+          <li
+            key={product.handle}
+            className="aspect-square w-full flex-none min-[475px]:w-4/5 sm:w-2/5 md:w-1/3 lg:w-1/4"
+          >
+            <GridTileImage
+              alt={product.title}
+              label={{
+                title: product.title,
+                amount: product.priceRange.maxVariantPrice.amount,
+                currencyCode: product.priceRange.maxVariantPrice.currencyCode,
+              }}
+              src={product.featuredImage?.url}
+              fill
+              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default async function ProductPage({
+  params,
+}: {
   params: Promise<{ handle: string }>;
 }) {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.handle);
 
-  if (!product) return notFound();
+  if (!product) {
+    notFound();
+  }
 
-  const productJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.title,
-    description: product.description,
-    image: product.featuredImage.url,
-    brand: product.seo?.title || "Marca",
-    offers: {
-      "@type": "AggregateOffer",
-      availability: product.availableForSale
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-      highPrice: product.priceRange.maxVariantPrice.amount,
-      lowPrice: product.priceRange.minVariantPrice.amount,
-    },
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Inicio",
-        item: "/",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Pijamas Mujer",
-        item: "/search/pijamas-mujer",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: product.title,
-        item: `/product/${product.handle}`,
-      },
-    ],
-  };
+  // Generar breadcrumbs
+  const breadcrumbs = [
+    { name: "Inicio", url: "/" },
+    { name: "Productos", url: "/category/lisos" }, // URL genérica de productos
+    { name: product.title, url: `/product/${product.handle}` },
+  ];
 
   return (
     <ProductProvider product={product}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbJsonLd),
-        }}
-      />
+      {/* Schema.org Product */}
+      <ProductSchema product={product} />
 
-      {/* Botón Volver Flotante */}
-      <BackButton />
+      {/* Schema.org Breadcrumbs */}
+      <BreadcrumbSchema breadcrumbs={breadcrumbs} />
 
       <div className="mx-auto max-w-[80vw] px-6 lg:px-12">
         <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
-          {/* Espacio adicional entre secciones en mobile */}
-          <div className="mb-6 lg:mb-0" />
           {/* Información del producto - arriba en mobile, derecha en desktop */}
           <div className="order-1 basis-full lg:order-2 lg:basis-2/6">
             <Suspense fallback={null}>
@@ -153,51 +164,6 @@ export default async function ProductPage(props: {
         </div>
         <RelatedProducts id={product.id} />
       </div>
-      <Footer companyName={COMPANY_NAME} siteName={SITE_NAME} />
     </ProductProvider>
-  );
-}
-
-async function RelatedProducts({ id }: { id: string }) {
-  const relatedProducts = await getProductRecommendations(id);
-  // Deduplicate by product id to avoid duplicate keys if backend returns duplicates
-  const unique = relatedProducts.filter(
-    (p, idx, arr) => arr.findIndex((x) => x.id === p.id) === idx,
-  );
-
-  if (!unique.length) return null;
-
-  return (
-    <div className="py-8 max-w-[80vw] mx-auto">
-      <h2 className="mb-4 text-2xl font-bold text-[#bf9d6d] font-cormorant">
-        Related Products
-      </h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {unique.map((product) => (
-          <li
-            key={product.id}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-          >
-            <OverlayLink
-              className="relative h-full w-full"
-              href={`/product/${product.handle}`}
-              prefetch={true}
-            >
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
-                }}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </OverlayLink>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }
