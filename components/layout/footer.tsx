@@ -1,5 +1,6 @@
 import { OverlayLink } from "components/ui/overlay-link";
 import { getMenu } from "lib/api/menu-drizzle";
+import ContactModal from "./footer/contact-modal";
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
@@ -247,8 +248,9 @@ export default async function Footer() {
             </div>
             <div className="text-sm text-[#bf9d6d]/60 font-inter">
               <span className="font-cormorant text-[#bf9d6d]">
-                Desarrollado por Diego M. Maldini Freyre
+                Desarrollado por{" "}
               </span>
+              <ContactModal />
             </div>
           </div>
         </div>
