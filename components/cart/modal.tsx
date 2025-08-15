@@ -80,7 +80,11 @@ export default function CartModal() {
                 <p className="text-lg font-semibold font-cormorant">
                   Mi Carrito
                 </p>
-                <button aria-label="Cerrar carrito" onClick={closeCart}>
+                <button
+                  aria-label="Cerrar carrito"
+                  onClick={closeCart}
+                  className="transition-all duration-200 hover:scale-110 active:scale-95"
+                >
                   <CloseCart />
                 </button>
               </div>
@@ -174,7 +178,7 @@ export default function CartModal() {
                                     item.cost.totalAmount.currencyCode
                                   }
                                 />
-                                <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-[#bf9d6d]/20">
+                                <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-[#bf9d6d]/20 transition-all duration-200 hover:border-[#bf9d6d]/40 hover:shadow-sm">
                                   <EditItemQuantityButton
                                     item={item}
                                     type="minus"

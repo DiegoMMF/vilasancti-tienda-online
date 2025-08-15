@@ -19,18 +19,19 @@ function SubmitButton({
       disabled={disabled}
       aria-label={type === "plus" ? "Aumentar cantidad" : "Reducir cantidad"}
       className={clsx(
-        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200",
+        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 ease-in-out",
         {
           "ml-auto": type === "minus",
-          "hover:border-[#bf9d6d] hover:opacity-80": !disabled,
+          "hover:border-[#bf9d6d] hover:opacity-80 hover:scale-105 active:scale-95 active:bg-[#bf9d6d]/10":
+            !disabled,
           "cursor-not-allowed opacity-50": disabled,
         },
       )}
     >
       {type === "plus" ? (
-        <PlusIcon className="h-4 w-4 text-[#bf9d6d]" />
+        <PlusIcon className="h-4 w-4 text-[#bf9d6d] transition-transform duration-150" />
       ) : (
-        <MinusIcon className="h-4 w-4 text-[#bf9d6d]" />
+        <MinusIcon className="h-4 w-4 text-[#bf9d6d] transition-transform duration-150" />
       )}
     </button>
   );

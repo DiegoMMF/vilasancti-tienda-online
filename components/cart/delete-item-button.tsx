@@ -28,9 +28,9 @@ export function DeleteItemButton({
       <button
         type="submit"
         aria-label="Eliminar artículo del carrito"
-        className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#bf9d6d] hover:bg-[#a08a5a] transition-colors"
+        className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#bf9d6d] hover:bg-[#a08a5a] transition-all duration-200 ease-in-out active:scale-95 active:bg-[#8b7a4a] hover:scale-105"
       >
-        <XMarkIcon className="mx-[1px] h-4 w-4 text-white" />
+        <XMarkIcon className="mx-[1px] h-4 w-4 text-white transition-transform duration-150" />
       </button>
       <p aria-live="polite" className="sr-only" role="status">
         {message}
