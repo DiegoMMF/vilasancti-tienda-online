@@ -1,11 +1,11 @@
-import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, like, ne, or, sql } from "drizzle-orm";
 import { db } from "../db/index";
 import {
-  collections,
-  productCollections,
-  productImages,
-  products,
-  productVariants,
+    collections,
+    productCollections,
+    productImages,
+    products,
+    productVariants,
 } from "../db/schema";
 import type { Collection, Product } from "../types";
 
@@ -140,8 +140,91 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   return reshapeProduct(dbProduct, variants, images);
 }
 
-export async function getProducts(): Promise<Product[]> {
-  const dbProducts = await db.select().from(products);
+export async function getProducts({
+  query,
+  colors,
+  sizes,
+}: {
+  query?: string;
+  colors?: string[];
+  sizes?: string[];
+} = {}): Promise<Product[]> {
+  let whereConditions = [];
+
+  // Búsqueda por texto en título y descripción
+  if (query) {
+    const searchTerm = `%${query.toLowerCase()}%`;
+    whereConditions.push(
+      or(
+        like(sql`LOWER(${products.title})`, searchTerm),
+        like(sql`LOWER(${products.description})`, searchTerm)
+      )
+    );
+  }
+
+  // Filtros por colores y tallas
+  if (colors && colors.length > 0 || sizes && sizes.length > 0) {
+    const variantConditions = [];
+    
+    if (colors && colors.length > 0) {
+      variantConditions.push(
+        or(...colors.map(color => 
+          like(productVariants.selectedOptions, `%"value":"${color}"%`)
+        ))
+      );
+    }
+    
+    if (sizes && sizes.length > 0) {
+      // Mapeo de términos de búsqueda a tallas
+      const sizeMapping: { [key: string]: string[] } = {
+        'chico': ['S'],
+        'pequeño': ['S'],
+        'pequeña': ['S'],
+        'small': ['S'],
+        'mediano': ['M'],
+        'mediana': ['M'],
+        'medium': ['M'],
+        'grande': ['L'],
+        'large': ['L'],
+        'xl': ['XL'],
+        'extra grande': ['XL'],
+        'extra large': ['XL']
+      };
+
+      const searchSizes = sizes.flatMap(size => {
+        const lowerSize = size.toLowerCase();
+        return sizeMapping[lowerSize] || [size];
+      });
+
+      variantConditions.push(
+        or(...searchSizes.map(size => 
+          like(productVariants.selectedOptions, `%"value":"${size}"%`)
+        ))
+      );
+    }
+
+    if (variantConditions.length > 0) {
+      const productIdsWithVariants = await db
+        .selectDistinct({ productId: productVariants.productId })
+        .from(productVariants)
+        .where(or(...variantConditions));
+      
+      if (productIdsWithVariants.length > 0) {
+        whereConditions.push(
+          inArray(products.id, productIdsWithVariants.map(v => v.productId))
+        );
+      } else {
+        // Si no hay variantes que coincidan, devolver array vacío
+        return [];
+      }
+    }
+  }
+
+  const dbProducts = await db
+    .select()
+    .from(products)
+    .where(whereConditions.length > 0 ? and(...whereConditions) : undefined);
+
   if (dbProducts.length === 0) return [];
 
   const productIds = dbProducts.map((p) => p.id);

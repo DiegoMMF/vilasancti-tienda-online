@@ -39,8 +39,12 @@ export default async function SearchPage(props: {
   const colors = color ? color.split(",").filter(Boolean) : undefined;
   const sizes = size ? size.split(",").filter(Boolean) : undefined;
 
-  const products = await getProducts();
-  const resultsText = products.length > 1 ? "results" : "result";
+  const products = await getProducts({
+    query: searchValue,
+    colors,
+    sizes,
+  });
+  const resultsText = products.length > 1 ? "resultados" : "resultado";
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -62,8 +66,8 @@ export default async function SearchPage(props: {
       {searchValue ? (
         <p className="mb-4 text-[#bf9d6d] font-cormorant">
           {products.length === 0
-            ? "There are no products that match "
-            : `Showing ${products.length} ${resultsText} for `}
+            ? "No hay productos que coincidan con "
+            : `Mostrando ${products.length} ${resultsText} para `}
           <span className="font-bold">&quot;{searchValue}&quot;</span>
         </p>
       ) : null}
