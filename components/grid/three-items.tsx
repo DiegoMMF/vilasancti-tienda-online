@@ -48,14 +48,17 @@ function ThreeItemGridItem({
 }
 
 export async function ThreeItemGrid() {
-  // Collections that start with `hidden-*` are hidden from the search page.
-  const homepageItems = await getCollectionProducts(
+  // Obtener todos los productos de la colección
+  const allHomepageItems = await getCollectionProducts(
     "hidden-homepage-featured-items",
   );
 
-  if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
+  // Seleccionar específicamente los productos que queremos mostrar
+  const firstProduct = allHomepageItems.find(item => item.handle === "pijama-animal-print-largo");
+  const secondProduct = allHomepageItems.find(item => item.handle === "pijama-liso-plateado-corto");
+  const thirdProduct = allHomepageItems.find(item => item.handle === "pijama-azul-cuadritos");
 
-  const [firstProduct, secondProduct, thirdProduct] = homepageItems;
+  if (!firstProduct || !secondProduct || !thirdProduct) return null;
 
   return (
     <section className="mx-auto grid max-w-[80vw] gap-6 px-6 pb-8 md:grid-cols-6 md:grid-rows-2 lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)]">
