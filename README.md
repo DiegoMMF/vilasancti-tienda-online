@@ -49,7 +49,7 @@ Requisitos: Node.js 20+, pnpm.
 ```bash
 pnpm install
 pnpm db:migrate    # aplica migraciones de Drizzle (si existen)
-pnpm db:seed       # carga datos de ejemplo (7 productos de piyamas mujer)
+pnpm db:seed       # carga datos de ejemplo (7 productos de pijamas mujer)
 pnpm dev           # http://localhost:3000
 ```
 
@@ -65,8 +65,8 @@ Scripts disponibles (`package.json`):
 
 El script `scripts/seed-drizzle.js`:
 
-- Limpia tablas y crea colecciones de sistema: `hidden-homepage-featured-items`, `hidden-homepage-carousel`, `piyamas-mujer`.
-- Inserta 7 productos de piyamas para mujer con variantes de color y talla.
+- Limpia tablas y crea colecciones de sistema: `hidden-homepage-featured-items`, `hidden-homepage-carousel`, `pijamas-mujer`.
+- Inserta 7 productos de pijamas para mujer con variantes de color y talla.
 - Gestiona imágenes en Vercel Blob bajo los prefijos `articles/01`, `articles/02`, ..., `articles/06` (y `articles/07` para el 7º producto):
   - Si no existen blobs todavía, sube automáticamente los archivos locales desde `articles/<nn>/` (carpeta del repo) con acceso público y sin sufijo aleatorio.
   - Si ya existen, lista y usa las URLs públicas existentes.
@@ -85,7 +85,7 @@ Puedes adaptar precios, imágenes o colecciones editando `scripts/seed-drizzle.j
 ## Rutas principales
 
 - `/` Página principal (grid, carrusel, destacados)
-- `/category/[handle]` Listado por colección (por ejemplo, `piyamas-mujer`)
+- `/category/[handle]` Listado por colección (por ejemplo, `pijamas-mujer`)
 - `/product/[handle]` Ficha de producto
 - `/search/[collection]?q=` Búsqueda/filtrado
 - `/api/revalidate` Stub (no se usan webhooks externos actualmente)

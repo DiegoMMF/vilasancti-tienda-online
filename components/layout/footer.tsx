@@ -94,7 +94,7 @@ export default async function Footer() {
               </li>
               <li>
                 <OverlayLink
-                  href="/search/piyamas"
+                  href="/search/pijamas"
                   className="text-sm text-[#bf9d6d]/80 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline px-2 py-1 rounded-md transition-all duration-200 font-inter"
                 >
                   Pijamas
