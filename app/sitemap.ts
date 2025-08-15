@@ -1,48 +1,62 @@
-import { getCollections, getProducts } from "lib/api/products-drizzle";
-import { baseUrl, validateEnvironmentVariables } from "lib/utils";
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next'
+import { db } from 'lib/db'
+import { products, collections } from 'lib/db/schema'
 
-type Route = {
-  url: string;
-  lastModified: string;
-};
+async function getProducts() { 
+  return await db.select({
+    handle: products.handle,
+    updatedAt: products.updatedAt
+  }).from(products)
+}
 
-export const dynamic = "force-dynamic";
+async function getCollections() { 
+  return await db.select({
+    handle: collections.handle,
+    updatedAt: collections.updatedAt
+  }).from(collections)
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  validateEnvironmentVariables();
+  const [products, collections] = await Promise.all([
+    getProducts(),
+    getCollections()
+  ])
 
-  const routesMap = [""].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString(),
-  }));
-
-  const collectionsPromise = getCollections().then((collections) =>
-    collections.map((collection) => ({
-      url: `${baseUrl}${collection.path}`,
-      lastModified: collection.updatedAt,
-    })),
-  );
-
-  const productsPromise = getProducts().then((products) =>
-    products.map((product) => ({
-      url: `${baseUrl}/product/${product.handle}`,
-      lastModified: product.updatedAt,
-    })),
-  );
-
-  // Por ahora, no incluimos páginas dinámicas en el sitemap
-  const pagesPromise = Promise.resolve([]);
-
-  let fetchedRoutes: Route[] = [];
-
-  try {
-    fetchedRoutes = (
-      await Promise.all([collectionsPromise, productsPromise, pagesPromise])
-    ).flat();
-  } catch (error) {
-    throw JSON.stringify(error, null, 2);
-  }
-
-  return [...routesMap, ...fetchedRoutes];
+  return [
+    {
+      url: 'https://vilasancti.vercel.app/',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1.0
+    },
+    // Páginas estáticas importantes
+    {
+      url: 'https://vilasancti.vercel.app/nuestra-historia',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6
+    },
+    {
+      url: 'https://vilasancti.vercel.app/envios-y-devoluciones',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6
+    },
+    // Colecciones principales (excluyendo las ocultas del sistema)
+    ...collections
+      .filter(collection => !collection.handle.startsWith('hidden-'))
+      .map(collection => ({
+        url: `https://vilasancti.vercel.app/category/${collection.handle}`,
+        lastModified: collection.updatedAt || new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8
+      })),
+    // Productos
+    ...products.map(product => ({
+      url: `https://vilasancti.vercel.app/product/${product.handle}`,
+      lastModified: product.updatedAt || new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.7
+    }))
+  ]
 }
