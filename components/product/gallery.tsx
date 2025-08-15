@@ -46,7 +46,7 @@ export function Gallery({
     currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
 
   const buttonClassName =
-    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100";
+    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100";
 
   const handleImageChange = (newIndex: number) => {
     setIsLoading(true);
@@ -81,7 +81,7 @@ export function Gallery({
 
         {images.length > 1 ? (
           <div className="absolute bottom-[15%] flex w-full justify-center">
-            <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur-sm dark:border-black dark:bg-neutral-900/80">
+            <div className="mx-auto flex h-11 items-center rounded-full border border-[#bf9d6d]/20 bg-[#f0e3d7]/50 text-[#bf9d6d] backdrop-blur-sm">
               <button
                 type="button"
                 onClick={() => {
@@ -93,7 +93,7 @@ export function Gallery({
               >
                 <ArrowLeftIcon className="h-5" />
               </button>
-              <div className="mx-1 h-6 w-px bg-neutral-500"></div>
+              <div className="mx-1 h-6 w-px bg-[#bf9d6d]/30"></div>
               <button
                 type="button"
                 onClick={() => {
