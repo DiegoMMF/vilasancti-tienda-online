@@ -18,13 +18,16 @@ function calculateItemCost(quantity: number, price: string): string {
 
 function reshapeCart(cartData: any, itemsData: any[]): Cart {
   const lines: CartItem[] = itemsData.map((item) => {
-    // Drizzle join shape: { cartItems, productVariants, products }
-    const variant = item.productVariants || {};
+    // Drizzle join shape: { cart_items, product_variants, products }
+    const variant = item.product_variants || {};
     const product = item.products || {};
-    const line = item.cartItems || {};
+    const line = item.cart_items || {};
 
     const currencyCode = variant.currencyCode || "ARS";
-    const priceStr = (variant.price ?? 0).toString();
+    // Los precios están guardados como decimales en la base de datos (ej: 86500.00)
+    // Usar el valor directo sin multiplicar
+    const priceValue = variant.price ? Number(variant.price) : 0;
+    const priceStr = priceValue.toString();
 
     return {
       id: line.id,

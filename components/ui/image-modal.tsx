@@ -7,6 +7,7 @@ import {
   MagnifyingGlassPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface ImageModalProps {
@@ -170,23 +171,22 @@ export default function ImageModal({
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          <img
+          <Image
             src={imageUrl}
             alt={altText}
+            fill
             className={`transition-all duration-300 ${
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
             style={{
               transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
               transformOrigin: "center",
-              maxWidth: "100vw",
-              maxHeight: "100vh",
               objectFit: "contain",
               userSelect: "none",
               pointerEvents: scale > 1 ? "none" : "auto",
             }}
             onLoad={() => setIsLoaded(true)}
-            draggable={false}
+            unoptimized
           />
 
           {/* Loading state */}

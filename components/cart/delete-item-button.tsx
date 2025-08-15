@@ -19,14 +19,16 @@ export function DeleteItemButton({
   return (
     <form
       action={async () => {
+        // Actualizar el estado local inmediatamente
         optimisticUpdate(merchandiseId, "delete");
+        // Ejecutar la acción del servidor en segundo plano
         removeItemAction();
       }}
     >
       <button
         type="submit"
         aria-label="Eliminar artículo del carrito"
-        className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#bf9d6d]"
+        className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#bf9d6d] hover:bg-[#a08a5a] transition-colors"
       >
         <XMarkIcon className="mx-[1px] h-4 w-4 text-white" />
       </button>

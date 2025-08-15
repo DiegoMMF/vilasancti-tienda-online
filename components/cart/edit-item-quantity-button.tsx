@@ -52,7 +52,7 @@ export function EditItemQuantityButton({
   const isDisabled =
     type === "plus"
       ? newQuantity > item.merchandise.inventoryQuantity
-      : newQuantity < 0;
+      : newQuantity <= 0;
 
   const payload = {
     merchandiseId: item.merchandise.id,
@@ -64,7 +64,9 @@ export function EditItemQuantityButton({
     <form
       action={async () => {
         if (!isDisabled) {
+          // Actualizar el estado local inmediatamente
           optimisticUpdate(payload.merchandiseId, type);
+          // Ejecutar la acción del servidor en segundo plano
           updateItemQuantityAction();
         }
       }}

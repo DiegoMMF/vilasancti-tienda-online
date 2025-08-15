@@ -88,7 +88,9 @@ export function AddToCart({ product }: { product: Product }) {
 
   // Verificar si la variante seleccionada está disponible
   const isSelectedVariantAvailable =
-    finalVariant?.availableForSale && finalVariant?.inventoryQuantity > 0;
+    finalVariant &&
+    finalVariant.availableForSale &&
+    finalVariant.inventoryQuantity > 0;
 
   // Determinar el estado del botón
   let buttonState: "agotado" | "seleccionar-opcion" | "agregar-al-carrito" =
@@ -110,8 +112,10 @@ export function AddToCart({ product }: { product: Product }) {
         if (buttonState === "agregar-al-carrito" && finalVariant) {
           try {
             show();
+            // Agregar al estado local inmediatamente
             addCartItem(finalVariant, product);
-            await addItemAction();
+            // Ejecutar la acción del servidor en segundo plano
+            addItemAction();
             // Abrir el carrito después de agregar el producto
             setTimeout(() => {
               openCart();

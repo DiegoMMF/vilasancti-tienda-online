@@ -39,7 +39,9 @@ export default function CartModal() {
       cart?.totalQuantity !== quantityRef.current &&
       cart?.totalQuantity > 0
     ) {
-      if (!isOpen) {
+      // Solo abrir el carrito si la cantidad aumentó (nuevo item agregado)
+      // No abrir si la cantidad disminuyó (edición dentro del carrito)
+      if (!isOpen && cart.totalQuantity > (quantityRef.current ?? 0)) {
         openCart();
       }
       quantityRef.current = cart?.totalQuantity;
@@ -83,7 +85,7 @@ export default function CartModal() {
                 </button>
               </div>
 
-              {!cart || cart.lines.length === 0 ? (
+              {!cart || cart.lines.length === 0 || cart.totalQuantity === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
                   <p className="mt-6 text-center text-2xl font-bold font-cormorant">
