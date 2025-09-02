@@ -1,6 +1,6 @@
-import { db } from "lib/db";
-import { collections, products } from "lib/db/schema";
 import { MetadataRoute } from "next";
+import { db } from "lib/db";
+import { products, collections } from "lib/db/schema";
 
 async function getProducts() {
   return await db
