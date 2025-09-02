@@ -314,4 +314,4 @@ Basado en la plantilla [Next.js Commerce](https://github.com/vercel/commerce) de
 
 ---
 
-**Vilasancti** - Elegancia que se vive en casa ✨
+**Vilasancti** - Elegancia que se vive en casa 💝
