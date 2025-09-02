@@ -5,6 +5,7 @@ import { LoadingOverlayProvider } from "components/ui/loading-overlay-context";
 import WelcomeModal from "components/welcome-modal";
 import { getCart } from "lib/api/cart-drizzle";
 import { baseUrl } from "lib/utils";
+import { Metadata } from "next";
 import { Cormorant, Inter } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 import { Toaster } from "sonner";
@@ -24,7 +25,7 @@ const inter = Inter({
 
 const { SITE_NAME } = process.env;
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default: "Vilasancti - Pijamas Elegantes",
