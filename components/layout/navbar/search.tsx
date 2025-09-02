@@ -12,7 +12,7 @@ export default function Search() {
   return (
     <Form
       action="/search"
-      className="w-max-[550px] relative w-full lg:w-80 xl:w-full"
+      className="relative w-full max-w-md"
       onSubmit={() => {
         show();
       }}
@@ -24,9 +24,9 @@ export default function Search() {
         placeholder="Buscar pijamas, tallas, colores..."
         autoComplete="off"
         defaultValue={searchParams?.get("q") || ""}
-        className="text-md w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 py-2 text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 md:text-sm font-inter"
+        className="text-md w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 pr-12 py-2 text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 md:text-sm font-inter"
       />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
+      <div className="absolute right-0 top-0 mr-4 flex h-full items-center">
         <MagnifyingGlassIcon className="h-4 text-[#bf9d6d]" />
       </div>
     </Form>
@@ -35,12 +35,12 @@ export default function Search() {
 
 export function SearchSkeleton() {
   return (
-    <form className="w-max-[550px] relative w-full lg:w-80 xl:w-full">
+    <form className="relative w-full max-w-md">
       <input
         placeholder="Buscar pijamas, tallas, colores..."
-        className="w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 py-2 text-sm text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 font-inter"
+        className="w-full rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] px-4 pr-12 py-2 text-sm text-[#bf9d6d] placeholder:text-[#bf9d6d]/70 font-inter"
       />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
+      <div className="absolute right-0 top-0 mr-4 flex h-full items-center">
         <MagnifyingGlassIcon className="h-4 text-[#bf9d6d]" />
       </div>
     </form>

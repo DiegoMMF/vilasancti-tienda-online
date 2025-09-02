@@ -4,9 +4,10 @@ import { Gallery } from "components/product/gallery";
 import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
 import { ProductSchema } from "components/product/product-schema";
+import PromotionalBanner from "components/promotional-banner";
 import {
-  getProduct,
-  getProductRecommendations,
+    getProduct,
+    getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { Image } from "lib/types";
 import { baseUrl } from "lib/utils";
@@ -122,48 +123,39 @@ export default async function ProductPage({
     notFound();
   }
 
-  // Generar breadcrumbs
-  const breadcrumbs = [
-    { name: "Inicio", url: "/" },
-    { name: "Productos", url: "/category/lisos" }, // URL genérica de productos
-    { name: product.title, url: `/product/${product.handle}` },
-  ];
-
   return (
-    <ProductProvider product={product}>
-      {/* Schema.org Product */}
+    <>
+      {/* Generar breadcrumbs para la página de producto */}
+      <BreadcrumbSchema breadcrumbs={[
+        { name: "Inicio", url: "/" },
+        { name: "Productos", url: "/category/lisos" },
+        { name: product.title, url: `/product/${product.handle}` }
+      ]} />
       <ProductSchema product={product} />
+      
+      {/* Banner Promocional */}
+      <PromotionalBanner />
 
-      {/* Schema.org Breadcrumbs */}
-      <BreadcrumbSchema breadcrumbs={breadcrumbs} />
-
-      <div className="mx-auto max-w-[80vw] px-6 lg:px-12">
-        <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7] p-8 md:p-12 lg:flex-row lg:gap-8">
-          {/* Información del producto - arriba en mobile, derecha en desktop */}
-          <div className="order-1 basis-full lg:order-2 lg:basis-2/6">
-            <Suspense fallback={null}>
-              <ProductDescription product={product} />
-            </Suspense>
-          </div>
-
-          {/* Galería de imágenes - abajo en mobile, izquierda en desktop */}
-          <div className="order-2 h-full w-full basis-full lg:order-1 lg:basis-4/6">
-            <Suspense
-              fallback={
-                <div className="relative aspect-square h-full max-h-[80vh] w-full max-w-[80vw] mx-auto overflow-hidden" />
-              }
-            >
+      <ProductProvider product={product}>
+        <div className="mx-auto max-w-screen-2xl px-4">
+          <div className="flex flex-col rounded-lg border border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-8 md:p-12 lg:flex-row lg:gap-8">
+            <div className="h-full w-full basis-full lg:basis-4/6">
               <Gallery
-                images={product.images.slice(0, 5).map((image: Image) => ({
+                images={product.images.map((image: Image) => ({
                   src: image.url,
-                  altText: image.altText,
+                  altText: image.altText || image.altText || product.title,
                 }))}
               />
-            </Suspense>
+            </div>
+            <div className="basis-full lg:basis-2/6">
+              <ProductDescription product={product} />
+            </div>
           </div>
+          <Suspense fallback={<div className="py-8">Cargando productos relacionados...</div>}>
+            <RelatedProducts id={product.id} />
+          </Suspense>
         </div>
-        <RelatedProducts id={product.id} />
-      </div>
-    </ProductProvider>
+      </ProductProvider>
+    </>
   );
 }

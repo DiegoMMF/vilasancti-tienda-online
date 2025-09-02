@@ -64,8 +64,8 @@ export function Gallery({
   };
 
   return (
-    <div>
-      <div className="relative aspect-square h-full max-h-[80vh] w-full max-w-[80vw] mx-auto overflow-hidden">
+    <div className="w-full h-full">
+      <div className="relative aspect-square w-full h-full overflow-hidden rounded-lg">
         {isLoading && <ImageLoader />}
 
         {images[currentImageIndex] && (
@@ -139,7 +139,7 @@ export function Gallery({
       />
 
       {images.length > 1 ? (
-        <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-auto py-1 lg:mb-0">
+        <ul className="mt-8 flex items-center flex-wrap justify-center gap-2 py-1">
           {images.map((image, index) => {
             const isActive = index === currentImageIndex;
 
