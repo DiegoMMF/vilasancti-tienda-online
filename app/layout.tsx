@@ -2,6 +2,7 @@ import { CartProvider } from "components/cart/cart-context";
 import { CartModalProvider } from "components/cart/use-cart-modal";
 import { Navbar } from "components/layout/navbar";
 import { LoadingOverlayProvider } from "components/ui/loading-overlay-context";
+import WelcomeModal from "components/welcome-modal";
 import { getCart } from "lib/api/cart-drizzle";
 import { baseUrl } from "lib/utils";
 import { Cormorant, Inter } from "next/font/google";
@@ -157,6 +158,7 @@ export default async function RootLayout({
                 <Suspense fallback={null}>
                   <Toaster />
                 </Suspense>
+                <WelcomeModal />
               </div>
             </LoadingOverlayProvider>
           </CartModalProvider>
