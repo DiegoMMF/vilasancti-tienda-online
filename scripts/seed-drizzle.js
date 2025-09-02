@@ -328,7 +328,7 @@ async function main() {
       }
       if (
         productTitle.includes("estampado") ||
-        productTitle.includes("cuadritos") ||
+        productTitle.includes("cuadros") ||
         productTitle.includes("rayas") ||
         productTitle.includes("animal") ||
         productTitle.includes("regalitos") ||

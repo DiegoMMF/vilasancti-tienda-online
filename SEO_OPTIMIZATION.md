@@ -195,34 +195,7 @@ function OrganizationSchema() {
 
 ## 4. Optimización de Contenido
 
-### 4.1 Páginas de Categoría
-
-```tsx
-function CategoryPage({ collection, products }) {
-  return (
-    <>
-      {/* Hero Section */}
-      <section className="category-intro py-16 lg:py-24">
-        <div className="relative mx-auto max-w-4xl px-6">
-          <div className="bg-white/30 backdrop-blur-sm rounded-3xl p-6 md:p-12 border border-[#bf9d6d]/10 shadow-2xl">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#bf9d6d] font-cormorant tracking-wider leading-tight">
-              {collection.title}
-            </h1>
-            <p className="text-base md:text-lg lg:text-xl text-[#bf9d6d]/85 font-inter font-medium leading-relaxed mt-6">
-              {collection.description}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Products Grid */}
-      <ProductGrid products={products} />
-    </>
-  );
-}
-```
-
-### 4.2 Páginas de Producto
+### 4.1 Páginas de Producto
 
 ```tsx
 function ProductPage({ product }) {

@@ -1,5 +1,7 @@
 import { CategorySchema } from "components/category/category-schema";
+import Grid from "components/grid";
 import { BreadcrumbSchema } from "components/layout/breadcrumb-schema";
+import ProductGridItems from "components/layout/product-grid-items";
 import { getCollection, getCollectionProducts } from "lib/api/products-drizzle";
 import { baseUrl } from "lib/utils";
 import type { Metadata } from "next";
@@ -116,31 +118,18 @@ export default async function CategoryPage({
 
       {/* Schema.org Breadcrumbs */}
       <BreadcrumbSchema breadcrumbs={breadcrumbs} />
-
-      {/* Hero Section */}
-      <section className="category-intro py-16 lg:py-24">
-        <div className="relative mx-auto max-w-4xl px-6">
-          <div className="bg-white/30 backdrop-blur-sm rounded-3xl p-6 md:p-12 border border-[#bf9d6d]/10 shadow-2xl">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#bf9d6d] font-cormorant tracking-wider leading-tight">
-              {collection.title}
-            </h1>
-            <p className="text-base md:text-lg lg:text-xl text-[#bf9d6d]/85 font-inter font-medium leading-relaxed mt-6">
-              {collection.description}
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Products Grid */}
       <section className="py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <div key={product.id} className="product-card">
-                {/* Product card content */}
-              </div>
-            ))}
-          </div>
+          {products.length === 0 ? (
+            <p className="py-3 text-lg text-[#bf9d6d] font-cormorant text-center">
+              No se encontraron productos en esta categoría
+            </p>
+          ) : (
+            <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <ProductGridItems products={products} />
+            </Grid>
+          )}
         </div>
       </section>
     </>
