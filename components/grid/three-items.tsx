@@ -55,13 +55,13 @@ export async function ThreeItemGrid() {
 
   // Seleccionar específicamente los productos que queremos mostrar
   const firstProduct = allHomepageItems.find(
-    (item) => item.handle === "pijama-animal-print-largo",
+    (item) => item.handle === "pijama-animal-print-largo-dorado",
   );
   const secondProduct = allHomepageItems.find(
-    (item) => item.handle === "pijama-liso-plateado-corto",
+    (item) => item.handle === "pijama-liso-champagne-corto",
   );
   const thirdProduct = allHomepageItems.find(
-    (item) => item.handle === "pijama-azul-cuadritos",
+    (item) => item.handle === "pijama-azul-cuadros-largo",
   );
 
   if (!firstProduct || !secondProduct || !thirdProduct) return null;
