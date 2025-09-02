@@ -6,8 +6,8 @@ import { ProductDescription } from "components/product/product-description";
 import { ProductSchema } from "components/product/product-schema";
 import PromotionalBanner from "components/promotional-banner";
 import {
-    getProduct,
-    getProductRecommendations,
+  getProduct,
+  getProductRecommendations,
 } from "lib/api/products-drizzle";
 import { Image } from "lib/types";
 import { baseUrl } from "lib/utils";
@@ -126,13 +126,15 @@ export default async function ProductPage({
   return (
     <>
       {/* Generar breadcrumbs para la página de producto */}
-      <BreadcrumbSchema breadcrumbs={[
-        { name: "Inicio", url: "/" },
-        { name: "Productos", url: "/category/lisos" },
-        { name: product.title, url: `/product/${product.handle}` }
-      ]} />
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Inicio", url: "/" },
+          { name: "Productos", url: "/category/lisos" },
+          { name: product.title, url: `/product/${product.handle}` },
+        ]}
+      />
       <ProductSchema product={product} />
-      
+
       {/* Banner Promocional */}
       <PromotionalBanner />
 
@@ -151,7 +153,11 @@ export default async function ProductPage({
               <ProductDescription product={product} />
             </div>
           </div>
-          <Suspense fallback={<div className="py-8">Cargando productos relacionados...</div>}>
+          <Suspense
+            fallback={
+              <div className="py-8">Cargando productos relacionados...</div>
+            }
+          >
             <RelatedProducts id={product.id} />
           </Suspense>
         </div>

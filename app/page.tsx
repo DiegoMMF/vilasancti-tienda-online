@@ -56,7 +56,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       {/* Banner Promocional */}
       <PromotionalBanner />
-      
+
       {/* Hero Text Section - Diseño elegante y sofisticado */}
       <section className="relative py-16 lg:py-24 overflow-hidden">
         {/* Fondo con gradiente sutil */}

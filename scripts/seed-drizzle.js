@@ -4,11 +4,11 @@ config({ path: ".env" });
 
 import { db } from "../lib/db/index.ts";
 import {
-    collections,
-    productCollections,
-    productImages,
-    products,
-    productVariants,
+  collections,
+  productCollections,
+  productImages,
+  products,
+  productVariants,
 } from "../lib/db/schema.ts";
 import { getBlobUrlsForFolder } from "./generate-blob-urls.js";
 

@@ -119,7 +119,8 @@ export function AddToCart({ product }: { product: Product }) {
             addItemAction();
             // Mostrar toast de descuento
             toast.success("¡Producto agregado al carrito!", {
-              description: "💝 ¡Aprovecha el 10% de OFF en todos los artículos!",
+              description:
+                "💝 ¡Aprovecha el 10% de OFF en todos los artículos!",
               duration: 4000,
             });
             // Abrir el carrito después de agregar el producto

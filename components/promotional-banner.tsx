@@ -17,10 +17,16 @@ export default function PromotionalBanner() {
               <span className="text-lg">💝</span>
             </div>
             <p className="text-sm font-medium font-inter">
-              <span className="font-inter">Obsequio Lanzamiento &quot;vilasancti.com.ar&quot;</span>
+              <span className="font-inter">
+                Obsequio Lanzamiento &quot;vilasancti.com.ar&quot;
+              </span>
               <br className="block md:hidden" />
-              <span className="hidden md:inline-block mx-3 text-[#bf9d6d]/60">•</span>
-              <span className="text-lg font-bold font-cormorant">10% OFF en todos los artículos!</span>
+              <span className="hidden md:inline-block mx-3 text-[#bf9d6d]/60">
+                •
+              </span>
+              <span className="text-lg font-bold font-cormorant">
+                10% OFF en todos los artículos!
+              </span>
             </p>
           </div>
           <div className="flex items-center">

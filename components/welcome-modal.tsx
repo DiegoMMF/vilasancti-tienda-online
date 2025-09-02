@@ -10,12 +10,12 @@ export default function WelcomeModal() {
     // Verificar si es la primera visita del usuario
     // const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
     // if (!hasSeenWelcome) {
-      // Mostrar el modal después de 2 segundos
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 2000);
+    // Mostrar el modal después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 2000);
 
-      return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
     // }
   }, []);
 
@@ -29,12 +29,12 @@ export default function WelcomeModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
         onClick={closeModal}
         aria-hidden="true"
       />
-      
+
       {/* Modal Content */}
       <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all duration-300">
         <div className="absolute top-4 right-4">
@@ -50,14 +50,15 @@ export default function WelcomeModal() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#bf9d6d]/10 mb-4">
             <span className="text-3xl">💝</span>
           </div>
-          
+
           <h3 className="text-2xl font-bold leading-6 text-gray-900 mb-3 font-cormorant">
             Obsequio Lanzamiento
           </h3>
-          
+
           <div className="mt-4 space-y-3">
             <p className="text-base text-gray-700 font-inter leading-relaxed">
-              Un 10% de obsequio en tu compra para celebrar el inicio de una marca pensada para tu confort y distinción.
+              Un 10% de obsequio en tu compra para celebrar el inicio de una
+              marca pensada para tu confort y distinción.
             </p>
             <p className="text-xs text-gray-500 font-inter">
               El obsequio se aplica automáticamente en el carrito.

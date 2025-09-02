@@ -52,23 +52,21 @@ export default function CartModal() {
       <button aria-label="Abrir carrito" onClick={openCart}>
         <OpenCart quantity={cart?.totalQuantity} />
       </button>
-      
+
       {/* Cart Modal Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50">
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/30 transition-opacity duration-300"
             onClick={closeCart}
             aria-hidden="true"
           />
-          
+
           {/* Cart Panel */}
           <div className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px] transition-transform duration-300">
             <div className="flex items-center justify-between">
-              <p className="text-lg font-semibold font-cormorant">
-                Mi Carrito
-              </p>
+              <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
               <button
                 aria-label="Cerrar carrito"
                 onClick={closeCart}
@@ -101,8 +99,7 @@ export default function CartModal() {
                       item.merchandise.selectedOptions.forEach(
                         ({ name, value }) => {
                           if (value !== DEFAULT_OPTION) {
-                            merchandiseSearchParams[name.toLowerCase()] =
-                              value;
+                            merchandiseSearchParams[name.toLowerCase()] = value;
                           }
                         },
                       );
@@ -132,8 +129,7 @@ export default function CartModal() {
                                   height={64}
                                   alt={
                                     item.merchandise.product.featuredImage
-                                      .altText ||
-                                    item.merchandise.product.title
+                                      .altText || item.merchandise.product.title
                                   }
                                   src={
                                     item.merchandise.product.featuredImage
@@ -150,8 +146,7 @@ export default function CartModal() {
                                   <span className="leading-tight font-cormorant">
                                     {item.merchandise.product.title}
                                   </span>
-                                  {item.merchandise.title !==
-                                  DEFAULT_OPTION ? (
+                                  {item.merchandise.title !== DEFAULT_OPTION ? (
                                     <p className="text-sm text-[#bf9d6d] font-inter">
                                       {item.merchandise.title}
                                     </p>
@@ -203,7 +198,9 @@ export default function CartModal() {
                     <p>OFF (10%)</p>
                     <Price
                       className="text-right text-base text-[#bf9d6d]"
-                      amount={(-Number(cart.cost.subtotalAmount.amount) * 0.1).toFixed(2)}
+                      amount={(
+                        -Number(cart.cost.subtotalAmount.amount) * 0.1
+                      ).toFixed(2)}
                       currencyCode={cart.cost.subtotalAmount.currencyCode}
                     />
                   </div>
@@ -212,7 +209,9 @@ export default function CartModal() {
                     <p>Total</p>
                     <Price
                       className="text-right text-base text-[#bf9d6d]"
-                      amount={(Number(cart.cost.subtotalAmount.amount) * 0.9).toFixed(2)}
+                      amount={(
+                        Number(cart.cost.subtotalAmount.amount) * 0.9
+                      ).toFixed(2)}
                       currencyCode={cart.cost.subtotalAmount.currencyCode}
                     />
                   </div>

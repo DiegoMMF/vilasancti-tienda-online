@@ -38,17 +38,17 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
       >
         <Bars3Icon className="h-4" />
       </button>
-      
+
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/30 transition-opacity duration-300"
             onClick={closeMobileMenu}
             aria-hidden="true"
           />
-          
+
           {/* Menu Panel */}
           <div className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-[#f0e3d7] pb-6 transition-transform duration-300">
             <div className="p-4">
@@ -63,7 +63,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
               <div className="mb-4 w-full">
                 <Search />
               </div>
-              
+
               {menu.length ? (
                 <ul className="flex w-full flex-col">
                   {menu.map((item: Menu) => (

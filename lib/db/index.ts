@@ -19,4 +19,3 @@ export const db = drizzle(client, { schema });
 // Exportar schema y relaciones
 export * from "./relations";
 export * from "./schema";
-

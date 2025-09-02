@@ -35,12 +35,12 @@ export default function ContactModal() {
       {isOpen && (
         <div className="fixed inset-0 z-50">
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/30 transition-opacity duration-300"
             onClick={closeModal}
             aria-hidden="true"
           />
-          
+
           {/* Modal Content */}
           <div className="fixed inset-0 flex items-center justify-center p-4">
             <div className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-[#f0e3d7] p-8 shadow-xl border border-[#bf9d6d]/20 relative transition-all duration-300">

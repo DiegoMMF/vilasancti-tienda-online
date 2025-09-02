@@ -47,7 +47,7 @@ button {
 /* Carousel animation for the bottom product strip */
 @layer utilities {
   .animate-carousel {
-    animation: scroll-carousel 40s linear infinite;
+    animation: scroll-carousel 25s linear infinite;
     will-change: transform;
   }
 }
