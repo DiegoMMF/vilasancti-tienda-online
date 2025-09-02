@@ -1,14 +1,14 @@
-// Cargar variables de entorno desde .env.local
+// Cargar variables de entorno desde .env
 import { config } from "dotenv";
-config({ path: ".env.local" });
+config({ path: ".env" });
 
 import { db } from "../lib/db/index.ts";
 import {
-  collections,
-  productCollections,
-  productImages,
-  products,
-  productVariants,
+    collections,
+    productCollections,
+    productImages,
+    products,
+    productVariants,
 } from "../lib/db/schema.ts";
 import { getBlobUrlsForFolder } from "./generate-blob-urls.js";
 
