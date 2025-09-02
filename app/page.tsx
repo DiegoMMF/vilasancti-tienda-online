@@ -1,6 +1,7 @@
 import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
+import PromotionalBanner from "components/promotional-banner";
 import { Metadata } from "next";
 
 const baseUrl =
@@ -53,6 +54,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Banner Promocional */}
+      <PromotionalBanner />
+      
       {/* Hero Text Section - Diseño elegante y sofisticado */}
       <section className="relative py-16 lg:py-24 overflow-hidden">
         {/* Fondo con gradiente sutil */}
@@ -115,16 +119,6 @@ export default function HomePage() {
         <div className="absolute bottom-1/4 left-12 w-2.5 h-2.5 bg-[#bf9d6d]/25 rounded-full animate-pulse delay-500"></div>
       </section>
 
-      {/* Carrusel de productos destacados */}
-      <section className="py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#bf9d6d] font-cormorant text-center mb-8">
-            Productos Destacados
-          </h2>
-          <Carousel />
-        </div>
-      </section>
-
       {/* Grid de productos */}
       <section className="py-12 lg:py-16 bg-white/10">
         <div className="max-w-7xl mx-auto px-6">
@@ -132,6 +126,16 @@ export default function HomePage() {
             Nuestras Colecciones
           </h2>
           <ThreeItemGrid />
+        </div>
+      </section>
+
+      {/* Carrusel de productos destacados */}
+      <section className="py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#bf9d6d] font-cormorant text-center mb-8">
+            Productos Destacados
+          </h2>
+          <Carousel />
         </div>
       </section>
 
