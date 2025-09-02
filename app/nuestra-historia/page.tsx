@@ -1,8 +1,9 @@
 import Footer from "components/layout/footer";
+import { Metadata } from "next";
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Nuestra Historia | Vilasancti",
   description:
     "Descubre la historia detrás de VILASANCTI, un proyecto de madre e hija inspirado en el amor por la elegancia y la feminidad.",

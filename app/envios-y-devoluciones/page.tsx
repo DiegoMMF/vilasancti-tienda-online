@@ -1,9 +1,10 @@
 import Footer from "components/layout/footer";
 import { WhatsAppLink } from "components/ui/whatsapp-link";
+import { Metadata } from "next";
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Envíos y Devoluciones | Vilasancti",
   description:
     "Información sobre envíos y devoluciones de VILASANCTI. Coordinamos todo vía WhatsApp para brindarte el mejor servicio.",

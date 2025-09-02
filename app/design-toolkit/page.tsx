@@ -5,8 +5,9 @@ import Label from "components/label";
 import ProductGridItems from "components/layout/product-grid-items";
 import { LoaderShowcase } from "components/ui/fullscreen-loaders";
 import { getProducts } from "lib/api/products-drizzle";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Design Toolkit",
   description:
     "Muestrario de estilos, tipografías, colores y componentes disponibles.",
