@@ -67,7 +67,7 @@ export async function ThreeItemGrid() {
   if (!firstProduct || !secondProduct || !thirdProduct) return null;
 
   return (
-    <section className="mx-auto grid max-w-[80vw] gap-6 px-6 pb-8 md:grid-cols-6 md:grid-rows-2 lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)]">
+    <section className="mx-auto grid max-w-[95vw] gap-4 px-3 pb-8 md:max-w-[90vw] md:gap-6 md:px-4 md:grid-cols-6 md:grid-rows-2 lg:max-w-[80vw] lg:gap-8 lg:px-12 lg:pb-16 lg:max-h-[calc(100vh-200px)] grid-tablet-optimized">
       <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
       <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
       <ThreeItemGridItem size="half" item={thirdProduct} />

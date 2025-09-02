@@ -61,3 +61,23 @@ button {
     transform: translateX(-33.333333%);
   }
 }
+
+/* Tablet-specific optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Optimize grid spacing for tablets */
+  .grid-tablet-optimized {
+    gap: 1.5rem;
+  }
+  
+  /* Ensure prices are fully visible on tablet */
+  .label-tablet-optimized {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Optimize image container for tablets */
+  .image-tablet-optimized {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+}
