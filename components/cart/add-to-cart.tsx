@@ -6,6 +6,7 @@ import { useProduct } from "components/product/product-context";
 import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 import { Product, ProductVariant } from "lib/types";
 import { useActionState } from "react";
+import { toast } from "sonner";
 import { useCart } from "./cart-context";
 import { useCartModal } from "./use-cart-modal";
 
@@ -116,6 +117,11 @@ export function AddToCart({ product }: { product: Product }) {
             addCartItem(finalVariant, product);
             // Ejecutar la acción del servidor en segundo plano
             addItemAction();
+            // Mostrar toast de descuento
+            toast.success("¡Producto agregado al carrito!", {
+              description: "💝 ¡Aprovecha el 10% de OFF en todos los artículos!",
+              duration: 4000,
+            });
             // Abrir el carrito después de agregar el producto
             setTimeout(() => {
               openCart();
