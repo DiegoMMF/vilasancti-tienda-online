@@ -68,13 +68,13 @@ button {
   .grid-tablet-optimized {
     gap: 1.5rem;
   }
-  
+
   /* Ensure prices are fully visible on tablet */
   .label-tablet-optimized {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
-  
+
   /* Optimize image container for tablets */
   .image-tablet-optimized {
     aspect-ratio: 1;
