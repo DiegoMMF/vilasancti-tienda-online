@@ -2,6 +2,7 @@ import { AddToCart } from "components/cart/add-to-cart";
 import Price from "components/price";
 import Prose from "components/prose";
 import { Product } from "lib/types";
+import DiscountBadge from "./discount-badge";
 import { VariantSelector } from "./variant-selector";
 
 export function ProductDescription({ product }: { product: Product }) {
@@ -24,6 +25,7 @@ export function ProductDescription({ product }: { product: Product }) {
               currencyCode={product.priceRange.maxVariantPrice.currencyCode}
             />
           </div>
+          <DiscountBadge />
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
