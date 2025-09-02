@@ -49,7 +49,7 @@ export default {
   compress: true,
   swcMinify: true,
   experimental: {
-    optimizePackageImports: ["@heroicons/react", "@headlessui/react"],
+    optimizePackageImports: ["@heroicons/react"],
   },
   images: {
     formats: ["image/avif", "image/webp"],

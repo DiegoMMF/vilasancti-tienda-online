@@ -73,8 +73,9 @@ Este documento unifica criterios visuales y de interacción para el proyecto `vi
   - RSC para datos; Suspense para partes no críticas (menú móvil, buscador).
   - Estados de foco visibles y tamaños táctiles suficientes (mín. 44x44px).
 - **Modals (Cart)**
-  - Usa `Dialog`/`Transition` (headlessui) con `aria` y `role` adecuados.
-  - Cierre por `Esc` y click en overlay, foco atrapado dentro del modal.
+  - Usa implementación nativa con CSS transitions y estado local.
+  - Cierre por click en overlay, foco atrapado dentro del modal.
+  - Accesibilidad con `aria-label` y `role` apropiados.
 - **Formularios**
   - Inputs con `label` vinculado o `aria-label` claro.
   - Mensajes de validación cerca del campo; colores accesibles.

@@ -35,7 +35,7 @@ export default {
   experimental: {
     inlineCss: true,
     useCache: true,
-    optimizePackageImports: ["@heroicons/react", "@headlessui/react"],
+    optimizePackageImports: ["@heroicons/react"],
   },
 
   // Compresión

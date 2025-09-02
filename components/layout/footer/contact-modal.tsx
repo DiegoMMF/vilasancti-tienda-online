@@ -1,8 +1,7 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,101 +31,88 @@ export default function ContactModal() {
         Diego M. Maldini Freyre
       </button>
 
-      <Transition show={isOpen} as={Fragment}>
-        <Dialog onClose={closeModal} className="relative z-50">
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-0 backdrop-blur-none"
-            enterTo="opacity-100 backdrop-blur-[.5px]"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="opacity-100 backdrop-blur-[.5px]"
-            leaveTo="opacity-0 backdrop-blur-none"
-          >
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          </Transition.Child>
+      {/* Contact Modal Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/30 transition-opacity duration-300"
+            onClick={closeModal}
+            aria-hidden="true"
+          />
+          
+          {/* Modal Content */}
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <div className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-[#f0e3d7] p-8 shadow-xl border border-[#bf9d6d]/20 relative transition-all duration-300">
+              {/* Subtle decorative element */}
+              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#bf9d6d]/20 to-transparent"></div>
 
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <div className="fixed inset-0 flex items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-[#f0e3d7] p-8 shadow-xl border border-[#bf9d6d]/20 relative">
-                {/* Subtle decorative element */}
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#bf9d6d]/20 to-transparent"></div>
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-[#bf9d6d] font-cormorant">
+                    Gracias!
+                  </h2>
+                  <button
+                    onClick={closeModal}
+                    className="text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] p-1.5 rounded-md transition-all duration-200"
+                  >
+                    <XMarkIcon className="h-5 w-5" />
+                  </button>
+                </div>
 
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <Dialog.Title className="text-xl font-semibold text-[#bf9d6d] font-cormorant">
-                      Gracias!
-                    </Dialog.Title>
+                <div className="space-y-6">
+                  <div className="text-center space-y-4">
+                    <div className="relative py-1">
+                      <p className="text-base text-[#bf9d6d]/90 font-inter leading-relaxed">
+                        Téc.Univ.{" "}
+                        <strong className="text-[#bf9d6d] font-semibold">
+                          Diego M. Maldini Freyre
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div className="relative py-1">
+                      <p className="text-sm text-[#bf9d6d]/80 font-inter leading-relaxed">
+                        Aplicaciones Web e Inteligencia Artificial
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center space-x-6 pt-4">
                     <button
-                      onClick={closeModal}
-                      className="text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] p-1.5 rounded-md transition-all duration-200"
+                      onClick={handleLinkedIn}
+                      className="flex items-center justify-center w-12 h-12 text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] rounded-md transition-all duration-200"
+                      title="Conocer al autor en LinkedIn"
                     >
-                      <XMarkIcon className="h-5 w-5" />
+                      <svg
+                        className="h-7 w-7"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                      </svg>
+                    </button>
+
+                    <button
+                      onClick={handleWhatsApp}
+                      className="flex items-center justify-center w-12 h-12 text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] rounded-md transition-all duration-200"
+                      title="Contactar por WhatsApp"
+                    >
+                      <svg
+                        className="h-7 w-7"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+                      </svg>
                     </button>
                   </div>
-
-                  <div className="space-y-6">
-                    <div className="text-center space-y-4">
-                      <div className="relative py-1">
-                        <p className="text-base text-[#bf9d6d]/90 font-inter leading-relaxed">
-                          Téc.Univ.{" "}
-                          <strong className="text-[#bf9d6d] font-semibold">
-                            Diego M. Maldini Freyre
-                          </strong>
-                        </p>
-                      </div>
-
-                      <div className="relative py-1">
-                        <p className="text-sm text-[#bf9d6d]/80 font-inter leading-relaxed">
-                          Aplicaciones Web e Inteligencia Artificial
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center space-x-6 pt-4">
-                      <button
-                        onClick={handleLinkedIn}
-                        className="flex items-center justify-center w-12 h-12 text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] rounded-md transition-all duration-200"
-                        title="Conocer al autor en LinkedIn"
-                      >
-                        <svg
-                          className="h-7 w-7"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                      </button>
-
-                      <button
-                        onClick={handleWhatsApp}
-                        className="flex items-center justify-center w-12 h-12 text-[#bf9d6d] hover:text-[#f0e3d7] hover:bg-[#bf9d6d] rounded-md transition-all duration-200"
-                        title="Contactar por WhatsApp"
-                      >
-                        <svg
-                          className="h-7 w-7"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
                 </div>
-              </Dialog.Panel>
+              </div>
             </div>
-          </Transition.Child>
-        </Dialog>
-      </Transition>
+          </div>
+        </div>
+      )}
     </>
   );
 }
