@@ -73,7 +73,9 @@ export default function CartModal() {
               {/* Cart Panel */}
               <div className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px] transition-transform duration-300">
                 <div className="flex items-center justify-between">
-                  <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
+                  <p className="text-lg font-semibold font-cormorant">
+                    Mi Carrito
+                  </p>
                   <button
                     aria-label="Cerrar carrito"
                     onClick={closeCart}
@@ -83,151 +85,156 @@ export default function CartModal() {
                   </button>
                 </div>
 
-            {!cart || cart.lines.length === 0 || cart.totalQuantity === 0 ? (
-              <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
-                <ShoppingCartIcon className="h-16" />
-                <p className="mt-6 text-center text-2xl font-bold font-cormorant">
-                  Tu carrito está vacío.
-                </p>
-              </div>
-            ) : (
-              <div className="flex h-full flex-col justify-between overflow-hidden p-1">
-                <ul className="grow overflow-auto py-4">
-                  {cart.lines
-                    .sort((a, b) =>
-                      a.merchandise.product.title.localeCompare(
-                        b.merchandise.product.title,
-                      ),
-                    )
-                    .map((item, i) => {
-                      const merchandiseSearchParams =
-                        {} as MerchandiseSearchParams;
+                {!cart ||
+                cart.lines.length === 0 ||
+                cart.totalQuantity === 0 ? (
+                  <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+                    <ShoppingCartIcon className="h-16" />
+                    <p className="mt-6 text-center text-2xl font-bold font-cormorant">
+                      Tu carrito está vacío.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex h-full flex-col justify-between overflow-hidden p-1">
+                    <ul className="grow overflow-auto py-4">
+                      {cart.lines
+                        .sort((a, b) =>
+                          a.merchandise.product.title.localeCompare(
+                            b.merchandise.product.title,
+                          ),
+                        )
+                        .map((item, i) => {
+                          const merchandiseSearchParams =
+                            {} as MerchandiseSearchParams;
 
-                      item.merchandise.selectedOptions.forEach(
-                        ({ name, value }) => {
-                          if (value !== DEFAULT_OPTION) {
-                            merchandiseSearchParams[name.toLowerCase()] = value;
-                          }
-                        },
-                      );
+                          item.merchandise.selectedOptions.forEach(
+                            ({ name, value }) => {
+                              if (value !== DEFAULT_OPTION) {
+                                merchandiseSearchParams[name.toLowerCase()] =
+                                  value;
+                              }
+                            },
+                          );
 
-                      const merchandiseUrl = createUrl(
-                        `/product/${item.merchandise.product.handle}`,
-                        new URLSearchParams(merchandiseSearchParams),
-                      );
+                          const merchandiseUrl = createUrl(
+                            `/product/${item.merchandise.product.handle}`,
+                            new URLSearchParams(merchandiseSearchParams),
+                          );
 
-                      return (
-                        <li
-                          key={i}
-                          className="flex w-full flex-col border-b border-[#bf9d6d]/20"
-                        >
-                          <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                            <div className="absolute z-40 -ml-1 -mt-2">
-                              <DeleteItemButton
-                                item={item}
-                                optimisticUpdate={updateCartItem}
-                              />
-                            </div>
-                            <div className="flex flex-row">
-                              <div className="relative h-16 w-16 overflow-hidden rounded-md border border-[#bf9d6d]/20 bg-[#bf9d6d]/10">
-                                <Image
-                                  className="h-full w-full object-cover"
-                                  width={64}
-                                  height={64}
-                                  alt={
-                                    item.merchandise.product.featuredImage
-                                      .altText || item.merchandise.product.title
-                                  }
-                                  src={
-                                    item.merchandise.product.featuredImage
-                                      .url || "/favicon.ico"
-                                  }
-                                />
-                              </div>
-                              <Link
-                                href={merchandiseUrl}
-                                onClick={closeCart}
-                                className="z-30 ml-2 flex flex-row space-x-4"
-                              >
-                                <div className="flex flex-1 flex-col text-base">
-                                  <span className="leading-tight font-cormorant">
-                                    {item.merchandise.product.title}
-                                  </span>
-                                  {item.merchandise.title !== DEFAULT_OPTION ? (
-                                    <p className="text-sm text-[#bf9d6d] font-inter">
-                                      {item.merchandise.title}
-                                    </p>
-                                  ) : null}
+                          return (
+                            <li
+                              key={i}
+                              className="flex w-full flex-col border-b border-[#bf9d6d]/20"
+                            >
+                              <div className="relative flex w-full flex-row justify-between px-1 py-4">
+                                <div className="absolute z-40 -ml-1 -mt-2">
+                                  <DeleteItemButton
+                                    item={item}
+                                    optimisticUpdate={updateCartItem}
+                                  />
                                 </div>
-                              </Link>
-                            </div>
-                            <div className="flex h-16 flex-col justify-between">
-                              <Price
-                                className="flex justify-end space-y-2 text-right text-sm"
-                                amount={item.cost.totalAmount.amount}
-                                currencyCode={
-                                  item.cost.totalAmount.currencyCode
-                                }
-                              />
-                              <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-[#bf9d6d]/20 transition-all duration-200 hover:border-[#bf9d6d]/40 hover:shadow-sm">
-                                <EditItemQuantityButton
-                                  item={item}
-                                  type="minus"
-                                  optimisticUpdate={updateCartItem}
-                                />
-                                <p className="w-6 text-center">
-                                  <span className="w-full text-sm">
-                                    {item.quantity}
-                                  </span>
-                                </p>
-                                <EditItemQuantityButton
-                                  item={item}
-                                  type="plus"
-                                  optimisticUpdate={updateCartItem}
-                                />
+                                <div className="flex flex-row">
+                                  <div className="relative h-16 w-16 overflow-hidden rounded-md border border-[#bf9d6d]/20 bg-[#bf9d6d]/10">
+                                    <Image
+                                      className="h-full w-full object-cover"
+                                      width={64}
+                                      height={64}
+                                      alt={
+                                        item.merchandise.product.featuredImage
+                                          .altText ||
+                                        item.merchandise.product.title
+                                      }
+                                      src={
+                                        item.merchandise.product.featuredImage
+                                          .url || "/favicon.ico"
+                                      }
+                                    />
+                                  </div>
+                                  <Link
+                                    href={merchandiseUrl}
+                                    onClick={closeCart}
+                                    className="z-30 ml-2 flex flex-row space-x-4"
+                                  >
+                                    <div className="flex flex-1 flex-col text-base">
+                                      <span className="leading-tight font-cormorant">
+                                        {item.merchandise.product.title}
+                                      </span>
+                                      {item.merchandise.title !==
+                                      DEFAULT_OPTION ? (
+                                        <p className="text-sm text-[#bf9d6d] font-inter">
+                                          {item.merchandise.title}
+                                        </p>
+                                      ) : null}
+                                    </div>
+                                  </Link>
+                                </div>
+                                <div className="flex h-16 flex-col justify-between">
+                                  <Price
+                                    className="flex justify-end space-y-2 text-right text-sm"
+                                    amount={item.cost.totalAmount.amount}
+                                    currencyCode={
+                                      item.cost.totalAmount.currencyCode
+                                    }
+                                  />
+                                  <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-[#bf9d6d]/20 transition-all duration-200 hover:border-[#bf9d6d]/40 hover:shadow-sm">
+                                    <EditItemQuantityButton
+                                      item={item}
+                                      type="minus"
+                                      optimisticUpdate={updateCartItem}
+                                    />
+                                    <p className="w-6 text-center">
+                                      <span className="w-full text-sm">
+                                        {item.quantity}
+                                      </span>
+                                    </p>
+                                    <EditItemQuantityButton
+                                      item={item}
+                                      type="plus"
+                                      optimisticUpdate={updateCartItem}
+                                    />
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </li>
-                      );
-                    })}
-                </ul>
-                <div className="py-4 text-sm text-[#bf9d6d] font-inter">
-                  <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1">
-                    <p>Subtotal</p>
-                    <Price
-                      className="text-right text-base text-[#bf9d6d]"
-                      amount={cart.cost.subtotalAmount.amount}
-                      currencyCode={cart.cost.subtotalAmount.currencyCode}
-                    />
-                  </div>
-                  <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
-                    <p>OFF (10%)</p>
-                    <Price
-                      className="text-right text-base text-[#bf9d6d]"
-                      amount={(
-                        -Number(cart.cost.subtotalAmount.amount) * 0.1
-                      ).toFixed(2)}
-                      currencyCode={cart.cost.subtotalAmount.currencyCode}
-                    />
-                  </div>
+                            </li>
+                          );
+                        })}
+                    </ul>
+                    <div className="py-4 text-sm text-[#bf9d6d] font-inter">
+                      <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1">
+                        <p>Subtotal</p>
+                        <Price
+                          className="text-right text-base text-[#bf9d6d]"
+                          amount={cart.cost.subtotalAmount.amount}
+                          currencyCode={cart.cost.subtotalAmount.currencyCode}
+                        />
+                      </div>
+                      <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
+                        <p>OFF (10%)</p>
+                        <Price
+                          className="text-right text-base text-[#bf9d6d]"
+                          amount={(
+                            -Number(cart.cost.subtotalAmount.amount) * 0.1
+                          ).toFixed(2)}
+                          currencyCode={cart.cost.subtotalAmount.currencyCode}
+                        />
+                      </div>
 
-                  <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
-                    <p>Total</p>
-                    <Price
-                      className="text-right text-base text-[#bf9d6d]"
-                      amount={(
-                        Number(cart.cost.subtotalAmount.amount) * 0.9
-                      ).toFixed(2)}
-                      currencyCode={cart.cost.subtotalAmount.currencyCode}
-                    />
+                      <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
+                        <p>Total</p>
+                        <Price
+                          className="text-right text-base text-[#bf9d6d]"
+                          amount={(
+                            Number(cart.cost.subtotalAmount.amount) * 0.9
+                          ).toFixed(2)}
+                          currencyCode={cart.cost.subtotalAmount.currencyCode}
+                        />
+                      </div>
+                    </div>
+                    <form action={redirectToCheckout}>
+                      <CheckoutButton />
+                    </form>
                   </div>
-                </div>
-                <form action={redirectToCheckout}>
-                  <CheckoutButton />
-                </form>
-              </div>
-            )}
+                )}
               </div>
             </div>,
             document.body,
