@@ -8,8 +8,8 @@ import { DEFAULT_OPTION } from "lib/constants";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { useFormStatus } from "react-dom";
+import { useEffect, useRef, useState } from "react";
+import { createPortal, useFormStatus } from "react-dom";
 import { createCartAndSetCookie, redirectToCheckout } from "./actions";
 import { useCart } from "./cart-context";
 import { DeleteItemButton } from "./delete-item-button";
@@ -25,6 +25,7 @@ export default function CartModal() {
   const { cart, updateCartItem } = useCart();
   const { isOpen, openCart, closeCart } = useCartModal();
   const quantityRef = useRef(cart?.totalQuantity);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     if (!cart) {
@@ -47,6 +48,11 @@ export default function CartModal() {
     }
   }, [isOpen, cart?.totalQuantity, quantityRef, openCart]);
 
+  // Evitar uso de portal durante SSR
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <>
       <button aria-label="Abrir carrito" onClick={openCart}>
@@ -54,27 +60,28 @@ export default function CartModal() {
       </button>
 
       {/* Cart Modal Overlay */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/30 transition-opacity duration-300"
-            onClick={closeCart}
-            aria-hidden="true"
-          />
-
-          {/* Cart Panel */}
-          <div className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px] transition-transform duration-300">
-            <div className="flex items-center justify-between">
-              <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
-              <button
-                aria-label="Cerrar carrito"
+      {isOpen && isMounted
+        ? createPortal(
+            <div className="fixed inset-0 z-[100]">
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 bg-black/30 transition-opacity duration-300"
                 onClick={closeCart}
-                className="transition-all duration-200 hover:scale-110 active:scale-95"
-              >
-                <CloseCart />
-              </button>
-            </div>
+                aria-hidden="true"
+              />
+
+              {/* Cart Panel */}
+              <div className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-[#bf9d6d]/20 bg-[#f0e3d7]/95 p-6 text-[#bf9d6d] backdrop-blur-xl md:w-[390px] transition-transform duration-300">
+                <div className="flex items-center justify-between">
+                  <p className="text-lg font-semibold font-cormorant">Mi Carrito</p>
+                  <button
+                    aria-label="Cerrar carrito"
+                    onClick={closeCart}
+                    className="transition-all duration-200 hover:scale-110 active:scale-95"
+                  >
+                    <CloseCart />
+                  </button>
+                </div>
 
             {!cart || cart.lines.length === 0 || cart.totalQuantity === 0 ? (
               <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
@@ -221,9 +228,11 @@ export default function CartModal() {
                 </form>
               </div>
             )}
-          </div>
-        </div>
-      )}
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
