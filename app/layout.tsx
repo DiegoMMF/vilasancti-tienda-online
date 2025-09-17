@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: `%s | Vilasancti`,
   },
   description:
-    "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.",
+    "VILASANCTI. Elegancia que se vive en casa. Tienda Online de Pijamas que realzan tu belleza y transmiten distinción. Envío a toda la Argentina.",
   keywords: [
     "pijamas",
     "pijamas elegantes",

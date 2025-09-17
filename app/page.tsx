@@ -15,7 +15,7 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 export const metadata: Metadata = {
   title: "Vilasancti - Pijamas Elegantes | Elegancia que se vive en casa",
   description:
-    "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío gratis en Argentina. ¡Compra ahora!",
+    "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío a toda la Argentina. ¡Compra ahora!",
   keywords: [
     "pijamas elegantes",
     "pijamas mujer",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     title: "Vilasancti - Pijamas Elegantes",
     description:
-      "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.",
+      "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío a toda la Argentina.",
     images: [
       {
         url: `${baseUrl}/og-image.webp`,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vilasancti - Pijamas Elegantes",
     description:
-      "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.",
+      "Descubre nuestra colección de pijamas elegantes que realzan tu belleza y transmiten distinción. Envío a toda la Argentina.",
     images: [`${baseUrl}/og-image.webp`],
   },
 };

@@ -48,7 +48,7 @@ export async function generateMetadata({
 
   return {
     title: `${collection.title} - ${products.length} Pijamas Elegantes | Vilasancti`,
-    description: `Descubre ${products.length} ${collection.title.toLowerCase()} de la más alta calidad. Pijamas que realzan tu belleza y transmiten distinción. Envío gratis en Argentina.`,
+    description: `Descubre ${products.length} ${collection.title.toLowerCase()} de la más alta calidad. Pijamas que realzan tu belleza y transmiten distinción. Envío a toda la Argentina.`,
     keywords: [
       `pijamas ${collection.title.toLowerCase()}`,
       "sleepwear",
@@ -72,7 +72,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title: `${collection.title} | Vilasancti`,
-      description: `Los mejores ${collection.title.toLowerCase()} del mercado. Envío gratis en Argentina.`,
+      description: `Los mejores ${collection.title.toLowerCase()} del mercado. Envío a toda la Argentina.`,
       images: [],
       type: "website",
     },
