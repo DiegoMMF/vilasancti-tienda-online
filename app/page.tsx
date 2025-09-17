@@ -162,7 +162,7 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold text-[#bf9d6d] mb-2">
                 Envíos
               </h3>
-              <p className="text-[#bf9d6d]/70">A toda Argentina</p>
+              <p className="text-[#bf9d6d]/70">A todo el país</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#bf9d6d]/10 rounded-full flex items-center justify-center mx-auto mb-4">
