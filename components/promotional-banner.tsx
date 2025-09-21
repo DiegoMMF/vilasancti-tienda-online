@@ -1,12 +1,14 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useDiscount } from "lib/hooks/use-discount";
 import { useState } from "react";
 
 export default function PromotionalBanner() {
   const [isVisible, setIsVisible] = useState(true);
+  const { isDiscountActive, discountPercentage } = useDiscount();
 
-  if (!isVisible) return null;
+  if (!isVisible || !isDiscountActive) return null;
 
   return (
     <div className="relative bg-gradient-to-r from-[#bf9d6d] to-[#a88a5a] text-white">
@@ -25,7 +27,7 @@ export default function PromotionalBanner() {
                 •
               </span>
               <span className="text-lg font-bold font-cormorant">
-                10% OFF en todos los artículos!
+                {discountPercentage}% OFF en todos los artículos!
               </span>
             </p>
           </div>

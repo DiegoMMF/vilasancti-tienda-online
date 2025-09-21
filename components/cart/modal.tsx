@@ -5,6 +5,7 @@ import clsx from "clsx";
 import LoadingDots from "components/loading-dots";
 import Price from "components/price";
 import { DEFAULT_OPTION } from "lib/constants";
+import { useDiscount } from "lib/hooks/use-discount";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +27,7 @@ export default function CartModal() {
   const { isOpen, openCart, closeCart } = useCartModal();
   const quantityRef = useRef(cart?.totalQuantity);
   const [isMounted, setIsMounted] = useState(false);
+  const { isDiscountActive, discountPercentage } = useDiscount();
 
   useEffect(() => {
     if (!cart) {
@@ -208,23 +210,29 @@ export default function CartModal() {
                           currencyCode={cart.cost.subtotalAmount.currencyCode}
                         />
                       </div>
-                      <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
-                        <p>OFF (10%)</p>
-                        <Price
-                          className="text-right text-base text-[#bf9d6d]"
-                          amount={(
-                            -Number(cart.cost.subtotalAmount.amount) * 0.1
-                          ).toFixed(2)}
-                          currencyCode={cart.cost.subtotalAmount.currencyCode}
-                        />
-                      </div>
+                      {isDiscountActive && (
+                        <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
+                          <p>OFF ({discountPercentage}%)</p>
+                          <Price
+                            className="text-right text-base text-[#bf9d6d]"
+                            amount={(
+                              -Number(cart.cost.subtotalAmount.amount) *
+                              (discountPercentage / 100)
+                            ).toFixed(2)}
+                            currencyCode={cart.cost.subtotalAmount.currencyCode}
+                          />
+                        </div>
+                      )}
 
                       <div className="mb-3 flex items-center justify-between border-b border-[#bf9d6d]/20 pb-1 pt-1">
                         <p>Total</p>
                         <Price
                           className="text-right text-base text-[#bf9d6d]"
                           amount={(
-                            Number(cart.cost.subtotalAmount.amount) * 0.9
+                            Number(cart.cost.subtotalAmount.amount) *
+                            (isDiscountActive
+                              ? 1 - discountPercentage / 100
+                              : 1)
                           ).toFixed(2)}
                           currencyCode={cart.cost.subtotalAmount.currencyCode}
                         />

@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { addItem } from "components/cart/actions";
 import { useProduct } from "components/product/product-context";
 import { useLoadingOverlay } from "components/ui/loading-overlay-context";
+import { useDiscount } from "lib/hooks/use-discount";
 import { Product, ProductVariant } from "lib/types";
 import { useActionState } from "react";
 import { toast } from "sonner";
@@ -68,6 +69,7 @@ export function AddToCart({ product }: { product: Product }) {
   const [message, formAction] = useActionState(addItem, null);
   const { show, hide } = useLoadingOverlay();
   const { openCart } = useCartModal();
+  const { isDiscountActive, discountPercentage } = useDiscount();
 
   // Encontrar la variante que coincide con el estado actual
   const variant = variants.find((variant: ProductVariant) =>
@@ -119,8 +121,9 @@ export function AddToCart({ product }: { product: Product }) {
             addItemAction();
             // Mostrar toast de descuento
             toast.success("¡Producto agregado al carrito!", {
-              description:
-                "💝 ¡Aprovecha el 10% OFF en todos los artículos!",
+              description: isDiscountActive
+                ? `💝 ¡Aprovecha el ${discountPercentage}% OFF en todos los artículos!`
+                : "",
               duration: 4000,
             });
             // Abrir el carrito después de agregar el producto

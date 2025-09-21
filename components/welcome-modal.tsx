@@ -1,12 +1,17 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useDiscount } from "lib/hooks/use-discount";
 import { useEffect, useState } from "react";
 
 export default function WelcomeModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isDiscountActive, discountPercentage } = useDiscount();
 
   useEffect(() => {
+    // Solo mostrar el modal si hay descuento activo
+    if (!isDiscountActive) return;
+
     // Verificar si es la primera visita del usuario
     // const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
     // if (!hasSeenWelcome) {
@@ -17,14 +22,14 @@ export default function WelcomeModal() {
 
     return () => clearTimeout(timer);
     // }
-  }, []);
+  }, [isDiscountActive]);
 
   const closeModal = () => {
     setIsOpen(false);
     localStorage.setItem("hasSeenWelcome", "true");
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !isDiscountActive) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -57,8 +62,8 @@ export default function WelcomeModal() {
 
           <div className="mt-4 space-y-3">
             <p className="text-base text-gray-700 font-inter leading-relaxed">
-              Un 10% de obsequio en tu compra para celebrar el inicio de una
-              marca pensada para tu confort y distinción.
+              Un {discountPercentage}% de obsequio en tu compra para celebrar el
+              inicio de una marca pensada para tu confort y distinción.
             </p>
             <p className="text-xs text-gray-500 font-inter">
               El obsequio se aplica automáticamente en el carrito.
