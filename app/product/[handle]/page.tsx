@@ -14,6 +14,7 @@ import { baseUrl } from "lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { getSessionRole } from "lib/auth/session";
 
 export const revalidate = 600; // 10 minutos
 
@@ -123,6 +124,9 @@ export default async function ProductPage({
     notFound();
   }
 
+  const role = await getSessionRole();
+  const canEdit = role === "admin" || role === "dev";
+
   return (
     <>
       {/* Generar breadcrumbs para la página de producto */}
@@ -150,7 +154,7 @@ export default async function ProductPage({
               />
             </div>
             <div className="basis-full lg:basis-2/6">
-              <ProductDescription product={product} />
+              <ProductDescription product={product} canEdit={canEdit} />
             </div>
           </div>
           <Suspense

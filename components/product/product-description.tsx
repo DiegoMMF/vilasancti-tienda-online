@@ -1,11 +1,14 @@
+"use client";
+
 import { AddToCart } from "components/cart/add-to-cart";
 import Price from "components/price";
 import Prose from "components/prose";
 import { Product } from "lib/types";
+import { OverlayLink } from "components/ui/overlay-link";
 import DiscountBadge from "./discount-badge";
 import { VariantSelector } from "./variant-selector";
 
-export function ProductDescription({ product }: { product: Product }) {
+export function ProductDescription({ product, canEdit }: { product: Product; canEdit?: boolean }) {
   return (
     <>
       <div className="mb-8 flex flex-col border-b border-[#bf9d6d]/20 pb-8 lg:mb-12 lg:pb-12">
@@ -29,6 +32,17 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
+      {canEdit ? (
+        <div className="mt-4">
+          <OverlayLink
+            href={`/panel-de-control/articulos?productId=${product.id}`}
+            prefetch={true}
+            className="inline-block text-[#bf9d6d] px-4 py-2 rounded-md transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline font-inter"
+          >
+            Editar
+          </OverlayLink>
+        </div>
+      ) : null}
       <AddToCart product={product} />
       {/* Espacio adicional para separar del botón de las imágenes en mobile */}
       <div className="mb-12 lg:mb-0" />

@@ -7,11 +7,14 @@ import { NavbarLayout } from "./layout";
 import { LogoLink } from "./logo-link";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";
+import { getSessionRole } from "lib/auth/session";
+import { AuthButtons } from "components/auth/auth-buttons";
 
 const { SITE_NAME } = process.env;
 
 export async function Navbar() {
   const menu = await getMenu("next-js-frontend-header-menu");
+  const role = await getSessionRole();
 
   return (
     <NavbarLayout>
@@ -42,6 +45,17 @@ export async function Navbar() {
                 </OverlayLink>
               </li>
             ))}
+            {role === "admin" || role === "dev" ? (
+              <li key="panel-de-control">
+                <OverlayLink
+                  href="/panel-de-control"
+                  prefetch={true}
+                  className="text-[#bf9d6d] px-3 py-2 rounded-md transition-all duration-200 hover:text-[#f0e3d7] hover:bg-[#bf9d6d] hover:no-underline font-inter"
+                >
+                  Panel de Control
+                </OverlayLink>
+              </li>
+            ) : null}
           </ul>
         ) : null}
       </div>
@@ -55,6 +69,7 @@ export async function Navbar() {
 
       {/* Cart - Right side */}
       <div className="flex items-center justify-end">
+        <AuthButtons />
         <CartModal />
       </div>
     </NavbarLayout>

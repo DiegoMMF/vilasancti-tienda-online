@@ -5,6 +5,7 @@ import { useProduct } from "components/product/product-context";
 import { useLoadingOverlay } from "components/ui/loading-overlay-context";
 import { ProductOption, ProductVariant } from "lib/types";
 import { useState } from "react";
+import { toast } from "sonner";
 
 // Estilos CSS personalizados para asegurar que se apliquen correctamente
 const variantSelectorStyles = `
@@ -89,6 +90,22 @@ export function VariantSelector({
     } finally {
       hide();
       setLoadingOption(null);
+      try {
+        const selected = variants.find((v) =>
+          v.selectedOptions.every((o) => {
+            const n = o.name.toLowerCase();
+            return state[n] ? state[n] === o.value || (n === optionName && optionValue === o.value) : n === optionName && optionValue === o.value;
+          }),
+        );
+        if (selected && selected.availableForSale) {
+          const threshold = 2;
+          if (selected.inventoryQuantity <= threshold) {
+            toast.warning("Stock bajo para la variante seleccionada", {
+              description: `Quedan ${selected.inventoryQuantity} unidad(es)`,
+            });
+          }
+        }
+      } catch {}
     }
   };
 

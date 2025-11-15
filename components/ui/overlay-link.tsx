@@ -40,8 +40,9 @@ function OverlayLinkInner({
 }
 
 export function OverlayLink(props: OverlayLinkProps) {
+  const { showOnClick, ...rest } = props;
   return (
-    <Suspense fallback={<Link {...props} />}>
+    <Suspense fallback={<Link {...rest} />}>
       <OverlayLinkInner {...props} />
     </Suspense>
   );
